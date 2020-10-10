@@ -1,4 +1,3 @@
-<!-- Add file logging as in https://logging.apache.org/log4j/2.x/manual/migration.html -->
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
     <Appenders>
@@ -18,3 +17,4 @@
         </Root>
     </Loggers>
 </Configuration>
+<!-- Add file logging as in https://logging.apache.org/log4j/2.x/manual/migration.html -->
