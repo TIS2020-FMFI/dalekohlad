@@ -12,6 +12,9 @@
         <Logger name="fmfi.dalekohlad.Config" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
+        <Logger name="fmfi.dalekohlad.LockInstance" level="debug" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
         <Root level="warn">
             <AppenderRef ref="Console"/>
         </Root>
