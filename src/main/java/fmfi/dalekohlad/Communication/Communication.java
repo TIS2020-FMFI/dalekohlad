@@ -32,7 +32,7 @@ public class Communication {
         catch (Exception e) {
             // TODO retry?
             lgr.error(String.format("Failed to initialize connection to %s:%d", host.getAddress(), host.getPort()), e);
-            System.exit(4);
+            //System.exit(4);
         }
         Runnable runnable = Communication::periodic_update;
         Thread thread = new Thread(runnable);
