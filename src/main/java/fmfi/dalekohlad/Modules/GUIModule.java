@@ -1,6 +1,10 @@
 package fmfi.dalekohlad.Modules;
 
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import javafx.util.Pair;
+
+import java.util.Map;
 
 public interface GUIModule {
     // vsetky moduly by mali mat default konstruktor
@@ -9,5 +13,6 @@ public interface GUIModule {
     // update bude volany vzdy ked sa dostane v komunikacii novy konfig
     void update(String data);
     void init(Pane pane);
-    String collect_data();
+    String collectData();
+    default void registerShortcuts(Map<Pair<Boolean, KeyCode>, Runnable> shortcuts) {}  // Pair<isShiftDown(), KeyCode>
 }
