@@ -27,6 +27,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Main extends Application {
     private static final Logger lgr = LogManager.getLogger(Main.class);
@@ -80,6 +81,10 @@ public class Main extends Application {
         return new InetSocketAddress(address, port);
     }
 
+    static void registerShortcuts(Stage stage, Map<Pair<Boolean, KeyCode>, Runnable> shortcuts) {
+        stage.getScene().setOnKeyPressed(new ShortcutHandler<KeyEvent>(shortcuts));
+    }
+
     private ArrayList<GUIModule> bind_modules(Stage stage) {
         // initializes and collects correct modules
         ArrayList<GUIModule> modules = new ArrayList<>();
@@ -109,7 +114,7 @@ public class Main extends Application {
                 lgr.error("Failed to load module " + module_name, e);
             }
         }
-        stage.getScene().setOnKeyPressed(new ShortcutHandler<KeyEvent>(shortcuts));
+        registerShortcuts(stage, shortcuts);
         return modules;
     }
 
