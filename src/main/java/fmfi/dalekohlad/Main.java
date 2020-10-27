@@ -6,11 +6,15 @@ import com.google.gson.stream.JsonReader;
 import fmfi.dalekohlad.Communication.Communication;
 import fmfi.dalekohlad.LockInstance.LockInstance;
 import fmfi.dalekohlad.Modules.GUIModule;
+import fmfi.dalekohlad.inputHandling.Key;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
@@ -36,6 +40,8 @@ public class Main extends Application {
         ArrayList<GUIModule> modules = bind_modules(stage);
         InetSocketAddress host = load_host_from_config();
         Communication.init(host, modules);
+
+
     }
 
     public static void main() {
@@ -54,6 +60,8 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.show();
         lgr.debug("Loaded FXML " + main_screen);
+
+        scene.setOnKeyPressed(new Key<KeyEvent>());
     }
 
     private InetSocketAddress load_host_from_config() {
