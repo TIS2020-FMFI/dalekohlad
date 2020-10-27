@@ -8,13 +8,14 @@ import javafx.scene.input.KeyEvent;
 import javafx.util.Pair;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static javafx.scene.input.KeyEvent.KEY_PRESSED;
 
 public class ShortcutHandler<T extends KeyEvent> implements EventHandler {
-    private HashMap<Pair<Boolean, KeyCode>, Runnable> shortcuts;
+    private Map<Pair<Boolean, KeyCode>, Runnable> shortcuts;
 
-    public ShortcutHandler(HashMap<Pair<Boolean, KeyCode>, Runnable> shortcuts) {
+    public ShortcutHandler(Map<Pair<Boolean, KeyCode>, Runnable> shortcuts) {
         this.shortcuts = shortcuts;
     }
 
