@@ -11,10 +11,10 @@ import java.util.HashMap;
 
 import static javafx.scene.input.KeyEvent.KEY_PRESSED;
 
-public class Key<T extends KeyEvent> implements EventHandler {
+public class ShortcutHandler<T extends KeyEvent> implements EventHandler {
     private HashMap<Pair<Boolean, KeyCode>, Runnable> shortcuts;
 
-    public Key(HashMap<Pair<Boolean, KeyCode>, Runnable> shortcuts) {
+    public ShortcutHandler(HashMap<Pair<Boolean, KeyCode>, Runnable> shortcuts) {
         this.shortcuts = shortcuts;
     }
 
