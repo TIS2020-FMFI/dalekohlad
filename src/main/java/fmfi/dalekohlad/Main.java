@@ -6,7 +6,7 @@ import com.google.gson.stream.JsonReader;
 import fmfi.dalekohlad.Communication.Communication;
 import fmfi.dalekohlad.LockInstance.LockInstance;
 import fmfi.dalekohlad.Modules.GUIModule;
-import fmfi.dalekohlad.InputHandling.Key;
+import fmfi.dalekohlad.InputHandling.ShortcutHandler;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -109,7 +109,7 @@ public class Main extends Application {
                 lgr.error("Failed to load module " + module_name, e);
             }
         }
-        stage.getScene().setOnKeyPressed(new Key<KeyEvent>(shortcuts));
+        stage.getScene().setOnKeyPressed(new ShortcutHandler<KeyEvent>(shortcuts));
         return modules;
     }
 
