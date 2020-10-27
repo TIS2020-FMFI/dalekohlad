@@ -1,6 +1,5 @@
 package fmfi.dalekohlad.Communication;
 
-import java.io.DataOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -30,9 +29,8 @@ public class Communication {
             sock = new Socket(host.getAddress(), host.getPort());
         }
         catch (Exception e) {
-            // TODO retry?
             lgr.error(String.format("Failed to initialize connection to %s:%d", host.getAddress(), host.getPort()), e);
-            //System.exit(4);
+            System.exit(4);
         }
         Runnable runnable = Communication::periodic_update;
         Thread thread = new Thread(runnable);
@@ -43,7 +41,7 @@ public class Communication {
         // zbiera data z modulov a odosiela ich na server, mal by byt volany tlacitkom send
         String data = "";
         for (GUIModule module: modules) {
-            data = data.concat(module.collect_data());
+            data = data.concat(module.collectData());
         }
     }
 
