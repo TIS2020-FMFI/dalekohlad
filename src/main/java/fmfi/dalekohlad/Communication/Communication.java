@@ -63,10 +63,12 @@ public class Communication {
             System.exit(Main.EXIT_CONNECTION_INITIALIZATION_ERROR);
         }
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            try {
-                sock.close();
-            } catch (Exception e) {
-                lgr.error("Unable to close connection: ", e);
+            if (run) {
+                try {
+                    sock.close();
+                } catch (Exception e) {
+                    lgr.error("Unable to close connection: ", e);
+                }
             }
         }));
         Runnable runnable = Communication::periodic_update;
