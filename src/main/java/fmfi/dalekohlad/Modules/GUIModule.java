@@ -22,6 +22,5 @@ public interface GUIModule {
     
     void update(JsonObject jo);
     void init(Pane pane);
-    String collectData();
     default void registerShortcuts(Map<Pair<Boolean, KeyCode>, Runnable> shortcuts) {}  // Pair<isShiftDown(), KeyCode>
 }
