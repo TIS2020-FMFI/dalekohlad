@@ -20,6 +20,8 @@ public interface GUIModule {
     // napriklad: Platform.runLater(() -> {label.text = "zmeneny";});.
     // Je to nevyhnutne kvoli https://stackoverflow.com/questions/25171039/what-is-the-best-way-to-manage-multithreading-in-javafx-8       .
     
+    // Ukazka ako z JsonObject parsovat data: https://github.com/TIS2020-FMFI/dalekohlad/blob/1d5e7f971384653d84f5641c6328198cc86621b9/src/test/java/fmfi/dalekohlad/JsonTest.java#L23
+    
     void update(JsonObject jo);
     void init(Pane pane);
     default void registerShortcuts(Map<Pair<Boolean, KeyCode>, Runnable> shortcuts) {}  // Pair<isShiftDown(), KeyCode>
