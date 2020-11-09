@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import fmfi.dalekohlad.Main;
 import fmfi.dalekohlad.Modules.GUIModule;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
@@ -20,28 +21,36 @@ public class Communication {
     private static DataInputStream client_in;
 
     private static ArrayList<GUIModule> modules = null;
+    private static boolean run = true;
 
     private static void periodic_update() {
         // caka na data zo serveru a posuva ich vsetkym modulom
         String data = null;
-        while (true) {
+        while (run) {
             boolean read = false;
-            while (!read) {
+            while (!read && run) {
                 try {
                     data = client_in.readUTF();
                     read = true;
                 }
                 catch (Exception e) {
                     lgr.error("Failed to read data, repeating...");
-                    try { TimeUnit.SECONDS.sleep(1); } catch (Exception f) {}
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                    }
+                    catch (Exception f) {
+                        lgr.debug("Failed to sleep", e);
+                    }
                 }
             }
-            JsonObject json_object = JsonParser.parseString(data).getAsJsonObject();
-            modules.forEach(x -> x.update(json_object));
+            if (read) {
+                JsonObject json_object = JsonParser.parseString(data).getAsJsonObject();
+                modules.forEach(x -> x.update(json_object));
+            }
         }
     }
 
-    public static void init(InetSocketAddress host, ArrayList<GUIModule> modules) {
+    public static Thread init(InetSocketAddress host, ArrayList<GUIModule> modules) {
         Communication.modules = modules;
         lgr.debug(String.format("Connecting to %s:%d", host.getAddress(), host.getPort()));
         try {
@@ -51,7 +60,7 @@ public class Communication {
         }
         catch (Exception e) {
             lgr.fatal(String.format("Failed to initialize connection to %s:%d", host.getAddress(), host.getPort()), e);
-            System.exit(4);
+            System.exit(Main.EXIT_CONNECTION_INITIALIZATION_ERROR);
         }
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
@@ -61,8 +70,9 @@ public class Communication {
             }
         }));
         Runnable runnable = Communication::periodic_update;
-        Thread thread = new Thread(runnable);
-        thread.start();
+        Thread periodic_thread = new Thread(runnable);
+        periodic_thread.start();
+        return periodic_thread;
     }
 
     public static void send_data(String data) {
@@ -75,8 +85,24 @@ public class Communication {
                 sent = true;
             } catch (Exception e) {
                 lgr.error("Failed to send data, repeating...");
-                try { TimeUnit.SECONDS.sleep(1); } catch (Exception f) {}
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                }
+                catch (Exception f) {
+                    lgr.debug("Failed to sleep", e);
+                }
             }
+        }
+    }
+
+    public static void close() {
+        run = false;
+        try {
+            sock.close();
+        }
+        catch (Exception e) {
+            lgr.fatal("Failed to close socket, forcing exit", e);
+            System.exit(Main.EXIT_SOCKET_CLOSE_ERROR);
         }
     }
 
