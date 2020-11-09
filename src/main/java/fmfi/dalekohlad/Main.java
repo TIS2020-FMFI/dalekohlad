@@ -34,6 +34,11 @@ public class Main extends Application {
     private static final String main_screen = "/fxml/main_screen.fxml";
     private static final String module_prefix = "module_";
     private static final String config = "/config.json";
+    public static final int EXIT_LOCK_INSTANCE_ERROR = 1;
+    public static final int EXIT_NETWORK_CONFIG_ERROR = 2;
+    public static final int EXIT_FXML_ERROR = 3;
+    public static final int EXIT_CONNECTION_INITIALIZATION_ERROR = 4;
+    public static final int EXIT_SOCKET_CLOSE_ERROR = 5;
 
     @Override
     public void start(Stage stage) {
@@ -55,7 +60,7 @@ public class Main extends Application {
         }
         catch (Exception e) {
             lgr.fatal("Unable to load FXML resource: " + main_screen, e);
-            System.exit(3);
+            System.exit(EXIT_FXML_ERROR);
         }
         stage.setScene(scene);
         stage.show();
@@ -75,7 +80,7 @@ public class Main extends Application {
         }
         catch (Exception e) {
             lgr.fatal("Failed to load network config", e);
-            System.exit(2);
+            System.exit(EXIT_NETWORK_CONFIG_ERROR);
         }
         lgr.debug("Loaded network config");
         return new InetSocketAddress(address, port);
