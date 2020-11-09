@@ -1,6 +1,7 @@
 package fmfi.dalekohlad.Modules;
 
 import com.google.gson.JsonObject;
+import fmfi.dalekohlad.Communication.Communication;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
@@ -18,12 +19,9 @@ public class Dome implements GUIModule {
 
     }
 
-    public String collectData() {
-        return "";
-    }
-
     public void nastavRychlostKupoly() {
         System.out.println("Hello from the modules side");
+        Communication.send_data("Prikaz123 25");
     }
 
     @Override
