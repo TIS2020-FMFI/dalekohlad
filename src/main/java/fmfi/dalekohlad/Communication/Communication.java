@@ -4,6 +4,8 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import fmfi.dalekohlad.Modules.GUIModule;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
@@ -16,9 +18,10 @@ public class Communication {
     private static void periodic_update() {
         // caka na data zo serveru a posuva ich vsetkym modulom
         String data = "";
+        JsonObject json_object = JsonParser.parseString(data).getAsJsonObject();
 
         for (GUIModule module: modules) {
-            module.update(data);
+            module.update(json_object);
         }
     }
 

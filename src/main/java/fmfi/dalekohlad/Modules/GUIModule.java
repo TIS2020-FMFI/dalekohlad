@@ -1,5 +1,6 @@
 package fmfi.dalekohlad.Modules;
 
+import com.google.gson.JsonObject;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
@@ -19,7 +20,7 @@ public interface GUIModule {
     // napriklad: Platform.runLater(() -> {label.text = "zmeneny";});.
     // Je to nevyhnutne kvoli https://stackoverflow.com/questions/25171039/what-is-the-best-way-to-manage-multithreading-in-javafx-8       .
     
-    void update(String data);
+    void update(JsonObject jo);
     void init(Pane pane);
     String collectData();
     default void registerShortcuts(Map<Pair<Boolean, KeyCode>, Runnable> shortcuts) {}  // Pair<isShiftDown(), KeyCode>
