@@ -63,13 +63,7 @@ public class Communication {
             System.exit(Main.EXIT_CONNECTION_INITIALIZATION_ERROR);
         }
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            if (run) {
-                try {
-                    sock.close();
-                } catch (Exception e) {
-                    lgr.error("Unable to close connection: ", e);
-                }
-            }
+            close();
         }));
         Runnable runnable = Communication::periodic_update;
         Thread periodic_thread = new Thread(runnable);
@@ -98,13 +92,15 @@ public class Communication {
     }
 
     public static void close() {
-        run = false;
-        try {
-            sock.close();
-        }
-        catch (Exception e) {
-            lgr.fatal("Failed to close socket, forcing exit", e);
-            System.exit(Main.EXIT_SOCKET_CLOSE_ERROR);
+        if (run) {
+            run = false;
+            try {
+                sock.close();
+            }
+            catch (Exception e) {
+                lgr.fatal("Failed to close socket, forcing exit", e);
+                System.exit(Main.EXIT_SOCKET_CLOSE_ERROR);
+            }
         }
     }
 
