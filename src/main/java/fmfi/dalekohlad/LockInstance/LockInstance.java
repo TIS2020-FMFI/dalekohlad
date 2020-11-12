@@ -1,6 +1,6 @@
 package fmfi.dalekohlad.LockInstance;
 
-import fmfi.dalekohlad.Main;
+import fmfi.dalekohlad.Mediator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -43,7 +43,7 @@ public class LockInstance {
         boolean is_locked = lock(tmp_file_path.toString());
         if (!is_locked) {
             lgr.fatal("Lock couldn't be acquired, exiting.");
-            System.exit(Main.EXIT_LOCK_INSTANCE_ERROR);
+            System.exit(Mediator.EXIT_LOCK_INSTANCE_ERROR);
         }
         lgr.debug("Successfully acquired lock.");
     }
