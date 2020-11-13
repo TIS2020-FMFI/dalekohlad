@@ -11,10 +11,8 @@ import org.testfx.framework.junit.ApplicationTest;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 
 import static org.junit.Assert.*;
-import static org.testfx.util.WaitForAsyncUtils.waitForFxEvents;
 
 public class MainTest extends ApplicationTest {
     private FxRobot robot = new FxRobot();
@@ -38,7 +36,7 @@ public class MainTest extends ApplicationTest {
         stage.setScene(scene);
         stage.show();
 
-        Main.registerShortcuts(stage, shortcuts);
+        Mediator.registerShortcuts(stage, shortcuts);
     }
 
     @Test

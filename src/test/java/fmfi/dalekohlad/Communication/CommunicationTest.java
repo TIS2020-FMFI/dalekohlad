@@ -12,13 +12,11 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.concurrent.Semaphore;
 
 public class CommunicationTest {
     private static final int PORT = 8887;
     private static DataOutputStream serverOut;
     private static DataInputStream serverIn;
-    private static Semaphore lock = new Semaphore(1);
 
     private void listen(ServerSocket server) {
         new Thread(() -> {
