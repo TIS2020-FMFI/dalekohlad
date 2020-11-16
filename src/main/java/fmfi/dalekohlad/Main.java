@@ -46,7 +46,7 @@ public class Main extends Application {
         load_scene(stage);
         ArrayList<GUIModule> modules = bind_modules(stage);
         InetSocketAddress host = load_host_from_config();
-        Communication.init(host, modules);
+        //Communication.init(host, modules);
     }
 
     public static void main() {
@@ -64,6 +64,7 @@ public class Main extends Application {
         }
         stage.setScene(scene);
         stage.show();
+
         lgr.debug("Loaded FXML " + main_screen);
     }
 
@@ -114,6 +115,9 @@ public class Main extends Application {
                 module.registerShortcuts(shortcuts);
                 modules.add(module);
                 lgr.debug("Loaded module: " + module_name);
+                for(Node i:pane.getChildren()){
+                    //lgr.debug("id::::" + i.getId());
+                }
             }
             catch (Exception e) {
                 lgr.error("Failed to load module " + module_name, e);
