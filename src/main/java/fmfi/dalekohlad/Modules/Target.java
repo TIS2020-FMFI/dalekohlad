@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
@@ -15,27 +16,20 @@ import java.util.Map;
 
 public class Target implements GUIModule {
     private Pane pane;
+    private Label[] info;
 
     public void init(Pane p) {
         pane = p;
-        ((Button)GetById(pane,"LoadTarget")).setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                LoadTarget();
-            }
-        });
-        ((Button)GetById(pane,"GoToCancel")).setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                GoToCancel();
-            }
-        });
-        ((Button)GetById(pane,"PoleCrossing")).setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                PoleCrossing();
-            }
-        });
+        info = new Label[10];
+
+        for(int i = 0; i < 10; i++){
+            info[i] = (Label) GetById(pane, "target" + (i+1));
+            info[i].setText("...");
+        }
+
+        ((Button)GetById(pane,"LoadTarget")).setOnAction(actionEvent -> LoadTarget());
+        ((Button)GetById(pane,"GoToCancel")).setOnAction(actionEvent -> GoToCancel());
+        ((Button)GetById(pane,"PoleCrossing")).setOnAction(actionEvent -> PoleCrossing());
     }
 
     public void update(JsonObject jo) {
@@ -43,11 +37,13 @@ public class Target implements GUIModule {
     }
 
     public void LoadTarget(){
-        String data = ((TextField)GetById(pane,"LoadTargetRA")).getText();
-        data += ", " + ((TextField)GetById(pane,"LoadTargetDE")).getText();
+        TextField ra = ((TextField)GetById(pane,"LoadTargetRA"));
+        TextField de = ((TextField)GetById(pane,"LoadTargetDE"));
 
-        System.out.println("Load Target: " + data);
+        System.out.println("Load Target: " + ra.getText() + ", " + de.getText());
         //Communication.send_data("Prikaz123 25");
+        ra.setText("");
+        de.setText("");
     }
 
     public void GoToCancel(){

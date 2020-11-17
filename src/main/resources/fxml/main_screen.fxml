@@ -2,6 +2,8 @@
 
 <?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.Scene?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
@@ -21,16 +23,43 @@
               <children>
                   <Label layoutY="-25.0" text="Polar Axis:" textFill="WHITE">
                       <font><Font size="18.0" /></font></Label>
-                  <Button fx:id="StopRAandDE" layoutX="10.0" layoutY="190.0" prefWidth="140.0" style="-fx-background-color: rgb(250,250,100);" text="Stop RA &amp; DE" />
-                  <Button fx:id="StopDE" layoutX="85.0" layoutY="155.0" mnemonicParsing="false" prefWidth="65.0" style="-fx-background-color: rgb(250,250,100);" text="Stop DE" />
-                  <Button fx:id="EnableDisableMotors" layoutX="10.0" layoutY="120.0" mnemonicParsing="false" prefWidth="140.0" style="-fx-background-color: rgb(250,250,100);" text="Enable Motors" />
-                  <Button fx:id="StopRA" layoutX="10.0" layoutY="155.0" mnemonicParsing="false" prefWidth="65.0" style="-fx-background-color: rgb(250,250,100);" text="Stop RA" />
-                  <Button fx:id="Correction" layoutX="362.0" layoutY="190.0" prefWidth="100.0" style="-fx-background-color: rgb(250,250,100);" text="Correction" />
-                  <Button fx:id="Calibrate" layoutX="362.0" layoutY="155.0" prefWidth="100.0" style="-fx-background-color: rgb(250,250,100);" text="Calibrate" />
+                  <Button fx:id="StopRAandDE" layoutX="10.0" layoutY="190.0" mnemonicParsing="false" prefWidth="140.0" style="-fx-background-color: rgb(250,250,100);" text="Stop RA &amp; DE">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
+                  <Button fx:id="StopDE" layoutX="85.0" layoutY="155.0" mnemonicParsing="false" prefWidth="65.0" style="-fx-background-color: rgb(250,250,100);" text="Stop DE">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
+                  <Button fx:id="EnableDisableMotors" layoutX="10.0" layoutY="120.0" mnemonicParsing="false" prefWidth="140.0" style="-fx-background-color: rgb(250,250,100);" text="Enable Motors" textOverrun="CLIP">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
+                  <opaqueInsets>
+                     <Insets />
+                  </opaqueInsets></Button>
+                  <Button fx:id="StopRA" layoutX="10.0" layoutY="155.0" mnemonicParsing="false" prefWidth="65.0" style="-fx-background-color: rgb(250,250,100);" text="Stop RA">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
+                  <Button fx:id="Correction" layoutX="362.0" layoutY="190.0" mnemonicParsing="false" prefWidth="100.0" style="-fx-background-color: rgb(250,250,100);" text="Correction">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
+                  <Button fx:id="Calibrate" layoutX="362.0" layoutY="155.0" mnemonicParsing="false" prefWidth="100.0" style="-fx-background-color: rgb(250,250,100);" text="Calibrate">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
                   <TextField fx:id="SlewRAField" layoutX="220.0" layoutY="120.0" prefHeight="25.0" prefWidth="70.0" />
                   <TextField fx:id="SlewDEField" layoutX="394.0" layoutY="120.0" prefHeight="25.0" prefWidth="70.0" />
-                  <Button fx:id="SlewDE" layoutX="464.0" layoutY="120.0" mnemonicParsing="false" style="-fx-background-color: rgb(250,250,100);" text="→" />
-                  <Button fx:id="SlewRA" layoutX="290.0" layoutY="120.0" mnemonicParsing="false" style="-fx-background-color: rgb(250,250,100);" text="→" />
+                  <Button fx:id="SlewDE" layoutX="464.0" layoutY="120.0" mnemonicParsing="false" style="-fx-background-color: rgb(250,250,100);" text="→">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
+                  <Button fx:id="SlewRA" layoutX="290.0" layoutY="120.0" mnemonicParsing="false" style="-fx-background-color: rgb(250,250,100);" text="→">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
                   <Label layoutX="10.0" layoutY="5.0" text="Encoder:" textFill="WHITE" />
                   <Label layoutX="250.0" layoutY="-25.0" text="Declination Axis:" textFill="WHITE">
                       <font><Font size="18.0" /></font></Label>
@@ -47,9 +76,22 @@
                   <Label layoutX="340.0" layoutY="125.0" text="Slew DE:" textFill="WHITE" />
                   <TextField fx:id="GoToRAField" layoutX="220.0" layoutY="155.0" prefWidth="70.0" />
                   <TextField fx:id="GoToDEField" layoutX="220.0" layoutY="190.0" prefWidth="70.0" />
-                  <Button fx:id="GoTo" layoutX="290.0" layoutY="155.0" mnemonicParsing="false" prefHeight="60.0" style="-fx-background-color: rgb(250,250,100);" text="→" />
+                  <Button fx:id="GoTo" layoutX="290.0" layoutY="155.0" mnemonicParsing="false" prefHeight="60.0" style="-fx-background-color: rgb(250,250,100);" text="→">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
                   <Label layoutX="165.0" layoutY="160.0" text="GoTo RA:" textFill="WHITE" />
                   <Label layoutX="165.0" layoutY="195.0" text="GoTo DE:" textFill="WHITE" />
+               <Label fx:id="polar1" layoutX="200.0" layoutY="5.0" text="Label" textFill="WHITE" />
+               <Label fx:id="polar2" layoutX="200.0" layoutY="25.0" text="Label" textFill="WHITE" />
+               <Label fx:id="polar3" layoutX="200.0" layoutY="45.0" text="Label" textFill="WHITE" />
+               <Label fx:id="polar4" layoutX="200.0" layoutY="65.0" text="Label" textFill="WHITE" />
+               <Label fx:id="polar5" layoutX="200.0" layoutY="85.0" text="Label" textFill="WHITE" />
+               <Label fx:id="declination1" layoutX="460.0" layoutY="5.0" text="Label" textFill="WHITE" />
+               <Label fx:id="declination2" layoutX="460.0" layoutY="25.0" text="Label" textFill="WHITE" />
+               <Label fx:id="declination3" layoutX="460.0" layoutY="45.0" text="Label" textFill="WHITE" />
+               <Label fx:id="declination4" layoutX="460.0" layoutY="65.0" text="Label" textFill="WHITE" />
+               <Label fx:id="declination5" layoutX="460.0" layoutY="85.0" text="Label" textFill="WHITE" />
               </children>
           </Pane>
 
@@ -57,21 +99,44 @@
               <children>
                   <Label layoutY="-25.0" text="Dome:" textFill="WHITE">
                       <font><Font size="18.0" /></font></Label>
-                  <Button fx:id="DomeEast" layoutX="180.0" layoutY="120.0" prefWidth="80.0" style="-fx-background-color: rgb(250,250,100);" text="Dome East" />
+                  <Button fx:id="DomeEast" layoutX="180.0" layoutY="120.0" prefWidth="80.0" style="-fx-background-color: rgb(250,250,100);" text="Dome East">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
                   <Label layoutX="10.0" layoutY="25.0" text="Azimuth:" textFill="WHITE" />
                   <Label layoutX="10.0" layoutY="85.0" text="Status:" textFill="WHITE" />
                   <Label layoutX="10.0" layoutY="65.0" text="Synchronize:" textFill="WHITE" />
                   <Label layoutX="10.0" layoutY="45.0" text="Target azimuth:" textFill="WHITE" />
                   <Label layoutX="10.0" layoutY="5.0" text="Encoder:" textFill="WHITE" />
-                  <Button fx:id="DomeStop" layoutX="95.0" layoutY="120.0" mnemonicParsing="false" prefWidth="80.0" style="-fx-background-color: rgb(250,250,100);" text="Dome Stop" />
-                  <Button fx:id="DomeWest" layoutX="10.0" layoutY="120.0" mnemonicParsing="false" prefWidth="80.0" style="-fx-background-color: rgb(250,250,100);" text="Dome West" />
+                  <Button fx:id="DomeStop" layoutX="95.0" layoutY="120.0" mnemonicParsing="false" prefWidth="80.0" style="-fx-background-color: rgb(250,250,100);" text="Dome Stop">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
+                  <Button fx:id="DomeWest" layoutX="10.0" layoutY="120.0" mnemonicParsing="false" prefWidth="80.0" style="-fx-background-color: rgb(250,250,100);" text="Dome West">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
                   <TextField fx:id="FrequencyField" layoutX="80.0" layoutY="155.0" prefWidth="80.0" />
-                  <Button fx:id="Frequency" layoutX="160.0" layoutY="155.0" mnemonicParsing="false" style="-fx-background-color: rgb(250,250,100);" text="→" />
+                  <Button fx:id="Frequency" layoutX="160.0" layoutY="155.0" mnemonicParsing="false" style="-fx-background-color: rgb(250,250,100);" text="→">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
                   <TextField fx:id="CalibrateAzimuthField" layoutX="80.0" layoutY="190.0" prefWidth="80.0" />
-                  <Button fx:id="CalibrateAzimuth" layoutX="160.0" layoutY="190.0" mnemonicParsing="false" style="-fx-background-color: rgb(250,250,100);" text="→" />
-                  <Button fx:id="Synchronize" layoutX="75.0" layoutY="225.0" mnemonicParsing="false" prefWidth="120.0" style="-fx-background-color: rgb(250,250,100);" text="Synchronize" />
+                  <Button fx:id="CalibrateAzimuth" layoutX="160.0" layoutY="190.0" mnemonicParsing="false" style="-fx-background-color: rgb(250,250,100);" text="→">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
+                  <Button fx:id="Synchronize" layoutX="75.0" layoutY="225.0" mnemonicParsing="false" prefWidth="120.0" style="-fx-background-color: rgb(250,250,100);" text="Synchronize">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
                   <Label layoutX="10.0" layoutY="160.0" text="Frequency:" textFill="WHITE" />
                   <Label layoutX="10.0" layoutY="195.0" text="Azimuth:" textFill="WHITE" />
+               <Label fx:id="dome1" layoutX="230.0" layoutY="5.0" text="Label" textFill="WHITE" />
+               <Label fx:id="dome5" layoutX="230.0" layoutY="85.0" text="Label" textFill="WHITE" />
+               <Label fx:id="dome4" layoutX="230.0" layoutY="65.0" text="Label" textFill="WHITE" />
+               <Label fx:id="dome3" layoutX="230.0" layoutY="45.0" text="Label" textFill="WHITE" />
+               <Label fx:id="dome2" layoutX="230.0" layoutY="25.0" text="Label" textFill="WHITE" />
               </children>
           </Pane>
 
@@ -97,15 +162,30 @@
                <Label layoutX="10.0" layoutY="65.0" text="RBI flush count:" textFill="WHITE" />
                <Label layoutX="10.0" layoutY="45.0" text="Mode:" textFill="WHITE" />
                <Label layoutX="10.0" layoutY="25.0" text="Exposure:" textFill="WHITE" />
-               <Button fx:id="TurnCameraOn" layoutX="45.0" layoutY="585.0" mnemonicParsing="false" prefWidth="120.0" style="-fx-background-color: rgb(250,250,100);" text="Turn camera ON " />
+               <Button fx:id="TurnCameraOn" layoutX="45.0" layoutY="585.0" mnemonicParsing="false" prefWidth="120.0" style="-fx-background-color: rgb(250,250,100);" text="Turn camera ON ">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
                <TextField fx:id="ExposureTimeField" layoutX="110.0" layoutY="430.0" prefWidth="80.0" />
-               <TextField fx:id="CoolerSetpointField" layoutX="110.0" layoutY="465.0" prefWidth="80.0" />
+               <TextField fx:id="CoolerSetPointField" layoutX="110.0" layoutY="465.0" prefWidth="80.0" />
                <TextField fx:id="ExposureDelayField" layoutX="110.0" layoutY="500.0" prefWidth="80.0" />
                <TextField fx:id="SequenceRepeatsField" layoutX="110.0" layoutY="535.0" prefHeight="0.0" prefWidth="80.0" />
-               <Button fx:id="CoolerSetpoint" layoutX="190.0" layoutY="465.0" mnemonicParsing="false" prefHeight="25.0" style="-fx-background-color: rgb(250,250,100);" text="→" />
-               <Button fx:id="ExposureTime" layoutX="190.0" layoutY="430.0" mnemonicParsing="false" prefHeight="25.0" style="-fx-background-color: rgb(250,250,100);" text="→" />
-               <Button fx:id="SequenceRepeats" layoutX="190.0" layoutY="535.0" mnemonicParsing="false" prefHeight="25.0" style="-fx-background-color: rgb(250,250,100);" text="→" />
-               <Button fx:id="ExposureDelay" layoutX="190.0" layoutY="500.0" mnemonicParsing="false" prefHeight="25.0" style="-fx-background-color: rgb(250,250,100);" text="→" />
+               <Button fx:id="CoolerSetpoint" layoutX="190.0" layoutY="465.0" mnemonicParsing="false" prefHeight="25.0" style="-fx-background-color: rgb(250,250,100);" text="→">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
+               <Button fx:id="ExposureTime" layoutX="190.0" layoutY="430.0" mnemonicParsing="false" prefHeight="25.0" style="-fx-background-color: rgb(250,250,100);" text="→">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
+               <Button fx:id="SequenceRepeats" layoutX="190.0" layoutY="535.0" mnemonicParsing="false" prefHeight="25.0" style="-fx-background-color: rgb(250,250,100);" text="→">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
+               <Button fx:id="ExposureDelay" layoutX="190.0" layoutY="500.0" mnemonicParsing="false" prefHeight="25.0" style="-fx-background-color: rgb(250,250,100);" text="→">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
                <Label layoutX="10.0" layoutY="470.0" text="Cooler setpoint:" textFill="WHITE" />
                <Label layoutX="10.0" layoutY="540.0" text="Sequence repeats:" textFill="WHITE" />
                <Label layoutX="10.0" layoutY="505.0" text="Exposure delay:" textFill="WHITE" />
@@ -114,15 +194,41 @@
                <Label layoutX="10.0" layoutY="435.0" text="Exposure time:" textFill="WHITE" />
                <ChoiceBox fx:id="CameraMode" layoutX="110.0" layoutY="395.0" prefWidth="106.0" />
                <ChoiceBox fx:id="ImageType" layoutX="110.0" layoutY="360.0" prefWidth="106.0" />
-               <Button fx:id="Notes" layoutX="380.0" layoutY="520.0" mnemonicParsing="false" prefHeight="40.0" style="-fx-background-color: rgb(250,250,100);" text="→" />
-               <Button fx:id="Object" layoutX="380.0" layoutY="470.0" mnemonicParsing="false" prefHeight="40.0" style="-fx-background-color: rgb(250,250,100);" text="→" />
-               <Button fx:id="Observer" layoutX="380.0" layoutY="420.0" mnemonicParsing="false" prefHeight="40.0" style="-fx-background-color: rgb(250,250,100);" text="→" />
+               <Button fx:id="Notes" layoutX="380.0" layoutY="520.0" mnemonicParsing="false" prefHeight="40.0" style="-fx-background-color: rgb(250,250,100);" text="→">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
+               <Button fx:id="Object" layoutX="380.0" layoutY="470.0" mnemonicParsing="false" prefHeight="40.0" style="-fx-background-color: rgb(250,250,100);" text="→">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
+               <Button fx:id="Observer" layoutX="380.0" layoutY="420.0" mnemonicParsing="false" prefHeight="40.0" style="-fx-background-color: rgb(250,250,100);" text="→">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
                <Label layoutX="230.0" layoutY="430.0" text="Observer:" textFill="WHITE" />
                <Label layoutX="230.0" layoutY="480.0" text="Object:" textFill="WHITE" />
                <Label layoutX="230.0" layoutY="530.0" text="Notes:" textFill="WHITE" />
                <TextArea fx:id="NotesField" layoutX="300.0" layoutY="520.0" prefHeight="40.0" prefWidth="80.0" />
                <TextArea fx:id="ObjectField" layoutX="300.0" layoutY="470.0" prefHeight="40.0" prefWidth="80.0" />
                <TextArea fx:id="ObserverField" layoutX="300.0" layoutY="420.0" prefHeight="40.0" prefWidth="80.0" />
+               <Label fx:id="camera17" layoutX="200.0" layoutY="325.0" text="Label" textFill="WHITE" />
+               <Label fx:id="camera16" layoutX="200.0" layoutY="305.0" text="Label" textFill="WHITE" />
+               <Label fx:id="camera15" layoutX="200.0" layoutY="285.0" text="Label" textFill="WHITE" />
+               <Label fx:id="camera14" layoutX="200.0" layoutY="265.0" text="Label" textFill="WHITE" />
+               <Label fx:id="camera13" layoutX="200.0" layoutY="245.0" text="Label" textFill="WHITE" />
+               <Label fx:id="camera12" layoutX="200.0" layoutY="225.0" text="Label" textFill="WHITE" />
+               <Label fx:id="camera11" layoutX="200.0" layoutY="205.0" text="Label" textFill="WHITE" />
+               <Label fx:id="camera10" layoutX="200.0" layoutY="185.0" text="Label" textFill="WHITE" />
+               <Label fx:id="camera9" layoutX="200.0" layoutY="165.0" text="Label" textFill="WHITE" />
+               <Label fx:id="camera8" layoutX="200.0" layoutY="145.0" text="Label" textFill="WHITE" />
+               <Label fx:id="camera7" layoutX="200.0" layoutY="125.0" text="Label" textFill="WHITE" />
+               <Label fx:id="camera6" layoutX="200.0" layoutY="105.0" text="Label" textFill="WHITE" />
+               <Label fx:id="camera5" layoutX="200.0" layoutY="85.0" text="Label" textFill="WHITE" />
+               <Label fx:id="camera4" layoutX="200.0" layoutY="65.0" text="Label" textFill="WHITE" />
+               <Label fx:id="camera3" layoutX="200.0" layoutY="45.0" text="Label" textFill="WHITE" />
+               <Label fx:id="camera2" layoutX="200.0" layoutY="25.0" text="Label" textFill="WHITE" />
+               <Label fx:id="camera1" layoutX="200.0" layoutY="5.0" text="Label" textFill="WHITE" />
             </children>
          </Pane>
          <Pane fx:id="module_Target" layoutX="520.0" layoutY="180.0" prefHeight="345.0" prefWidth="240.0" style="-fx-background-color: rgb(80,80,80);">
@@ -139,13 +245,32 @@
                <Label layoutX="10.0" layoutY="65.0" text="DE apparent:" textFill="WHITE" />
                <Label layoutX="10.0" layoutY="45.0" text="HA apparent:" textFill="WHITE" />
                <Label layoutX="10.0" layoutY="25.0" text="dEnc:" textFill="WHITE" />
-               <Button fx:id="PoleCrossing" layoutX="65.0" layoutY="310.0" mnemonicParsing="false" prefWidth="110.0" style="-fx-background-color: rgb(250,250,100);" text="Pole crossing on" />
-               <Button fx:id="LoadTarget" layoutX="190.0" layoutY="210.0" mnemonicParsing="false" prefHeight="55.0" style="-fx-background-color: rgb(250,250,100);" text="→" />
+               <Button fx:id="PoleCrossing" layoutX="65.0" layoutY="310.0" mnemonicParsing="false" prefWidth="110.0" style="-fx-background-color: rgb(250,250,100);" text="Pole crossing on">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
+               <Button fx:id="LoadTarget" layoutX="190.0" layoutY="210.0" mnemonicParsing="false" prefHeight="55.0" style="-fx-background-color: rgb(250,250,100);" text="→">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
                <TextField fx:id="LoadTargetRA" layoutX="110.0" layoutY="210.0" prefWidth="80.0" />
                <TextField fx:id="LoadTargetDE" layoutX="110.0" layoutY="240.0" prefWidth="80.0" />
                <Label layoutX="20.0" layoutY="215.0" text="Load target RA:" textFill="WHITE" />
                <Label layoutX="20.0" layoutY="245.0" text="Load target DE:" textFill="WHITE" />
-               <Button fx:id="GoToCancel" layoutX="65.0" layoutY="275.0" mnemonicParsing="false" prefWidth="110.0" style="-fx-background-color: rgb(250,250,100);" text="Go To/Cancel" />
+               <Button fx:id="GoToCancel" layoutX="65.0" layoutY="275.0" mnemonicParsing="false" prefWidth="110.0" style="-fx-background-color: rgb(250,250,100);" text="Go To/Cancel">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
+               <Label fx:id="target10" layoutX="200.0" layoutY="185.0" text="Label" textFill="WHITE" />
+               <Label fx:id="target9" layoutX="200.0" layoutY="165.0" text="Label" textFill="WHITE" />
+               <Label fx:id="target8" layoutX="200.0" layoutY="145.0" text="Label" textFill="WHITE" />
+               <Label fx:id="target7" layoutX="200.0" layoutY="125.0" text="Label" textFill="WHITE" />
+               <Label fx:id="target6" layoutX="200.0" layoutY="105.0" text="Label" textFill="WHITE" />
+               <Label fx:id="target5" layoutX="200.0" layoutY="85.0" text="Label" textFill="WHITE" />
+               <Label fx:id="target4" layoutX="200.0" layoutY="65.0" text="Label" textFill="WHITE" />
+               <Label fx:id="target3" layoutX="200.0" layoutY="45.0" text="Label" textFill="WHITE" />
+               <Label fx:id="target2" layoutX="200.0" layoutY="25.0" text="Label" textFill="WHITE" />
+               <Label fx:id="target1" layoutX="200.0" layoutY="5.0" text="Label" textFill="WHITE" />
             </children>
          </Pane>
 
@@ -165,6 +290,7 @@
                   </items>
 	            </ChoiceBox>
                <Label layoutX="10.0" layoutY="5.0" text="filter:" textFill="WHITE" />
+               <Label fx:id="filter1" layoutX="200.0" layoutY="5.0" text="Label" textFill="WHITE" />
             </children>
          </Pane>
 

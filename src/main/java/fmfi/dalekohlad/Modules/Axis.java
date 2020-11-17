@@ -7,75 +7,41 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.Effect;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
-
 import java.lang.reflect.Method;
 import java.util.Map;
 
 
 public class Axis implements GUIModule {
     private Pane pane;
+    private Label[] info_polar;
+    private Label[] info_declination;
 
     public void init(Pane p) {
         pane = p;
-       ((Button)GetById(pane,"EnableDisableMotors")).setOnAction(new EventHandler<ActionEvent>() {
-           @Override
-           public void handle(ActionEvent actionEvent) {
-               EnableDisableMotors();
-           }
-       });
-       ((Button)GetById(pane,"StopRA")).setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                StopRA();
-            }
-       });
-       ((Button)GetById(pane,"StopDE")).setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                StopDE();
-            }
-       });
-       ((Button)GetById(pane,"StopRAandDE")).setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                StopRAandDE();
-            }
-       });
-       ((Button)GetById(pane,"Calibrate")).setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                Calibrate();
-            }
-       });
-       ((Button)GetById(pane,"Correction")).setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                Correction();
-            }
-       });
-       ((Button)GetById(pane,"SlewRA")).setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                SlewRA();
-            }
-       });
-       ((Button)GetById(pane,"SlewDE")).setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                SlewDE();
-            }
-       });
-       ((Button)GetById(pane,"GoTo")).setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                GoTo();
-            }
-       });
+        info_polar = new Label[5];
+        info_declination = new Label[5];
+
+        for(int i = 0; i < 5; i++){
+            info_polar[i] = (Label) GetById(pane, "polar" + (i+1));
+            info_declination[i] = (Label) GetById(pane, "declination" + (i+1));
+            info_polar[i].setText("...");
+            info_declination[i].setText("...");
+        }
+
+       ((Button)GetById(pane,"EnableDisableMotors")).setOnAction(actionEvent -> EnableDisableMotors());
+       ((Button)GetById(pane,"StopRA")).setOnAction(actionEvent -> StopRA());
+       ((Button)GetById(pane,"StopDE")).setOnAction(actionEvent -> StopDE());
+       ((Button)GetById(pane,"StopRAandDE")).setOnAction(actionEvent -> StopRAandDE());
+       ((Button)GetById(pane,"Calibrate")).setOnAction(actionEvent -> Calibrate());
+       ((Button)GetById(pane,"Correction")).setOnAction(actionEvent -> Correction());
+       ((Button)GetById(pane,"SlewRA")).setOnAction(actionEvent -> SlewRA());
+       ((Button)GetById(pane,"SlewDE")).setOnAction(actionEvent -> SlewDE());
+       ((Button)GetById(pane,"GoTo")).setOnAction(actionEvent -> GoTo());
     }
 
     public void update(JsonObject jo) {
@@ -115,25 +81,26 @@ public class Axis implements GUIModule {
     }
 
     public void SlewRA() {
-        String data = ((TextField)GetById(pane,"SlewRAField")).getText();
-
-        System.out.println("Slew RA: " + data);
+        TextField slew_ra = ((TextField)GetById(pane,"SlewRAField"));
+        System.out.println("Slew RA: " + slew_ra.getText());
         //Communication.send_data("Prikaz123 25");
+        slew_ra.setText("");
     }
 
     public void SlewDE() {
-        String data = ((TextField)GetById(pane,"SlewDEField")).getText();
-
-        System.out.println("Slew DE: " + data);
+        TextField slew_de = ((TextField)GetById(pane,"SlewDEField"));
+        System.out.println("Slew DE: " + slew_de.getText());
         //Communication.send_data("Prikaz123 25");
+        slew_de.setText("");
     }
 
     public void GoTo() {
-        String data = ((TextField)GetById(pane,"GoToRAField")).getText();
-        data += ", " + ((TextField)GetById(pane,"GoToDEField")).getText();
-
-        System.out.println("Go To: " + data);
+        TextField goto_ra = ((TextField)GetById(pane,"GoToRAField"));
+        TextField goto_de = ((TextField)GetById(pane,"GoToDEField"));
+        System.out.println("Go To: " + goto_ra.getText() + ", " + goto_de.getText());
         //Communication.send_data("Prikaz123 25");
+        goto_ra.setText("");
+        goto_de.setText("");
     }
 
     @Override
