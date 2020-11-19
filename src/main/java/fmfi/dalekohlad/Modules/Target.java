@@ -46,6 +46,12 @@ public class Target implements GUIModule {
         de.setText("");
     }
 
+    /*public void TargetFocus(){
+        TextField ra = ((TextField)GetById(pane,"LoadTargetRA"));
+        TextField de = ((TextField)GetById(pane,"LoadTargetDE"));
+        //ra.setFocusTraversable(true);
+    }*/
+
     public void GoToCancel(){
         System.out.println("Go To / Cancel");
         //Communication.send_data("GoToCancel");
@@ -60,7 +66,8 @@ public class Target implements GUIModule {
 
     @Override
     public void registerShortcuts(Map<Pair<Boolean, KeyCode>, Runnable> shortcuts) {
-
+        /*Pair<Boolean, KeyCode> shortcut_id = new Pair<>(false, KeyCode.O);
+        shortcuts.put(shortcut_id, this::TargetFocus);*/
     }
 
     Node GetById(Pane pane, String id){
