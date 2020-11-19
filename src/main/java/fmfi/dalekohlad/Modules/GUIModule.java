@@ -1,6 +1,9 @@
 package fmfi.dalekohlad.Modules;
 
 import com.google.gson.JsonObject;
+import javafx.scene.Node;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
@@ -25,4 +28,18 @@ public interface GUIModule {
     void update(JsonObject jo);
     void init(Pane pane);
     default void registerShortcuts(Map<Pair<Boolean, KeyCode>, Runnable> shortcuts) {}  // Pair<isShiftDown(), KeyCode>
+
+    default Node GetById(Pane pane, String id){
+        for(Node i:pane.getChildren()){
+            if(i.getId() != null && i.getId().equals(id)) return i;
+        }
+        return null;
+    }
+
+    default void FocusTextField(boolean textArea, String id, Pane pane){
+        Node field;
+        if(textArea) field = ((TextArea)GetById(pane,id));
+        else field = ((TextField)GetById(pane,id));
+        field.requestFocus();
+    }
 }

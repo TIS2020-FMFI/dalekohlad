@@ -61,18 +61,4 @@ public class Target implements GUIModule {
     @Override
     public void registerShortcuts(Map<Pair<Boolean, KeyCode>, Runnable> shortcuts) {
     }
-
-    Node GetById(Pane pane, String id){
-        for(Node i:pane.getChildren()){
-            if(i.getId() != null && i.getId().equals(id)) return i;
-        }
-        return null;
-    }
-
-    public void FocusTextField(boolean textArea, String id){
-        Node field;
-        if(textArea) field = ((TextArea)GetById(pane,id));
-        else field = ((TextField)GetById(pane,id));
-        field.requestFocus();
-    }
 }

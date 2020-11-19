@@ -40,11 +40,4 @@ public class Filterwheel implements GUIModule {
     public void registerShortcuts(Map<Pair<Boolean, KeyCode>, Runnable> shortcuts) {
 
     }
-
-    Node GetById(Pane pane, String id){
-        for(Node i:pane.getChildren()){
-            if(i.getId() != null && i.getId().equals(id)) return i;
-        }
-        return null;
-    }
 }
