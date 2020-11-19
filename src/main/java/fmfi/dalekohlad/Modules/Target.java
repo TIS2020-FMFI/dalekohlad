@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
@@ -46,12 +47,6 @@ public class Target implements GUIModule {
         de.setText("");
     }
 
-    /*public void TargetFocus(){
-        TextField ra = ((TextField)GetById(pane,"LoadTargetRA"));
-        TextField de = ((TextField)GetById(pane,"LoadTargetDE"));
-        //ra.setFocusTraversable(true);
-    }*/
-
     public void GoToCancel(){
         System.out.println("Go To / Cancel");
         //Communication.send_data("GoToCancel");
@@ -63,11 +58,8 @@ public class Target implements GUIModule {
     }
 
 
-
     @Override
     public void registerShortcuts(Map<Pair<Boolean, KeyCode>, Runnable> shortcuts) {
-        /*Pair<Boolean, KeyCode> shortcut_id = new Pair<>(false, KeyCode.O);
-        shortcuts.put(shortcut_id, this::TargetFocus);*/
     }
 
     Node GetById(Pane pane, String id){
@@ -75,5 +67,12 @@ public class Target implements GUIModule {
             if(i.getId() != null && i.getId().equals(id)) return i;
         }
         return null;
+    }
+
+    public void FocusTextField(boolean textArea, String id){
+        Node field;
+        if(textArea) field = ((TextArea)GetById(pane,id));
+        else field = ((TextField)GetById(pane,id));
+        field.requestFocus();
     }
 }

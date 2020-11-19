@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
@@ -113,5 +114,12 @@ public class Axis implements GUIModule {
             if(i.getId() != null && i.getId().equals(id)) return i;
         }
         return null;
+    }
+
+    public void FocusTextField(boolean textArea, String id){
+        Node field;
+        if(textArea) field = ((TextArea)GetById(pane,id));
+        else field = ((TextField)GetById(pane,id));
+        field.requestFocus();
     }
 }

@@ -35,6 +35,10 @@ public class Camera implements GUIModule {
         ((Button)GetById(pane,"TurnCameraOn")).setOnAction(actionEvent -> TurnCameraOn());
     }
 
+    public void update(JsonObject jo) {
+
+    }
+
     public void ImageType(){
         ChoiceBox choiceBox = (ChoiceBox)GetById(pane, "ImageType");
         String data = (String) choiceBox.getValue();
@@ -103,13 +107,10 @@ public class Camera implements GUIModule {
         //Communication.send_data("TurnCameraOn");
     }
 
-    public void update(JsonObject jo) {
-
-    }
-
     @Override
     public void registerShortcuts(Map<Pair<Boolean, KeyCode>, Runnable> shortcuts) {
-
+        Pair<Boolean, KeyCode> shortcut_id = new Pair<>(false, KeyCode.N);
+        shortcuts.put(shortcut_id, () -> FocusTextField(true,"NotesField"));
     }
 
     Node GetById(Pane pane, String id){
@@ -117,5 +118,12 @@ public class Camera implements GUIModule {
             if(i.getId() != null && i.getId().equals(id)) return i;
         }
         return null;
+    }
+
+    public void FocusTextField(boolean textArea, String id){
+        Node field;
+        if(textArea) field = ((TextArea)GetById(pane,id));
+        else field = ((TextField)GetById(pane,id));
+        field.requestFocus();
     }
 }
