@@ -9,8 +9,8 @@ import java.util.concurrent.TimeUnit;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import fmfi.dalekohlad.Main;
 import fmfi.dalekohlad.Modules.GUIModule;
+import fmfi.dalekohlad.Mediator;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
@@ -60,11 +60,9 @@ public class Communication {
         }
         catch (Exception e) {
             lgr.fatal(String.format("Failed to initialize connection to %s:%d", host.getAddress(), host.getPort()), e);
-            System.exit(Main.EXIT_CONNECTION_INITIALIZATION_ERROR);
+            System.exit(Mediator.EXIT_CONNECTION_INITIALIZATION_ERROR);
         }
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            close();
-        }));
+        Runtime.getRuntime().addShutdownHook(new Thread(Communication::close));
         Runnable runnable = Communication::periodic_update;
         Thread periodic_thread = new Thread(runnable);
         periodic_thread.start();
@@ -99,7 +97,7 @@ public class Communication {
             }
             catch (Exception e) {
                 lgr.fatal("Failed to close socket, forcing exit", e);
-                System.exit(Main.EXIT_SOCKET_CLOSE_ERROR);
+                System.exit(Mediator.EXIT_SOCKET_CLOSE_ERROR);
             }
         }
     }
