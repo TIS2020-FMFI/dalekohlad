@@ -25,15 +25,15 @@ public class Filterwheel implements GUIModule {
         ((ChoiceBox)GetById(pane, "Filterwheel")).setOnAction(actionEvent -> SetFilter());
     }
 
-    public void update(JsonObject jo) {
-
-    }
-
     public void SetFilter(){
         ChoiceBox choiceBox = (ChoiceBox)GetById(pane, "Filterwheel");
         String data = (String) choiceBox.getValue();
         System.out.println("Set Filter: " + data);
         //Communication.send_data("Prikaz123 25");
+    }
+
+    public void update(JsonObject jo) {
+
     }
 
     @Override

@@ -2,15 +2,10 @@ package fmfi.dalekohlad.Modules;
 
 import com.google.gson.JsonObject;
 import fmfi.dalekohlad.Communication.Communication;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 
@@ -35,10 +30,6 @@ public class Dome implements GUIModule {
         ((Button)GetById(pane,"DomeStop")).setOnAction(actionEvent -> DomeStop());
         ((Button)GetById(pane,"DomeEast")).setOnAction(actionEvent -> DomeEast());
         ((Button)GetById(pane,"Synchronize")).setOnAction(actionEvent -> Synchronize());
-    }
-
-    public void update(JsonObject jo) {
-
     }
 
     public void Frequency() {
@@ -75,10 +66,18 @@ public class Dome implements GUIModule {
         //Communication.send_data("Synchronize");
     }
 
+    public void update(JsonObject jo) {
+
+    }
+
     @Override
     public void registerShortcuts(Map<Pair<Boolean, KeyCode>, Runnable> shortcuts) {
         // f - pouzivatel zadava double hodnotu, nastavuje sa rýchlosť kupoly (0 - 60)
-        Pair<Boolean, KeyCode> shortcut_id = new Pair<>(false, KeyCode.F);
-        shortcuts.put(shortcut_id, this::Frequency);
+        Pair<Boolean, KeyCode> frequency = new Pair<>(false, KeyCode.F);
+        shortcuts.put(frequency, () -> FocusTextField(false,"FrequencyField", pane));
+        // a -
+        Pair<Boolean, KeyCode> calibrate_azimuth = new Pair<>(false, KeyCode.A);
+        shortcuts.put(calibrate_azimuth, () -> FocusTextField(false,"CalibrateAzimuthField", pane));
+
     }
 }

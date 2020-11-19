@@ -45,10 +45,6 @@ public class Axis implements GUIModule {
        ((Button)GetById(pane,"GoTo")).setOnAction(actionEvent -> GoTo());
     }
 
-    public void update(JsonObject jo) {
-
-    }
-
     public void EnableDisableMotors() {
         Button button = (Button) GetById(pane, "EnableDisableMotors");
         if(button.getText().equals("Enable Motors")) button.setText("Disable Motors");
@@ -102,6 +98,10 @@ public class Axis implements GUIModule {
         //Communication.send_data("Prikaz123 25");
         goto_ra.setText("");
         goto_de.setText("");
+    }
+
+    public void update(JsonObject jo) {
+
     }
 
     @Override

@@ -35,10 +35,6 @@ public class Camera implements GUIModule {
         ((Button)GetById(pane,"TurnCameraOn")).setOnAction(actionEvent -> TurnCameraOn());
     }
 
-    public void update(JsonObject jo) {
-
-    }
-
     public void ImageType(){
         ChoiceBox choiceBox = (ChoiceBox)GetById(pane, "ImageType");
         String data = (String) choiceBox.getValue();
@@ -105,6 +101,10 @@ public class Camera implements GUIModule {
     public void TurnCameraOn(){
         System.out.println("Turn Camera On");
         //Communication.send_data("TurnCameraOn");
+    }
+
+    public void update(JsonObject jo) {
+
     }
 
     @Override

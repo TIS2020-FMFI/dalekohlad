@@ -115,6 +115,7 @@ public class Mediator {
         }
         Pane pane = (Pane) node;
         String id = pane.getId();
+        pane.setOnMouseClicked(actionEvent -> pane.requestFocus());
         if (!id.startsWith(module_prefix)) {
             return;
         }

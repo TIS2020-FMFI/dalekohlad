@@ -2,12 +2,8 @@ package fmfi.dalekohlad.Modules;
 
 import com.google.gson.JsonObject;
 import fmfi.dalekohlad.Communication.Communication;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
@@ -33,10 +29,6 @@ public class Target implements GUIModule {
         ((Button)GetById(pane,"PoleCrossing")).setOnAction(actionEvent -> PoleCrossing());
     }
 
-    public void update(JsonObject jo) {
-
-    }
-
     public void LoadTarget(){
         TextField ra = ((TextField)GetById(pane,"LoadTargetRA"));
         TextField de = ((TextField)GetById(pane,"LoadTargetDE"));
@@ -57,6 +49,9 @@ public class Target implements GUIModule {
         //Communication.send_data("PoleCrossing");
     }
 
+    public void update(JsonObject jo) {
+
+    }
 
     @Override
     public void registerShortcuts(Map<Pair<Boolean, KeyCode>, Runnable> shortcuts) {
