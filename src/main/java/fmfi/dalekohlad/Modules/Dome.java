@@ -72,12 +72,24 @@ public class Dome implements GUIModule {
 
     @Override
     public void registerShortcuts(Map<Pair<Boolean, KeyCode>, Runnable> shortcuts) {
-        // f - pouzivatel zadava double hodnotu, nastavuje sa rýchlosť kupoly (0 - 60)
+        // f - frequency  (0 - 60)
         Pair<Boolean, KeyCode> frequency = new Pair<>(false, KeyCode.F);
         shortcuts.put(frequency, () -> FocusTextField(false,"FrequencyField", pane));
-        // a -
+        // a - azimuth
         Pair<Boolean, KeyCode> calibrate_azimuth = new Pair<>(false, KeyCode.A);
         shortcuts.put(calibrate_azimuth, () -> FocusTextField(false,"CalibrateAzimuthField", pane));
 
+        // y - synchronize
+        Pair<Boolean, KeyCode> synchronize = new Pair<>(false, KeyCode.Y);
+        shortcuts.put(synchronize, this::Synchronize);
+        // Insert - dome east
+        Pair<Boolean, KeyCode> dome_east = new Pair<>(false, KeyCode.INSERT);
+        shortcuts.put(dome_east, this::DomeEast);
+        // Page Up - dome west
+        Pair<Boolean, KeyCode> dome_west = new Pair<>(false, KeyCode.PAGE_UP);
+        shortcuts.put(dome_west, this::DomeWest);
+        // Home - dome stop
+        Pair<Boolean, KeyCode> dome_stop = new Pair<>(false, KeyCode.HOME);
+        shortcuts.put(dome_stop, this::DomeStop);
     }
 }

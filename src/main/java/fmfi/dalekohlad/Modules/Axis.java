@@ -106,6 +106,42 @@ public class Axis implements GUIModule {
 
     @Override
     public void registerShortcuts(Map<Pair<Boolean, KeyCode>, Runnable> shortcuts) {
+        // Left - slew east
+        Pair<Boolean, KeyCode> slew_east = new Pair<>(false, KeyCode.LEFT);
+        shortcuts.put(slew_east, () -> FocusTextField(false,"SlewRAField", pane));
+        //Right - slew west
+        Pair<Boolean, KeyCode> slew_west = new Pair<>(false, KeyCode.RIGHT);
+        shortcuts.put(slew_west, () -> FocusTextField(false,"SlewRAField", pane));
+        // Up - slew up
+        Pair<Boolean, KeyCode> slew_up = new Pair<>(false, KeyCode.UP);
+        shortcuts.put(slew_up, () -> FocusTextField(false,"SlewDEField", pane));
+        //Down - slew down
+        Pair<Boolean, KeyCode> slew_down = new Pair<>(false, KeyCode.DOWN);
+        shortcuts.put(slew_down, () -> FocusTextField(false,"SlewDEField", pane));
 
+        // PageDown - stop RA
+        Pair<Boolean, KeyCode> stop_ra = new Pair<>(false, KeyCode.PAGE_DOWN);
+        shortcuts.put(stop_ra, this::StopRA);
+        // Delete - stop DE
+        Pair<Boolean, KeyCode> stop_de = new Pair<>(false, KeyCode.DELETE);
+        shortcuts.put(stop_de, this::StopDE);
+        // End - stop RA and DE
+        Pair<Boolean, KeyCode> stop_ra_and_de = new Pair<>(false, KeyCode.END);
+        shortcuts.put(stop_ra_and_de, this::StopRAandDE);
+        // [ - enable motors
+        Pair<Boolean, KeyCode> enable_motors = new Pair<>(false, KeyCode.OPEN_BRACKET);
+        shortcuts.put(enable_motors, this::EnableDisableMotors);
+        // ] - enable motors
+        Pair<Boolean, KeyCode> disable_motors = new Pair<>(false, KeyCode.CLOSE_BRACKET);
+        shortcuts.put(disable_motors, this::EnableDisableMotors);
+
+        // c - calibrate
+        Pair<Boolean, KeyCode> calibrate = new Pair<>(false, KeyCode.C);
+        shortcuts.put(calibrate, this::Calibrate);
+        // T - correction
+        Pair<Boolean, KeyCode> correction = new Pair<>(true, KeyCode.T);
+        shortcuts.put(correction, this::Correction);
+
+        // goto
     }
 }

@@ -32,12 +32,31 @@ public class Filterwheel implements GUIModule {
         //Communication.send_data("Prikaz123 25");
     }
 
+    public void SetFilter(String s){
+        System.out.println("Set Filter: " + s);
+        //Communication.send_data("Prikaz123 25");
+    }
+
     public void update(JsonObject jo) {
 
     }
 
     @Override
     public void registerShortcuts(Map<Pair<Boolean, KeyCode>, Runnable> shortcuts) {
-
+        // B - filter B
+        Pair<Boolean, KeyCode> filter_B = new Pair<>(true, KeyCode.B);
+        shortcuts.put(filter_B, () -> SetFilter("B"));
+        // V - filter B
+        Pair<Boolean, KeyCode> filter_V = new Pair<>(true, KeyCode.V);
+        shortcuts.put(filter_V, () -> SetFilter("V"));
+        // R - filter B
+        Pair<Boolean, KeyCode> filter_R = new Pair<>(true, KeyCode.R);
+        shortcuts.put(filter_R, () -> SetFilter("R"));
+        // I - filter B
+        Pair<Boolean, KeyCode> filter_I = new Pair<>(true, KeyCode.I);
+        shortcuts.put(filter_I, () -> SetFilter("I"));
+        // C - filter B
+        Pair<Boolean, KeyCode> filter_C = new Pair<>(true, KeyCode.C);
+        shortcuts.put(filter_C, () -> SetFilter("C"));
     }
 }

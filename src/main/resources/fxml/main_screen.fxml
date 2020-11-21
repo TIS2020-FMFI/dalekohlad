@@ -191,8 +191,24 @@
                <Label layoutX="10.0" layoutY="365.0" text="Image type:" textFill="WHITE" />
                <Label layoutX="10.0" layoutY="400.0" text="Camera mode:" textFill="WHITE" />
                <Label layoutX="10.0" layoutY="435.0" text="Exposure time:" textFill="WHITE" />
-               <ChoiceBox fx:id="CameraMode" layoutX="110.0" layoutY="395.0" prefWidth="106.0" />
-               <ChoiceBox fx:id="ImageType" layoutX="110.0" layoutY="360.0" prefWidth="106.0" />
+                <ChoiceBox fx:id="CameraMode" layoutX="110.0" layoutY="395.0" prefWidth="106.0" >
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Light" />
+                            <String fx:value="Dark" />
+                            <String fx:value="Flat" />
+                        </FXCollections>
+                    </items>
+                </ChoiceBox>
+                <ChoiceBox fx:id="ImageType" layoutX="110.0" layoutY="360.0" prefWidth="106.0">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="1MHz low noise"/>
+                            <String fx:value="3.4MHz low noise" />
+                            <String fx:value="1MHz high dynamic range"/>
+                        </FXCollections>
+                    </items>
+                </ChoiceBox>
                <Button fx:id="Notes" layoutX="380.0" layoutY="520.0" mnemonicParsing="false" prefHeight="40.0" style="-fx-background-color: rgb(250,250,100);" text="→">
                   <cursor>
                      <Cursor fx:constant="HAND" />

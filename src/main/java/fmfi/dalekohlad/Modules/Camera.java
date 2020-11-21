@@ -109,7 +109,40 @@ public class Camera implements GUIModule {
 
     @Override
     public void registerShortcuts(Map<Pair<Boolean, KeyCode>, Runnable> shortcuts) {
-        Pair<Boolean, KeyCode> shortcut_id = new Pair<>(false, KeyCode.N);
-        shortcuts.put(shortcut_id, () -> FocusTextField(true,"NotesField", pane));
+        // O - observer
+        Pair<Boolean, KeyCode> observer = new Pair<>(true, KeyCode.O);
+        shortcuts.put(observer, () -> FocusTextField(true,"ObserverField", pane));
+        // o - object
+        Pair<Boolean, KeyCode> object = new Pair<>(false, KeyCode.O);
+        shortcuts.put(object, () -> FocusTextField(true,"ObjectField", pane));
+        // n - notes
+        Pair<Boolean, KeyCode> notes = new Pair<>(false, KeyCode.N);
+        shortcuts.put(notes, () -> FocusTextField(true,"NotesField", pane));
+
+        // e - exposure time
+        Pair<Boolean, KeyCode> exposure_time = new Pair<>(false, KeyCode.E);
+        shortcuts.put(exposure_time, () -> FocusTextField(false,"ExposureTimeField", pane));
+        // s - cooler setpoint
+        Pair<Boolean, KeyCode> cooler_setpoint = new Pair<>(false, KeyCode.S);
+        shortcuts.put(cooler_setpoint, () -> FocusTextField(false,"CoolerSetPointField", pane));
+        // d - exposure delay
+        Pair<Boolean, KeyCode> exposure_delay = new Pair<>(false, KeyCode.D);
+        shortcuts.put(exposure_delay, () -> FocusTextField(false,"ExposureDelayField", pane));
+        // r - sequence repeats
+        Pair<Boolean, KeyCode> sequence_repeats = new Pair<>(false, KeyCode.R);
+        shortcuts.put(sequence_repeats, () -> FocusTextField(false,"SequenceRepeatsField", pane));
+
+        // m - camera mode
+        Pair<Boolean, KeyCode> camera_mode = new Pair<>(false, KeyCode.M);
+        shortcuts.put(camera_mode, this::CameraMode);
+        // t - image type
+        Pair<Boolean, KeyCode> image_type = new Pair<>(false, KeyCode.T);
+        shortcuts.put(image_type, this::ImageType);
+
+        // E - turn on camera
+        Pair<Boolean, KeyCode> turn_on_camera = new Pair<>(true, KeyCode.E);
+        shortcuts.put(turn_on_camera, this::TurnCameraOn);
+        // X
+        // A
     }
 }
