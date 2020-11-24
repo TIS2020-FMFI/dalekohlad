@@ -20,18 +20,18 @@ public class Target implements GUIModule {
         info = new Label[10];
 
         for(int i = 0; i < 10; i++){
-            info[i] = (Label) GetById(pane, "target" + (i+1));
+            info[i] = (Label) GUIModule.GetById(pane, "target" + (i+1));
             info[i].setText("...");
         }
 
-        ((Button)GetById(pane,"LoadTarget")).setOnAction(actionEvent -> LoadTarget());
-        ((Button)GetById(pane,"GoToCancel")).setOnAction(actionEvent -> GoToCancel());
-        ((Button)GetById(pane,"PoleCrossing")).setOnAction(actionEvent -> PoleCrossing());
+        ((Button)GUIModule.GetById(pane,"LoadTarget")).setOnAction(actionEvent -> LoadTarget());
+        ((Button)GUIModule.GetById(pane,"GoToCancel")).setOnAction(actionEvent -> GoToCancel());
+        ((Button)GUIModule.GetById(pane,"PoleCrossing")).setOnAction(actionEvent -> PoleCrossing());
     }
 
     public void LoadTarget(){
-        TextField ra = ((TextField)GetById(pane,"LoadTargetRA"));
-        TextField de = ((TextField)GetById(pane,"LoadTargetDE"));
+        TextField ra = ((TextField)GUIModule.GetById(pane,"LoadTargetRA"));
+        TextField de = ((TextField)GUIModule.GetById(pane,"LoadTargetDE"));
 
         System.out.println("Load Target: " + ra.getText() + ", " + de.getText());
         // temporary for testing

@@ -29,7 +29,7 @@ public interface GUIModule {
     void init(Pane pane);
     default void registerShortcuts(Map<Pair<Boolean, KeyCode>, Runnable> shortcuts) {}  // Pair<isShiftDown(), KeyCode>
 
-    default Node GetById(Pane pane, String id){
+    static Node GetById(Pane pane, String id){
         for(Node i:pane.getChildren()){
             if(i.getId() != null && i.getId().equals(id)) return i;
         }

@@ -10,6 +10,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import fmfi.dalekohlad.Modules.GUIModule;
 import fmfi.dalekohlad.Mediator;
+import fmfi.dalekohlad.Operations;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
@@ -63,7 +64,7 @@ public class Communication {
                     modules.forEach(x -> x.update(json_object));
                 }
                 else {
-                    lgr.debug(data);
+                    Operations.add(data);
                 }
             }
         }

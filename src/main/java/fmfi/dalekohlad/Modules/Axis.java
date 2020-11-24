@@ -28,25 +28,25 @@ public class Axis implements GUIModule {
         info_declination = new Label[5];
 
         for(int i = 0; i < 5; i++){
-            info_polar[i] = (Label) GetById(pane, "polar" + (i+1));
-            info_declination[i] = (Label) GetById(pane, "declination" + (i+1));
+            info_polar[i] = (Label) GUIModule.GetById(pane, "polar" + (i+1));
+            info_declination[i] = (Label) GUIModule.GetById(pane, "declination" + (i+1));
             info_polar[i].setText("...");
             info_declination[i].setText("...");
         }
 
-       ((Button)GetById(pane,"EnableDisableMotors")).setOnAction(actionEvent -> EnableDisableMotors());
-       ((Button)GetById(pane,"StopRA")).setOnAction(actionEvent -> StopRA());
-       ((Button)GetById(pane,"StopDE")).setOnAction(actionEvent -> StopDE());
-       ((Button)GetById(pane,"StopRAandDE")).setOnAction(actionEvent -> StopRAandDE());
-       ((Button)GetById(pane,"Calibrate")).setOnAction(actionEvent -> Calibrate());
-       ((Button)GetById(pane,"Correction")).setOnAction(actionEvent -> Correction());
-       ((Button)GetById(pane,"SlewRA")).setOnAction(actionEvent -> SlewRA());
-       ((Button)GetById(pane,"SlewDE")).setOnAction(actionEvent -> SlewDE());
-       ((Button)GetById(pane,"GoTo")).setOnAction(actionEvent -> GoTo());
+       ((Button)GUIModule.GetById(pane,"EnableDisableMotors")).setOnAction(actionEvent -> EnableDisableMotors());
+       ((Button)GUIModule.GetById(pane,"StopRA")).setOnAction(actionEvent -> StopRA());
+       ((Button)GUIModule.GetById(pane,"StopDE")).setOnAction(actionEvent -> StopDE());
+       ((Button)GUIModule.GetById(pane,"StopRAandDE")).setOnAction(actionEvent -> StopRAandDE());
+       ((Button)GUIModule.GetById(pane,"Calibrate")).setOnAction(actionEvent -> Calibrate());
+       ((Button)GUIModule.GetById(pane,"Correction")).setOnAction(actionEvent -> Correction());
+       ((Button)GUIModule.GetById(pane,"SlewRA")).setOnAction(actionEvent -> SlewRA());
+       ((Button)GUIModule.GetById(pane,"SlewDE")).setOnAction(actionEvent -> SlewDE());
+       ((Button)GUIModule.GetById(pane,"GoTo")).setOnAction(actionEvent -> GoTo());
     }
 
     public void EnableDisableMotors() {
-        Button button = (Button) GetById(pane, "EnableDisableMotors");
+        Button button = (Button) GUIModule.GetById(pane, "EnableDisableMotors");
         if(button.getText().equals("Enable Motors")) button.setText("Disable Motors");
         else button.setText("Enable Motors");
         System.out.println("Hello from the modules side");
@@ -78,22 +78,22 @@ public class Axis implements GUIModule {
     }
 
     public void SlewRA() {
-        TextField slew_ra = ((TextField)GetById(pane,"SlewRAField"));
+        TextField slew_ra = ((TextField)GUIModule.GetById(pane,"SlewRAField"));
         System.out.println("Slew RA: " + slew_ra.getText());
         //Communication.send_data("Prikaz123 25");
         slew_ra.setText("");
     }
 
     public void SlewDE() {
-        TextField slew_de = ((TextField)GetById(pane,"SlewDEField"));
+        TextField slew_de = ((TextField)GUIModule.GetById(pane,"SlewDEField"));
         System.out.println("Slew DE: " + slew_de.getText());
         //Communication.send_data("Prikaz123 25");
         slew_de.setText("");
     }
 
     public void GoTo() {
-        TextField goto_ra = ((TextField)GetById(pane,"GoToRAField"));
-        TextField goto_de = ((TextField)GetById(pane,"GoToDEField"));
+        TextField goto_ra = ((TextField)GUIModule.GetById(pane,"GoToRAField"));
+        TextField goto_de = ((TextField)GUIModule.GetById(pane,"GoToDEField"));
         System.out.println("Go To: " + goto_ra.getText() + ", " + goto_de.getText());
         //Communication.send_data("Prikaz123 25");
         goto_ra.setText("");

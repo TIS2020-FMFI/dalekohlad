@@ -19,80 +19,80 @@ public class Camera implements GUIModule {
         info = new Label[17];
 
         for(int i = 0; i < 17; i++){
-            info[i] = (Label) GetById(pane, "camera" + (i+1));
+            info[i] = (Label) GUIModule.GetById(pane, "camera" + (i+1));
             info[i].setText("...");
         }
 
-        ((ChoiceBox)GetById(pane, "ImageType")).setOnAction(actionEvent -> ImageType());
-        ((ChoiceBox)GetById(pane, "CameraMode")).setOnAction(actionEvent -> CameraMode());
-        ((Button)GetById(pane,"ExposureTime")).setOnAction(actionEvent -> ExposureTime());
-        ((Button)GetById(pane,"CoolerSetpoint")).setOnAction(actionEvent -> CoolerSetPoint());
-        ((Button)GetById(pane,"ExposureDelay")).setOnAction(actionEvent -> ExposureDelay());
-        ((Button)GetById(pane,"SequenceRepeats")).setOnAction(actionEvent -> SequenceRepeats());
-        ((Button)GetById(pane,"Observer")).setOnAction(actionEvent -> Observer());
-        ((Button)GetById(pane,"Object")).setOnAction(actionEvent -> Object());
-        ((Button)GetById(pane,"Notes")).setOnAction(actionEvent -> Notes());
-        ((Button)GetById(pane,"TurnCameraOn")).setOnAction(actionEvent -> TurnCameraOn());
+        ((ChoiceBox)GUIModule.GetById(pane, "ImageType")).setOnAction(actionEvent -> ImageType());
+        ((ChoiceBox)GUIModule.GetById(pane, "CameraMode")).setOnAction(actionEvent -> CameraMode());
+        ((Button)GUIModule.GetById(pane,"ExposureTime")).setOnAction(actionEvent -> ExposureTime());
+        ((Button)GUIModule.GetById(pane,"CoolerSetpoint")).setOnAction(actionEvent -> CoolerSetPoint());
+        ((Button)GUIModule.GetById(pane,"ExposureDelay")).setOnAction(actionEvent -> ExposureDelay());
+        ((Button)GUIModule.GetById(pane,"SequenceRepeats")).setOnAction(actionEvent -> SequenceRepeats());
+        ((Button)GUIModule.GetById(pane,"Observer")).setOnAction(actionEvent -> Observer());
+        ((Button)GUIModule.GetById(pane,"Object")).setOnAction(actionEvent -> Object());
+        ((Button)GUIModule.GetById(pane,"Notes")).setOnAction(actionEvent -> Notes());
+        ((Button)GUIModule.GetById(pane,"TurnCameraOn")).setOnAction(actionEvent -> TurnCameraOn());
     }
 
     public void ImageType(){
-        ChoiceBox choiceBox = (ChoiceBox)GetById(pane, "ImageType");
+        ChoiceBox choiceBox = (ChoiceBox)GUIModule.GetById(pane, "ImageType");
         String data = (String) choiceBox.getValue();
         System.out.println("Set image type: " + data);
         //Communication.send_data("Prikaz123 25");
     }
 
     public void CameraMode(){
-        ChoiceBox choiceBox = (ChoiceBox)GetById(pane, "CameraMode");
+        ChoiceBox choiceBox = (ChoiceBox)GUIModule.GetById(pane, "CameraMode");
         String data = (String) choiceBox.getValue();
         System.out.println("Set camera mode: " + data);
         //Communication.send_data("Prikaz123 25");
     }
 
     public void ExposureTime(){
-        TextField exposure_time = ((TextField)GetById(pane,"ExposureTimeField"));
+        TextField exposure_time = ((TextField)GUIModule.GetById(pane,"ExposureTimeField"));
         System.out.println("Exposure time: " + exposure_time.getText());
         //Communication.send_data("Prikaz123 25");
         exposure_time.setText("");
     }
 
     public void CoolerSetPoint(){
-        TextField cooler_setpoint = ((TextField)GetById(pane,"CoolerSetPointField"));
+        TextField cooler_setpoint = ((TextField)GUIModule.GetById(pane,"CoolerSetPointField"));
         System.out.println("Cooler setpoint: " + cooler_setpoint.getText());
         //Communication.send_data("Prikaz123 25");
         cooler_setpoint.setText("");
     }
 
     public void ExposureDelay(){
-        TextField exposure_delay = ((TextField)GetById(pane,"ExposureDelayField"));
+        TextField exposure_delay = ((TextField)GUIModule.GetById(pane,"ExposureDelayField"));
         System.out.println("Exposure delay: " + exposure_delay.getText());
         //Communication.send_data("Prikaz123 25");
         exposure_delay.setText("");
     }
 
     public void SequenceRepeats(){
-        TextField sequence_repeats = ((TextField)GetById(pane,"SequenceRepeatsField"));
+        TextField sequence_repeats = ((TextField)GUIModule.GetById(pane,"SequenceRepeatsField"));
         System.out.println("Sequence repeats: " + sequence_repeats.getText());
         //Communication.send_data("Prikaz123 25");
         sequence_repeats.setText("");
     }
 
     public void Observer(){
-        TextArea observer = ((TextArea)GetById(pane,"ObserverField"));
+        TextArea observer = ((TextArea)GUIModule.GetById(pane,"ObserverField"));
         System.out.println("Observer: " + observer.getText());
         //Communication.send_data("Prikaz123 25");
         observer.setText("");
     }
 
     public void Object(){
-        TextArea object = ((TextArea)GetById(pane,"ObjectField"));
+        TextArea object = ((TextArea)GUIModule.GetById(pane,"ObjectField"));
         System.out.println("Object: " + object.getText());
         //Communication.send_data("Prikaz123 25");
         object.setText("");
     }
 
     public void Notes(){
-        TextArea notes = ((TextArea)GetById(pane,"NotesField"));
+        TextArea notes = ((TextArea)GUIModule.GetById(pane,"NotesField"));
         System.out.println("Notes: " + notes.getText());
         //Communication.send_data("Prikaz123 25");
         notes.setText("");

@@ -326,6 +326,8 @@
                <Label layoutY="-25.0" text="Operations:" textFill="WHITE">
                   <font><Font size="18.0" /></font>
                </Label>
+               <TextArea fx:id="text_area" layoutY="30" layoutX="30" prefWidth="160.0">
+               </TextArea>
             </children>
          </Pane>
 
