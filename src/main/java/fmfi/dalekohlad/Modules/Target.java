@@ -34,7 +34,8 @@ public class Target implements GUIModule {
         TextField de = ((TextField)GetById(pane,"LoadTargetDE"));
 
         System.out.println("Load Target: " + ra.getText() + ", " + de.getText());
-        //Communication.send_data("Prikaz123 25");
+        // temporary for testing
+        Communication.send_data(ra.getText());
         ra.setText("");
         de.setText("");
     }

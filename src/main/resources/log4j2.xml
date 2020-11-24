@@ -9,7 +9,7 @@
         <Logger name="fmfi.dalekohlad.Main" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="fmfi.dalekohlad.Config" level="debug" additivity="false">
+        <Logger name="fmfi.dalekohlad.Communication" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
         <Logger name="fmfi.dalekohlad.LockInstance" level="debug" additivity="false">
