@@ -15,6 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 import java.lang.reflect.Method;
 import java.util.Map;
+import fmfi.dalekohlad.InputHandling.InputConfirmation;
 
 
 public class Axis implements GUIModule {
@@ -45,53 +46,93 @@ public class Axis implements GUIModule {
        ((Button)GUIModule.GetById(pane,"GoTo")).setOnAction(actionEvent -> GoTo());
     }
 
+    public static boolean isInteger(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            int d = Integer.parseInt(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
+
     public void EnableDisableMotors() {
         Button button = (Button) GUIModule.GetById(pane, "EnableDisableMotors");
-        if(button.getText().equals("Enable Motors")) button.setText("Disable Motors");
-        else button.setText("Enable Motors");
-        System.out.println("Hello from the modules side");
+        if(button.getText().equals("Enable Motors")) {
+            button.setText("Disable Motors");
+            Communication.send_data(String.valueOf(91));
+        }
+        else {
+            button.setText("Enable Motors");
+            Communication.send_data(String.valueOf(93));
+        }
+        System.out.println("Enable/Disable motors");
     }
 
     public void StopRA(){
+        Communication.send_data(String.valueOf(87));
         System.out.println("Stop RA");
-        //Communication.send_data("StopRA");
     }
 
     public void StopDE(){
+        Communication.send_data(String.valueOf(119));
         System.out.println("Stop DE");
-        //Communication.send_data("StopDE");
     }
 
     public void StopRAandDE(){
+        Communication.send_data(String.valueOf(87));
+        Communication.send_data(String.valueOf(119));
         System.out.println("Stop RA and DE");
-        //Communication.send_data("StopRAandDE");
     }
 
     public void Calibrate(){
+        Communication.send_data(String.valueOf(99));
         System.out.println("Calibrate");
-        //Communication.send_data("Calibrate");
     }
 
     public void  Correction(){
+        // TO DOOOO ???
         System.out.println("Correction");
-        //Communication.send_data("Correction");
     }
 
     public void SlewRA() {
         TextField slew_ra = ((TextField)GUIModule.GetById(pane,"SlewRAField"));
+        String slew_ra_text = slew_ra.getText();
+
+        if(isInteger(slew_ra_text)) {
+            int input_value = Integer.parseInt(slew_ra_text);
+            if(input_value >= 0) Communication.send_data(77+";"+input_value);
+            else Communication.send_data(75+";"+(input_value*-1));
+        }
+        else {
+            InputConfirmation.warn("Data was entered incorrectly!");
+        }
+
         System.out.println("Slew RA: " + slew_ra.getText());
-        //Communication.send_data("Prikaz123 25");
         slew_ra.setText("");
     }
 
     public void SlewDE() {
         TextField slew_de = ((TextField)GUIModule.GetById(pane,"SlewDEField"));
+        String slew_de_text = slew_de.getText();
+
+        if(isInteger(slew_de_text)) {
+            int input_value = Integer.parseInt(slew_de_text);
+            if(input_value >= 0) Communication.send_data(72+";"+input_value);
+            else Communication.send_data(80+";"+(input_value*-1));
+        }
+        else {
+            InputConfirmation.warn("Data was entered incorrectly!");
+        }
+
         System.out.println("Slew DE: " + slew_de.getText());
-        //Communication.send_data("Prikaz123 25");
         slew_de.setText("");
     }
 
     public void GoTo() {
+        // NEBUDE
         TextField goto_ra = ((TextField)GUIModule.GetById(pane,"GoToRAField"));
         TextField goto_de = ((TextField)GUIModule.GetById(pane,"GoToDEField"));
         System.out.println("Go To: " + goto_ra.getText() + ", " + goto_de.getText());

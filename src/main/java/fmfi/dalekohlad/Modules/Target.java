@@ -29,25 +29,46 @@ public class Target implements GUIModule {
         ((Button)GUIModule.GetById(pane,"PoleCrossing")).setOnAction(actionEvent -> PoleCrossing());
     }
 
+    public static boolean isDouble(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
+
     public void LoadTarget(){
         TextField ra = ((TextField)GUIModule.GetById(pane,"LoadTargetRA"));
         TextField de = ((TextField)GUIModule.GetById(pane,"LoadTargetDE"));
 
+        String ra_text = ra.getText();
+        String de_text = de.getText();
+
+        if(isDouble(ra_text) && isDouble(de_text)) {
+            Communication.send_data(76+";"+ra_text+";"+de_text);
+        }
+        else {
+            InputConfirmation.warn("Data was entered incorrectly!");
+        }
+
+
         System.out.println("Load Target: " + ra.getText() + ", " + de.getText());
-        // temporary for testing
-        Communication.send_data(ra.getText());
         ra.setText("");
         de.setText("");
     }
 
     public void GoToCancel(){
+        Communication.send_data(String.valueOf(71));
         System.out.println("Go To / Cancel");
-        //Communication.send_data("GoToCancel");
     }
 
     public void PoleCrossing(){
+        Communication.send_data(String.valueOf(112));
         System.out.println("Pole Crossing");
-        //Communication.send_data("PoleCrossing");
     }
 
     public void update(JsonObject jo) {
