@@ -19,14 +19,14 @@ public class Filterwheel implements GUIModule {
 
     public void init(Pane p) {
         pane = p;
-        info = (Label) GetById(pane, "filter1");
+        info = (Label) GUIModule.GetById(pane, "filter1");
 
         info.setText("...");
-        ((ChoiceBox)GetById(pane, "Filterwheel")).setOnAction(actionEvent -> SetFilter());
+        ((ChoiceBox)GUIModule.GetById(pane, "Filterwheel")).setOnAction(actionEvent -> SetFilter());
     }
 
     public void SetFilter(){
-        ChoiceBox choiceBox = (ChoiceBox)GetById(pane, "Filterwheel");
+        ChoiceBox choiceBox = (ChoiceBox)GUIModule.GetById(pane, "Filterwheel");
         String data = (String) choiceBox.getValue();
         System.out.println("Set Filter: " + data);
         //Communication.send_data("Prikaz123 25");

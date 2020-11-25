@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import fmfi.dalekohlad.Communication.Communication;
+import fmfi.dalekohlad.InputHandling.InputConfirmation;
 import fmfi.dalekohlad.InputHandling.ShortcutHandler;
 import fmfi.dalekohlad.LockInstance.LockInstance;
 import fmfi.dalekohlad.Modules.GUIModule;
@@ -38,6 +39,7 @@ public class Mediator {
     public static final int EXIT_FXML_ERROR = 3;
     public static final int EXIT_CONNECTION_INITIALIZATION_ERROR = 4;
     public static final int EXIT_SOCKET_CLOSE_ERROR = 5;
+    public static final int EXIT_MISSING_OPERATIONS = 5;
     private static ArrayList<GUIModule> modules = new ArrayList<>();
     private static HashMap<Pair<Boolean, KeyCode>, Runnable> shortcuts = new HashMap<>();
 
@@ -116,7 +118,11 @@ public class Mediator {
         Pane pane = (Pane) node;
         String id = pane.getId();
         pane.setOnMouseClicked(actionEvent -> pane.requestFocus());
-        if (!id.startsWith(module_prefix)) {
+        if (id.equals("Operations")) {
+            Operations.init(pane);
+            return;
+        }
+        else if (!id.startsWith(module_prefix)) {
             return;
         }
         loadModuleByID(id, pane);
@@ -128,6 +134,10 @@ public class Mediator {
         Parent root = scene.getRoot();
         for (Node node: root.getChildrenUnmodifiable()) {
             extractModuleFromNode(node);
+        }
+        if (Operations.getPane() == null) {
+            lgr.fatal("Unable to find Operations pane");
+            System.exit(EXIT_MISSING_OPERATIONS);
         }
         registerShortcuts(stage, shortcuts);
     }

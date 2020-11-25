@@ -20,27 +20,27 @@ public class Dome implements GUIModule {
         info = new Label[5];
 
         for(int i = 0; i < 5; i++){
-            info[i] = (Label) GetById(pane, "dome" + (i+1));
+            info[i] = (Label) GUIModule.GetById(pane, "dome" + (i+1));
             info[i].setText("...");
         }
 
-        ((Button)GetById(pane,"Frequency")).setOnAction(actionEvent -> Frequency());
-        ((Button)GetById(pane,"CalibrateAzimuth")).setOnAction(actionEvent -> Frequency());
-        ((Button)GetById(pane,"DomeWest")).setOnAction(actionEvent -> DomeWest());
-        ((Button)GetById(pane,"DomeStop")).setOnAction(actionEvent -> DomeStop());
-        ((Button)GetById(pane,"DomeEast")).setOnAction(actionEvent -> DomeEast());
-        ((Button)GetById(pane,"Synchronize")).setOnAction(actionEvent -> Synchronize());
+        ((Button)GUIModule.GetById(pane,"Frequency")).setOnAction(actionEvent -> Frequency());
+        ((Button)GUIModule.GetById(pane,"CalibrateAzimuth")).setOnAction(actionEvent -> Frequency());
+        ((Button)GUIModule.GetById(pane,"DomeWest")).setOnAction(actionEvent -> DomeWest());
+        ((Button)GUIModule.GetById(pane,"DomeStop")).setOnAction(actionEvent -> DomeStop());
+        ((Button)GUIModule.GetById(pane,"DomeEast")).setOnAction(actionEvent -> DomeEast());
+        ((Button)GUIModule.GetById(pane,"Synchronize")).setOnAction(actionEvent -> Synchronize());
     }
 
     public void Frequency() {
-        TextField frequency = ((TextField)GetById(pane,"FrequencyField"));
+        TextField frequency = ((TextField)GUIModule.GetById(pane,"FrequencyField"));
         System.out.println("Frequency: " + frequency.getText());
         //Communication.send_data("Prikaz123 25");
         frequency.setText("");
     }
 
     public void CalibrateAzimuth() {
-        TextField calibrate_azimuth = ((TextField)GetById(pane,"CalibrateAzimuthField"));
+        TextField calibrate_azimuth = ((TextField)GUIModule.GetById(pane,"CalibrateAzimuthField"));
         System.out.println("Calibrate azimuth: " + calibrate_azimuth.getText());
         //Communication.send_data("Prikaz123 25");
         calibrate_azimuth.setText("");
