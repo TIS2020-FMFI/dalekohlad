@@ -72,7 +72,16 @@ public class Target implements GUIModule {
     }
 
     public void update(JsonObject jo) {
-
+        info[0].setText(jo.get("TAREncoder1").getAsString());
+        info[1].setText(jo.get("TARdEnc1").getAsString());
+        info[2].setText(jo.get("TARHAApparent").getAsString());
+        info[3].setText(jo.get("TARDEApparent").getAsString());
+        info[4].setText(jo.get("TARRAJ2000").getAsString());
+        info[5].setText(jo.get("TARDEJ2000").getAsString());
+        info[6].setText(jo.get("TARAzimuth").getAsString());
+        info[7].setText(jo.get("TARElevation").getAsString());
+        info[8].setText(jo.get("TARPoleCrossing").getAsString());
+        info[9].setText(jo.get("TARStatus").getAsString());
     }
 
     @Override

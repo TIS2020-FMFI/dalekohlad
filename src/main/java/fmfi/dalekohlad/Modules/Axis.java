@@ -142,7 +142,16 @@ public class Axis implements GUIModule {
     }
 
     public void update(JsonObject jo) {
-
+        info_polar[0].setText(jo.get("PAEncoder").getAsString());
+        info_polar[1].setText(jo.get("PAHAApparent").getAsString());
+        info_polar[2].setText(jo.get("PAHARAJ2000").getAsString());
+        info_polar[3].setText(jo.get("PAAzimuth").getAsString());
+        info_polar[4].setText(jo.get("PAStatus").getAsString());
+        info_declination[0].setText(jo.get("DEEncoder").getAsString());
+        info_declination[1].setText(jo.get("DEApparent").getAsString());
+        info_declination[2].setText(jo.get("DEDEJ2000").getAsString());
+        info_declination[3].setText(jo.get("DEElevation").getAsString());
+        info_declination[4].setText(jo.get("DEStatus").getAsString());
     }
 
     @Override
