@@ -9,7 +9,7 @@ public class InputConfirmation {
     public static Boolean confirm(String question, String... header) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation Dialog");
-        alert.setHeaderText(header.length == 0?"Potvrďte neobvyklý vstup":header[0]);
+        alert.setHeaderText(header.length == 0?"Confirm unusual input":header[0]);
         alert.setContentText(question);
 
         Optional<ButtonType> result = alert.showAndWait();
