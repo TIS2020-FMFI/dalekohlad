@@ -70,6 +70,7 @@ public class Others implements GUIModule {
         this.status = (Label) GUIModule.GetById(pane, "Connected");
         this.pathFITS = (Label) GUIModule.GetById(pane, "path_to_last_frame");
         this.swingNode = (SwingNode) GUIModule.GetById(pane, "node_FITS");
+        
         //((Button) GUIModule.GetById(pane,"Shortcuts")).setOnAction(event -> this.update(new JsonObject()));
     }
 }
