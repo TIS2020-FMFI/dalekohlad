@@ -1,6 +1,8 @@
 package fmfi.dalekohlad.Modules;
 
 import com.google.gson.JsonObject;
+import fmfi.dalekohlad.Communication.Communication;
+import fmfi.dalekohlad.InputHandling.InputConfirmation;
 import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;

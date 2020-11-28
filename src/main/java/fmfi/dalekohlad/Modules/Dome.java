@@ -2,6 +2,8 @@ package fmfi.dalekohlad.Modules;
 
 import com.google.gson.JsonObject;
 import fmfi.dalekohlad.Communication.Communication;
+import fmfi.dalekohlad.InputHandling.InputConfirmation;
+import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -25,7 +27,7 @@ public class Dome implements GUIModule {
         }
 
         ((Button)GUIModule.GetById(pane,"Frequency")).setOnAction(actionEvent -> Frequency());
-        ((Button)GUIModule.GetById(pane,"CalibrateAzimuth")).setOnAction(actionEvent -> Frequency());
+        ((Button)GUIModule.GetById(pane,"CalibrateAzimuth")).setOnAction(actionEvent -> CalibrateAzimuth());
         ((Button)GUIModule.GetById(pane,"DomeWest")).setOnAction(actionEvent -> DomeWest());
         ((Button)GUIModule.GetById(pane,"DomeStop")).setOnAction(actionEvent -> DomeStop());
         ((Button)GUIModule.GetById(pane,"DomeEast")).setOnAction(actionEvent -> DomeEast());
@@ -34,40 +36,57 @@ public class Dome implements GUIModule {
 
     public void Frequency() {
         TextField frequency = ((TextField)GUIModule.GetById(pane,"FrequencyField"));
+
+        try{
+            double value = Double.parseDouble(frequency.getText());
+            Communication.send_data(102 + ";" + value);
+        }
+        catch(Exception e){ InputConfirmation.warn(e.getMessage()); }
+
         System.out.println("Frequency: " + frequency.getText());
-        //Communication.send_data("Prikaz123 25");
         frequency.setText("");
     }
 
     public void CalibrateAzimuth() {
         TextField calibrate_azimuth = ((TextField)GUIModule.GetById(pane,"CalibrateAzimuthField"));
+
+        try{
+            // To Do - skontrolovať uhol
+            double value = Double.parseDouble(calibrate_azimuth.getText());
+            Communication.send_data(97 + ";" + value);
+        }
+        catch(Exception e){ InputConfirmation.warn(e.getMessage()); }
+
         System.out.println("Calibrate azimuth: " + calibrate_azimuth.getText());
-        //Communication.send_data("Prikaz123 25");
         calibrate_azimuth.setText("");
     }
 
     public void DomeWest(){
+        Communication.send_data(String.valueOf(297));
         System.out.println("Dome West");
-        //Communication.send_data("Dome West");
     }
 
     public void DomeStop(){
+        Communication.send_data(String.valueOf(295));
         System.out.println("Dome Stop");
-        //Communication.send_data("Dome Stop");
     }
 
     public void DomeEast(){
+        Communication.send_data(String.valueOf(306));
         System.out.println("Dome East");
-        //Communication.send_data("Dome East");
     }
 
     public void Synchronize(){
+        Communication.send_data(String.valueOf(121));
         System.out.println("Synchronize");
-        //Communication.send_data("Synchronize");
     }
 
-    public void update(JsonObject jo) {
-
+    public void update(JsonObject jo){
+        if(jo.get("DOMEEncoder") != null) Platform.runLater(() -> info[0].setText(jo.get("DOMEEncoder").getAsString()));
+        if(jo.get("DOMEAzimuth") != null) Platform.runLater(() -> info[1].setText(jo.get("DOMEAzimuth").getAsString()));
+        if(jo.get("DOMETargetAzimuth") != null) Platform.runLater(() -> info[2].setText(jo.get("DOMETargetAzimuth").getAsString()));
+        if(jo.get("DOMESynch") != null) Platform.runLater(() -> info[3].setText(jo.get("DOMESynch").getAsString()));
+        if(jo.get("DOMEStatus") != null) Platform.runLater(() -> info[4].setText(jo.get("DOMEStatus").getAsString()));
     }
 
     @Override
@@ -78,10 +97,10 @@ public class Dome implements GUIModule {
         // a - azimuth
         Pair<Boolean, KeyCode> calibrate_azimuth = new Pair<>(false, KeyCode.A);
         shortcuts.put(calibrate_azimuth, () -> FocusTextField(false,"CalibrateAzimuthField", pane));
-
         // y - synchronize
         Pair<Boolean, KeyCode> synchronize = new Pair<>(false, KeyCode.Y);
         shortcuts.put(synchronize, this::Synchronize);
+
         // Insert - dome east
         Pair<Boolean, KeyCode> dome_east = new Pair<>(false, KeyCode.INSERT);
         shortcuts.put(dome_east, this::DomeEast);

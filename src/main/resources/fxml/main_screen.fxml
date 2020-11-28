@@ -15,6 +15,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.ComboBox?>
 <Scene xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <AnchorPane prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: rgb(50,50,50);">
       <children>
@@ -293,7 +294,7 @@
             <children>
                <Label layoutY="-25.0" text="Filterwheel:" textFill="WHITE">
                   <font><Font size="18.0" /></font></Label>
-               <ChoiceBox fx:id="Filterwheel" layoutX="55.0" layoutY="50.0" prefWidth="130.0">
+               <ComboBox fx:id="Filterwheel" layoutX="55.0" layoutY="50.0" prefWidth="130.0">
                   <items>
                     <FXCollections fx:factory="observableArrayList">
                         <String fx:value="Filter B" />
@@ -303,7 +304,7 @@
                         <String fx:value="Filter C" />
                     </FXCollections>
                   </items>
-	            </ChoiceBox>
+	            </ComboBox>
                <Label layoutX="10.0" layoutY="5.0" text="filter:" textFill="WHITE" />
                <Label fx:id="filter1" layoutX="200.0" layoutY="5.0" text="Label" textFill="WHITE" />
             </children>
