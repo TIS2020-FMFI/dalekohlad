@@ -3,6 +3,7 @@ package fmfi.dalekohlad.Modules;
 import com.google.gson.JsonObject;
 import fmfi.dalekohlad.Communication.Communication;
 import fmfi.dalekohlad.Main;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -61,11 +62,11 @@ public class Axis implements GUIModule {
     public void EnableDisableMotors() {
         Button button = (Button) GUIModule.GetById(pane, "EnableDisableMotors");
         if(button.getText().equals("Enable Motors")) {
-            button.setText("Disable Motors");
+            Platform.runLater(() -> {button.setText("Disable Motors");});
             Communication.send_data(String.valueOf(91));
         }
         else {
-            button.setText("Enable Motors");
+            Platform.runLater(() -> {button.setText("Enable Motors");});
             Communication.send_data(String.valueOf(93));
         }
         System.out.println("Enable/Disable motors");
@@ -131,27 +132,57 @@ public class Axis implements GUIModule {
         slew_de.setText("");
     }
 
-    public void GoTo() {
-        // NEBUDE
-        TextField goto_ra = ((TextField)GUIModule.GetById(pane,"GoToRAField"));
-        TextField goto_de = ((TextField)GUIModule.GetById(pane,"GoToDEField"));
-        System.out.println("Go To: " + goto_ra.getText() + ", " + goto_de.getText());
-        //Communication.send_data("Prikaz123 25");
-        goto_ra.setText("");
-        goto_de.setText("");
-    }
-
     public void update(JsonObject jo) {
-        info_polar[0].setText(jo.get("PAEncoder").getAsString());
-        info_polar[1].setText(jo.get("PAHAApparent").getAsString());
-        info_polar[2].setText(jo.get("PAHARAJ2000").getAsString());
-        info_polar[3].setText(jo.get("PAAzimuth").getAsString());
-        info_polar[4].setText(jo.get("PAStatus").getAsString());
-        info_declination[0].setText(jo.get("DEEncoder").getAsString());
-        info_declination[1].setText(jo.get("DEApparent").getAsString());
-        info_declination[2].setText(jo.get("DEDEJ2000").getAsString());
-        info_declination[3].setText(jo.get("DEElevation").getAsString());
-        info_declination[4].setText(jo.get("DEStatus").getAsString());
+        if(jo.get("PAEncoder") != null) {
+            Platform.runLater(() -> {
+                info_polar[0].setText(jo.get("PAEncoder").getAsString());
+            });
+        }
+        if(jo.get("PAHAApparent") != null) {
+            Platform.runLater(() -> {
+                info_polar[1].setText(jo.get("PAHAApparent").getAsString());
+            });
+        }
+        if(jo.get("PAHARAJ2000") != null) {
+            Platform.runLater(() -> {
+                info_polar[2].setText(jo.get("PAHARAJ2000").getAsString());
+            });
+        }
+        if(jo.get("PAAzimuth") != null) {
+            Platform.runLater(() -> {
+                info_polar[3].setText(jo.get("PAAzimuth").getAsString());
+            });
+        }
+        if(jo.get("PAStatus") != null) {
+            Platform.runLater(() -> {
+                info_polar[4].setText(jo.get("PAStatus").getAsString());
+            });
+        }
+        if(jo.get("DEEncoder") != null) {
+            Platform.runLater(() -> {
+                info_declination[0].setText(jo.get("DEEncoder").getAsString());
+            });
+        }
+        if(jo.get("DEApparent") != null) {
+            Platform.runLater(() -> {
+                info_declination[1].setText(jo.get("DEApparent").getAsString());
+            });
+        }
+        if(jo.get("DEDEJ2000") != null) {
+            Platform.runLater(() -> {
+                info_declination[2].setText(jo.get("DEDEJ2000").getAsString());
+            });
+        }
+        if(jo.get("DEElevation") != null) {
+            Platform.runLater(() -> {
+                info_declination[3].setText(jo.get("DEElevation").getAsString());
+            });
+        }
+        if(jo.get("DEStatus") != null) {
+            Platform.runLater(() -> {
+                info_declination[4].setText(jo.get("DEStatus").getAsString());
+            });
+        }
     }
 
     @Override

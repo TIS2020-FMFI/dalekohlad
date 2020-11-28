@@ -2,6 +2,7 @@ package fmfi.dalekohlad.Modules;
 
 import com.google.gson.JsonObject;
 import fmfi.dalekohlad.Communication.Communication;
+import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -42,6 +43,7 @@ public class Target implements GUIModule {
     }
 
     public void LoadTarget(){
+        // nova kontrolna jednotka - vstupy formatu dd.ddd & hh:mm:ss.s ! goto function
         TextField ra = ((TextField)GUIModule.GetById(pane,"LoadTargetRA"));
         TextField de = ((TextField)GUIModule.GetById(pane,"LoadTargetDE"));
 
@@ -72,16 +74,16 @@ public class Target implements GUIModule {
     }
 
     public void update(JsonObject jo) {
-        info[0].setText(jo.get("TAREncoder1").getAsString());
-        info[1].setText(jo.get("TARdEnc1").getAsString());
-        info[2].setText(jo.get("TARHAApparent").getAsString());
-        info[3].setText(jo.get("TARDEApparent").getAsString());
-        info[4].setText(jo.get("TARRAJ2000").getAsString());
-        info[5].setText(jo.get("TARDEJ2000").getAsString());
-        info[6].setText(jo.get("TARAzimuth").getAsString());
-        info[7].setText(jo.get("TARElevation").getAsString());
-        info[8].setText(jo.get("TARPoleCrossing").getAsString());
-        info[9].setText(jo.get("TARStatus").getAsString());
+        if(jo.get("TAREncoder1") != null) Platform.runLater(() -> {info[0].setText(jo.get("TAREncoder1").getAsString());});
+        if(jo.get("TARdEnc1") != null) Platform.runLater(() -> {info[1].setText(jo.get("TARdEnc1").getAsString());});
+        if(jo.get("TARHAApparent") != null) Platform.runLater(() -> {info[2].setText(jo.get("TARHAApparent").getAsString());});
+        if(jo.get("TARDEApparent") != null) Platform.runLater(() -> {info[3].setText(jo.get("TARDEApparent").getAsString());});
+        if(jo.get("TARRAJ2000") != null) Platform.runLater(() -> {info[4].setText(jo.get("TARRAJ2000").getAsString());});
+        if(jo.get("TARDEJ2000") != null) Platform.runLater(() -> {info[5].setText(jo.get("TARDEJ2000").getAsString());});
+        if(jo.get("TARAzimuth") != null) Platform.runLater(() -> {info[6].setText(jo.get("TARAzimuth").getAsString());});
+        if(jo.get("TARElevation") != null) Platform.runLater(() -> {info[7].setText(jo.get("TARElevation").getAsString());});
+        if(jo.get("TARPoleCrossing") != null) Platform.runLater(() -> {info[8].setText(jo.get("TARPoleCrossing").getAsString());});
+        if(jo.get("TARStatus") != null) Platform.runLater(() -> {info[9].setText(jo.get("TARStatus").getAsString());});
     }
 
     @Override
