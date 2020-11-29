@@ -40,8 +40,10 @@ public interface GUIModule {
 
     default void FocusTextField(boolean textArea, String id, Pane pane){
         Node field;
-        if(textArea) field = ((TextArea)GetById(pane,id));
-        else field = ((TextField)GetById(pane,id));
+        field = GetById(pane,id);
         field.requestFocus();
+
+        if(textArea)((TextArea) field).setText("");
+        else((TextField) field).setText("");
     }
 }

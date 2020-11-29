@@ -11,38 +11,48 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Camera implements GUIModule {
     private Pane pane;
-    private Label[] info;
+    private HashMap<String, Label> info;
 
     public void init(Pane p) {
         pane = p;
-        info = new Label[17];
+        info = new HashMap<>();
 
-        for(int i = 0; i < 17; i++){
-            info[i] = (Label) GUIModule.GetById(pane, "camera" + (i+1));
-            info[i].setText("...");
+        for(String s:new String[]{
+                "CAMType","CAMExposure","CAMMode","CAMRBIFlushCount","CAMRBIFloodTime","CAMTDIMode","CAMBGFlush",
+                "CAMBinning","CAMSubframe1","CAMSubframe2","CAMObserver","CAMObject","CAMNotes","CAMSetpoint",
+                "CAMCooler1","CAMCooler2","CAMDelay","CAMRemaining1","CAMRemaining2","CAMStatus"}){
+            info.put(s, (Label) GUIModule.GetById(pane, s));
+            info.get(s).setText("...");
         }
 
-        ((ChoiceBox)GUIModule.GetById(pane, "ImageType")).setOnAction(actionEvent -> ImageType());
-        ((ChoiceBox)GUIModule.GetById(pane, "CameraMode")).setOnAction(actionEvent -> CameraMode());
-        ((Button)GUIModule.GetById(pane,"ExposureTime")).setOnAction(actionEvent -> ExposureTime());
-        ((Button)GUIModule.GetById(pane,"CoolerSetpoint")).setOnAction(actionEvent -> CoolerSetPoint());
-        ((Button)GUIModule.GetById(pane,"ExposureDelay")).setOnAction(actionEvent -> ExposureDelay());
-        ((Button)GUIModule.GetById(pane,"SequenceRepeats")).setOnAction(actionEvent -> SequenceRepeats());
-        ((Button)GUIModule.GetById(pane,"Observer")).setOnAction(actionEvent -> Observer());
-        ((Button)GUIModule.GetById(pane,"Object")).setOnAction(actionEvent -> Object());
-        ((Button)GUIModule.GetById(pane,"Notes")).setOnAction(actionEvent -> Notes());
-        ((Button)GUIModule.GetById(pane,"TurnCameraOn")).setOnAction(actionEvent -> TurnCameraOn());
+        ((ChoiceBox) Objects.requireNonNull(GUIModule.GetById(pane, "ImageTypeChoiceBox"))).setOnAction(actionEvent -> ImageType());
+        ((ChoiceBox) Objects.requireNonNull(GUIModule.GetById(pane, "CameraModeChoiceBox"))).setOnAction(actionEvent -> CameraMode());
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "ExposureTimeButton"))).setOnAction(actionEvent -> ExposureTime());
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "CoolerSetpointButton"))).setOnAction(actionEvent -> CoolerSetPoint());
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "ExposureDelayButton"))).setOnAction(actionEvent -> ExposureDelay());
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "SequenceRepeatsButton"))).setOnAction(actionEvent -> SequenceRepeats());
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "ObserverButton"))).setOnAction(actionEvent -> Observer());
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "ObjectButton"))).setOnAction(actionEvent -> Object());
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "NotesButton"))).setOnAction(actionEvent -> Notes());
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "TurnCameraOn"))).setOnAction(actionEvent -> TurnCameraOn());
+
+        ((TextField) Objects.requireNonNull(GUIModule.GetById(pane, "ExposureTimeField"))).setOnAction(actionEvent -> ExposureTime());
+        ((TextField) Objects.requireNonNull(GUIModule.GetById(pane, "CoolerSetPointField"))).setOnAction(actionEvent -> CoolerSetPoint());
+        ((TextField) Objects.requireNonNull(GUIModule.GetById(pane, "ExposureDelayField"))).setOnAction(actionEvent -> ExposureDelay());
+        ((TextField) Objects.requireNonNull(GUIModule.GetById(pane, "SequenceRepeatsField"))).setOnAction(actionEvent -> SequenceRepeats());
     }
 
     public void ImageType(){
-        ChoiceBox choiceBox = (ChoiceBox)GUIModule.GetById(pane, "ImageType");
+        ChoiceBox choiceBox = (ChoiceBox)GUIModule.GetById(pane, "ImageTypeChoiceBox");
         String data = (String) choiceBox.getValue();
 
-        int actual = choiceBox.getItems().indexOf(info[0].getText());
+        int actual = choiceBox.getItems().indexOf(info.get("ImageType").getText());
         int wanted = choiceBox.getItems().indexOf(choiceBox.getValue());
         int num = wanted - actual;
         if(num < 0) num += 3;
@@ -53,10 +63,10 @@ public class Camera implements GUIModule {
     }
 
     public void CameraMode(){
-        ChoiceBox choiceBox = (ChoiceBox)GUIModule.GetById(pane, "CameraMode");
+        ChoiceBox choiceBox = (ChoiceBox)GUIModule.GetById(pane, "CameraModeChoiceBox");
         String data = (String) choiceBox.getValue();
 
-        int actual = choiceBox.getItems().indexOf(info[2].getText());
+        int actual = choiceBox.getItems().indexOf(info.get("CameraMode").getText());
         int wanted = choiceBox.getItems().indexOf(choiceBox.getValue());
         int num = wanted - actual;
         if(num < 0) num += 3;
@@ -141,23 +151,9 @@ public class Camera implements GUIModule {
     }
 
     public void update(JsonObject jo){
-        if(jo.get("CAMType") != null) Platform.runLater(() -> info[0].setText(jo.get("CAMType").getAsString()));
-        if(jo.get("CAMExposure") != null) Platform.runLater(() -> info[1].setText(jo.get("CAMExposure").getAsString()));
-        if(jo.get("CAMMode") != null) Platform.runLater(() -> info[2].setText(jo.get("CAMMode").getAsString()));
-        if(jo.get("CAMRBIFlushCount") != null) Platform.runLater(() -> info[3].setText(jo.get("CAMRBIFlushCount").getAsString()));
-        if(jo.get("CAMRBIFloodTime") != null) Platform.runLater(() -> info[4].setText(jo.get("CAMRBIFloodTime").getAsString()));
-        if(jo.get("CAMTDIMode") != null) Platform.runLater(() -> info[5].setText(jo.get("CAMTDIMode").getAsString()));
-        if(jo.get("CAMBGFlush") != null) Platform.runLater(() -> info[6].setText(jo.get("CAMBGFlush").getAsString()));
-        if(jo.get("CAMBinning") != null) Platform.runLater(() -> info[7].setText(jo.get("CAMBinning").getAsString()));
-        if(jo.get("CAMSubframe1") != null) Platform.runLater(() -> info[8].setText(jo.get("CAMSubframe1").getAsString()));
-        if(jo.get("CAMObserver") != null) Platform.runLater(() -> info[9].setText(jo.get("CAMObserver").getAsString()));
-        if(jo.get("CAMObject") != null) Platform.runLater(() -> info[10].setText(jo.get("CAMObject").getAsString()));
-        if(jo.get("CAMNotes") != null) Platform.runLater(() -> info[11].setText(jo.get("CAMNotes").getAsString()));
-        if(jo.get("CAMSetpoint") != null) Platform.runLater(() -> info[12].setText(jo.get("CAMSetpoint").getAsString()));
-        if(jo.get("CAMCooler1") != null) Platform.runLater(() -> info[13].setText(jo.get("CAMCooler1").getAsString()));
-        if(jo.get("CAMDelay") != null) Platform.runLater(() -> info[14].setText(jo.get("CAMDelay").getAsString()));
-        if(jo.get("CAMRemaining1") != null) Platform.runLater(() -> info[15].setText(jo.get("CAMRemaining1").getAsString()));
-        if(jo.get("CAMStatus") != null) Platform.runLater(() -> info[16].setText(jo.get("CAMStatus").getAsString()));
+        for(String s:info.keySet()){
+            if(jo.get(s) != null) Platform.runLater(() -> info.get(s).setText(jo.get(s).getAsString()));
+        }
     }
 
     @Override

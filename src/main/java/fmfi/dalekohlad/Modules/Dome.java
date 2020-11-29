@@ -10,28 +10,32 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
-
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Dome implements GUIModule {
     private Pane pane;
-    private Label[] info;
+    private HashMap<String, Label> info;
 
     public void init(Pane p) {
         pane = p;
-        info = new Label[5];
+        info = new HashMap<>();
 
-        for(int i = 0; i < 5; i++){
-            info[i] = (Label) GUIModule.GetById(pane, "dome" + (i+1));
-            info[i].setText("...");
+        for(String s: new String[]{"DOMEEncoder", "DOMEAzimuth", "DOMETargetAzimuth", "DOMESynch", "DOMEStatus"}){
+            info.put(s, (Label) GUIModule.GetById(pane, s));
+            info.get(s).setText("...");
         }
 
-        ((Button)GUIModule.GetById(pane,"Frequency")).setOnAction(actionEvent -> Frequency());
-        ((Button)GUIModule.GetById(pane,"CalibrateAzimuth")).setOnAction(actionEvent -> CalibrateAzimuth());
-        ((Button)GUIModule.GetById(pane,"DomeWest")).setOnAction(actionEvent -> DomeWest());
-        ((Button)GUIModule.GetById(pane,"DomeStop")).setOnAction(actionEvent -> DomeStop());
-        ((Button)GUIModule.GetById(pane,"DomeEast")).setOnAction(actionEvent -> DomeEast());
-        ((Button)GUIModule.GetById(pane,"Synchronize")).setOnAction(actionEvent -> Synchronize());
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "FrequencyButton"))).setOnAction(actionEvent -> Frequency());
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "CalibrateAzimuthButton"))).setOnAction(actionEvent -> CalibrateAzimuth());
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "DomeWestButton"))).setOnAction(actionEvent -> DomeWest());
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "DomeStopButton"))).setOnAction(actionEvent -> DomeStop());
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "DomeEastButton"))).setOnAction(actionEvent -> DomeEast());
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "SynchronizeButton"))).setOnAction(actionEvent -> Synchronize());
+
+        ((TextField) Objects.requireNonNull(GUIModule.GetById(pane, "FrequencyField"))).setOnAction(actionEvent -> Frequency());
+        ((TextField) Objects.requireNonNull(GUIModule.GetById(pane, "CalibrateAzimuthField"))).setOnAction(actionEvent -> CalibrateAzimuth());
     }
 
     public void Frequency() {
@@ -82,11 +86,9 @@ public class Dome implements GUIModule {
     }
 
     public void update(JsonObject jo){
-        if(jo.get("DOMEEncoder") != null) Platform.runLater(() -> info[0].setText(jo.get("DOMEEncoder").getAsString()));
-        if(jo.get("DOMEAzimuth") != null) Platform.runLater(() -> info[1].setText(jo.get("DOMEAzimuth").getAsString()));
-        if(jo.get("DOMETargetAzimuth") != null) Platform.runLater(() -> info[2].setText(jo.get("DOMETargetAzimuth").getAsString()));
-        if(jo.get("DOMESynch") != null) Platform.runLater(() -> info[3].setText(jo.get("DOMESynch").getAsString()));
-        if(jo.get("DOMEStatus") != null) Platform.runLater(() -> info[4].setText(jo.get("DOMEStatus").getAsString()));
+        for(String s:info.keySet()){
+            if(jo.get(s) != null) Platform.runLater(() -> info.get(s).setText(jo.get(s).getAsString()));
+        }
     }
 
     @Override

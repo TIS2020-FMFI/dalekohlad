@@ -3,20 +3,13 @@ package fmfi.dalekohlad.Modules;
 import com.google.gson.JsonObject;
 import fmfi.dalekohlad.Communication.Communication;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Callback;
 import javafx.util.Pair;
-
 import java.util.Map;
 
 public class Filterwheel implements GUIModule {
@@ -25,11 +18,12 @@ public class Filterwheel implements GUIModule {
 
     public void init(Pane p) {
         pane = p;
-        info = (Label) GUIModule.GetById(pane, "filter1");
-
+        info = (Label) GUIModule.GetById(pane, "FWFilter");
         info.setText("...");
-        ((ComboBox)GUIModule.GetById(pane, "Filterwheel")).setOnAction(actionEvent -> SetFilter());
-        SetColors(((ComboBox)GUIModule.GetById(pane, "Filterwheel")));
+
+        ComboBox comboBox = ((ComboBox)GUIModule.GetById(pane, "FWFilterComboBox"));
+        comboBox.setOnAction(actionEvent -> SetFilter());
+        SetColors(comboBox);
     }
 
     public void SetColors(ComboBox comboBox){
@@ -62,7 +56,7 @@ public class Filterwheel implements GUIModule {
     }
 
     public void SetFilter(){
-        ComboBox choiceBox = (ComboBox) GUIModule.GetById(pane, "Filterwheel");
+        ComboBox choiceBox = (ComboBox) GUIModule.GetById(pane, "FWFilterComboBox");
         String data = (String)choiceBox.getValue();
 
         SetFilter(data.split(" ")[1]);
