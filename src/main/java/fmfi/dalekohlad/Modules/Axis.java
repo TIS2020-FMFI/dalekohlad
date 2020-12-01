@@ -44,7 +44,7 @@ public class Axis implements GUIModule {
        ((Button)GUIModule.GetById(pane,"Correction")).setOnAction(actionEvent -> Correction());
        ((Button)GUIModule.GetById(pane,"SlewRA")).setOnAction(actionEvent -> SlewRA());
        ((Button)GUIModule.GetById(pane,"SlewDE")).setOnAction(actionEvent -> SlewDE());
-       ((Button)GUIModule.GetById(pane,"GoTo")).setOnAction(actionEvent -> GoTo());
+       //((Button)GUIModule.GetById(pane,"GoTo")).setOnAction(actionEvent -> GoTo());
     }
 
     public static boolean isInteger(String strNum) {
@@ -222,7 +222,5 @@ public class Axis implements GUIModule {
         // T - correction
         Pair<Boolean, KeyCode> correction = new Pair<>(true, KeyCode.T);
         shortcuts.put(correction, this::Correction);
-
-        // goto
     }
 }

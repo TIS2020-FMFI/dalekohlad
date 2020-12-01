@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
-
+import fmfi.dalekohlad.InputHandling.InputConfirmation;
 import java.util.Map;
 
 public class Target implements GUIModule {
@@ -30,13 +30,11 @@ public class Target implements GUIModule {
         ((Button)GUIModule.GetById(pane,"PoleCrossing")).setOnAction(actionEvent -> PoleCrossing());
     }
 
-    public static boolean isDouble(String strNum) {
-        if (strNum == null) {
+    public static boolean goodFormat(String input) {
+        if (input == null) {
             return false;
         }
-        try {
-            double d = Double.parseDouble(strNum);
-        } catch (NumberFormatException nfe) {
+        if(!input.matches("[0-9][0-9][.][0-9][0-9][0-9]") && !input.matches("[0-9][0-9][:][0-9][0-9][:][0-9][0-9][.][0-9]")) {
             return false;
         }
         return true;
@@ -50,8 +48,10 @@ public class Target implements GUIModule {
         String ra_text = ra.getText();
         String de_text = de.getText();
 
-        if(isDouble(ra_text) && isDouble(de_text)) {
-            Communication.send_data(76+";"+ra_text+";"+de_text);
+        if(goodFormat(ra_text) && goodFormat(de_text)) {
+            // OLD: Communication.send_data(76+";"+ra_text+";"+de_text);
+            // NEW: Not implemented in emulator
+            InputConfirmation.warn("Currently not implemented!");
         }
         else {
             InputConfirmation.warn("Data was entered incorrectly!");
