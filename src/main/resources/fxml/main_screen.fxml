@@ -73,14 +73,7 @@
                   <Label layoutX="260.0" layoutY="85.0" text="Status:" textFill="WHITE" />
                   <Label layoutX="165.0" layoutY="125.0" text="Slew RA:" textFill="WHITE" />
                   <Label layoutX="340.0" layoutY="125.0" text="Slew DE:" textFill="WHITE" />
-                  <TextField fx:id="GoToRAField" layoutX="220.0" layoutY="155.0" prefWidth="70.0" />
-                  <TextField fx:id="GoToDEField" layoutX="220.0" layoutY="190.0" prefWidth="70.0" />
-                  <Button fx:id="GoTo" layoutX="290.0" layoutY="155.0" mnemonicParsing="false" prefHeight="60.0" style="-fx-background-color: rgb(250,250,100);" text="→">
-                  <cursor>
-                     <Cursor fx:constant="HAND" />
-                  </cursor></Button>
-                  <Label layoutX="165.0" layoutY="160.0" text="GoTo RA:" textFill="WHITE" />
-                  <Label layoutX="165.0" layoutY="195.0" text="GoTo DE:" textFill="WHITE" />
+
                <Label fx:id="polar1" layoutX="200.0" layoutY="5.0" text="Label" textFill="WHITE" />
                <Label fx:id="polar2" layoutX="200.0" layoutY="25.0" text="Label" textFill="WHITE" />
                <Label fx:id="polar3" layoutX="200.0" layoutY="45.0" text="Label" textFill="WHITE" />
