@@ -3,13 +3,13 @@ package fmfi.dalekohlad.Communication;
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import fmfi.dalekohlad.Modules.GUIModule;
-import fmfi.dalekohlad.Mediator;
 import fmfi.dalekohlad.Operations;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
@@ -19,6 +19,7 @@ public class Communication {
     private static Socket sock = null;
     private static OutputStreamWriter client_out;
     private static BufferedReader client_in;
+    private static InetSocketAddress host;
 
     private static ArrayList<GUIModule> modules = null;
     private static boolean run = true;
@@ -34,7 +35,16 @@ public class Communication {
         return sb.toString();
     }
 
-    private static void periodic_update() {
+    private static void sleep(int milliseconds) {
+        try {
+            TimeUnit.MILLISECONDS.sleep(milliseconds);
+        }
+        catch (Exception e) {
+            lgr.debug("Failed to sleep", e);
+        }
+    }
+
+    private static void periodicUpdate() {
         // caka na data zo serveru a posuva ich vsetkym modulom
         String data = null;
         lgr.debug("Entering read loop");
@@ -45,14 +55,12 @@ public class Communication {
                     data = readString();
                     read = true;
                 }
+                catch (SocketTimeoutException e) {
+                    reconnect();
+                }
                 catch (Exception e) {
                     lgr.error("Failed to read data, repeating...");
-                    try {
-                        TimeUnit.SECONDS.sleep(1);
-                    }
-                    catch (Exception f) {
-                        lgr.debug("Failed to sleep", e);
-                    }
+                    sleep(1000);
                 }
             }
             if (read) {
@@ -60,6 +68,7 @@ public class Communication {
                     continue;
                 }
                 if (data.startsWith("{")) {
+                    lgr.debug(JsonParser.parseString(data).isJsonObject());
                     JsonObject json_object = JsonParser.parseString(data).getAsJsonObject();
                     modules.forEach(x -> x.update(json_object));
                 }
@@ -70,26 +79,42 @@ public class Communication {
         }
     }
 
+    private static void reconnect() {
+        lgr.debug("Trying to reconnect");
+        closeSock();
+        connect();
+    }
+
+    private static void connect() {
+        boolean success = false;
+        while (!success) {
+            lgr.debug(String.format("Connecting to %s:%d", host.getAddress(), host.getPort()));
+            try {
+                sock = new Socket();
+                sock.connect(host, 2000);
+                client_out = new OutputStreamWriter(sock.getOutputStream());
+                client_in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+                success = true;
+            } catch (Exception e) {
+                lgr.error(String.format("Connection attempt %s:%d failed, repeating",
+                        host.getAddress(), host.getPort()), e);
+                sleep(1000);
+            }
+        }
+    }
+
     public static Thread init(InetSocketAddress host, ArrayList<GUIModule> modules) {
         Communication.modules = modules;
-        lgr.debug(String.format("Connecting to %s:%d", host.getAddress(), host.getPort()));
-        try {
-            sock = new Socket(host.getAddress(), host.getPort());
-            client_out = new OutputStreamWriter(sock.getOutputStream());
-            client_in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-        }
-        catch (Exception e) {
-            lgr.fatal(String.format("Failed to initialize connection to %s:%d", host.getAddress(), host.getPort()), e);
-            System.exit(Mediator.EXIT_CONNECTION_INITIALIZATION_ERROR);
-        }
+        Communication.host = host;
+        connect();
         Runtime.getRuntime().addShutdownHook(new Thread(Communication::close));
-        Runnable runnable = Communication::periodic_update;
+        Runnable runnable = Communication::periodicUpdate;
         Thread periodic_thread = new Thread(runnable);
         periodic_thread.start();
         return periodic_thread;
     }
 
-    public static void send_data(String data) {
+    public static void sendData(String data) {
         // kazdy modul odosiela informacie ked bude potrebovat
         boolean sent = false;
         while (!sent) {
@@ -99,26 +124,24 @@ public class Communication {
                 sent = true;
             } catch (Exception e) {
                 lgr.error("Failed to send data, repeating...");
-                try {
-                    TimeUnit.SECONDS.sleep(1);
-                }
-                catch (Exception f) {
-                    lgr.debug("Failed to sleep", e);
-                }
+                sleep(2000);
             }
+        }
+    }
+
+    private static void closeSock() {
+        try {
+            sock.close();
+        }
+        catch (Exception e) {
+            lgr.error("Failed to close socket", e);
         }
     }
 
     public static void close() {
         if (run) {
             run = false;
-            try {
-                sock.close();
-            }
-            catch (Exception e) {
-                lgr.fatal("Failed to close socket, forcing exit", e);
-                System.exit(Mediator.EXIT_SOCKET_CLOSE_ERROR);
-            }
+            closeSock();
         }
     }
 
