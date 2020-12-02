@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import fmfi.dalekohlad.Communication.Communication;
-import fmfi.dalekohlad.InputHandling.InputConfirmation;
 import fmfi.dalekohlad.InputHandling.ShortcutHandler;
 import fmfi.dalekohlad.LockInstance.LockInstance;
 import fmfi.dalekohlad.Modules.GUIModule;

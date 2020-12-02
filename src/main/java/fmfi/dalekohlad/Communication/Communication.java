@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
 import fmfi.dalekohlad.Modules.GUIModule;
 import fmfi.dalekohlad.Operations;
 import org.apache.logging.log4j.Logger;
@@ -29,6 +30,10 @@ public class Communication {
         StringBuilder sb = new StringBuilder();
         char[] tmp = new char[DEFAULT_BUF_LEN];
         int sz = client_in.read(tmp, 0, DEFAULT_BUF_LEN);
+        if (sz == -1) {
+            // -1 is returned when the other side exits unexpectedly, we'll treat this case in the same way as a timeout
+            throw new SocketTimeoutException();
+        }
         for (int i = 0; i < sz; i++) {
             sb.append(tmp[i]);
         }
@@ -68,8 +73,9 @@ public class Communication {
                     continue;
                 }
                 if (data.startsWith("{")) {
-                    lgr.debug(JsonParser.parseString(data).isJsonObject());
-                    JsonObject json_object = JsonParser.parseString(data).getAsJsonObject();
+                    JsonReader reader = new JsonReader(new StringReader(data.trim()));
+                    reader.setLenient(true);
+                    JsonObject json_object = JsonParser.parseReader(reader).getAsJsonObject();
                     modules.forEach(x -> x.update(json_object));
                 }
                 else {
@@ -98,7 +104,7 @@ public class Communication {
             } catch (Exception e) {
                 lgr.error(String.format("Connection attempt %s:%d failed, repeating",
                         host.getAddress(), host.getPort()), e);
-                sleep(1000);
+                sleep(2000);
             }
         }
     }
@@ -124,7 +130,7 @@ public class Communication {
                 sent = true;
             } catch (Exception e) {
                 lgr.error("Failed to send data, repeating...");
-                sleep(2000);
+                sleep(2500);
             }
         }
     }
