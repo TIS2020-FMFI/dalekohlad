@@ -2,19 +2,14 @@ package fmfi.dalekohlad.Modules;
 
 import com.google.gson.JsonObject;
 import fmfi.dalekohlad.Communication.Communication;
-import fmfi.dalekohlad.Main;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
-import java.lang.reflect.Method;
+
 import java.util.Map;
 import fmfi.dalekohlad.InputHandling.InputConfirmation;
 
@@ -63,33 +58,33 @@ public class Axis implements GUIModule {
         Button button = (Button) GUIModule.GetById(pane, "EnableDisableMotors");
         if(button.getText().equals("Enable Motors")) {
             Platform.runLater(() -> {button.setText("Disable Motors");});
-            Communication.send_data(String.valueOf(91));
+            Communication.sendData(String.valueOf(91));
         }
         else {
             Platform.runLater(() -> {button.setText("Enable Motors");});
-            Communication.send_data(String.valueOf(93));
+            Communication.sendData(String.valueOf(93));
         }
         System.out.println("Enable/Disable motors");
     }
 
     public void StopRA(){
-        Communication.send_data(String.valueOf(87));
+        Communication.sendData(String.valueOf(87));
         System.out.println("Stop RA");
     }
 
     public void StopDE(){
-        Communication.send_data(String.valueOf(119));
+        Communication.sendData(String.valueOf(119));
         System.out.println("Stop DE");
     }
 
     public void StopRAandDE(){
-        Communication.send_data(String.valueOf(87));
-        Communication.send_data(String.valueOf(119));
+        Communication.sendData(String.valueOf(87));
+        Communication.sendData(String.valueOf(119));
         System.out.println("Stop RA and DE");
     }
 
     public void Calibrate(){
-        Communication.send_data(String.valueOf(99));
+        Communication.sendData(String.valueOf(99));
         System.out.println("Calibrate");
     }
 
@@ -104,8 +99,8 @@ public class Axis implements GUIModule {
 
         if(isInteger(slew_ra_text)) {
             int input_value = Integer.parseInt(slew_ra_text);
-            if(input_value >= 0) Communication.send_data(77+";"+input_value);
-            else Communication.send_data(75+";"+(input_value*-1));
+            if(input_value >= 0) Communication.sendData(77+";"+input_value);
+            else Communication.sendData(75+";"+(input_value*-1));
         }
         else {
             InputConfirmation.warn("Data was entered incorrectly!");
@@ -121,8 +116,8 @@ public class Axis implements GUIModule {
 
         if(isInteger(slew_de_text)) {
             int input_value = Integer.parseInt(slew_de_text);
-            if(input_value >= 0) Communication.send_data(72+";"+input_value);
-            else Communication.send_data(80+";"+(input_value*-1));
+            if(input_value >= 0) Communication.sendData(72+";"+input_value);
+            else Communication.sendData(80+";"+(input_value*-1));
         }
         else {
             InputConfirmation.warn("Data was entered incorrectly!");

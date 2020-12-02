@@ -64,12 +64,12 @@ public class Target implements GUIModule {
     }
 
     public void GoToCancel(){
-        Communication.send_data(String.valueOf(71));
+        Communication.sendData(String.valueOf(71));
         System.out.println("Go To / Cancel");
     }
 
     public void PoleCrossing(){
-        Communication.send_data(String.valueOf(112));
+        Communication.sendData(String.valueOf(112));
         System.out.println("Pole Crossing");
     }
 
