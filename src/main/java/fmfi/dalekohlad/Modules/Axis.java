@@ -2,25 +2,32 @@ package fmfi.dalekohlad.Modules;
 
 import com.google.gson.JsonObject;
 import fmfi.dalekohlad.Communication.Communication;
-import fmfi.dalekohlad.Main;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
+import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
-import java.lang.reflect.Method;
+
 import java.util.Map;
+import fmfi.dalekohlad.InputHandling.InputConfirmation;
 
 
 public class Axis implements GUIModule {
     private Pane pane;
     private Label[] info_polar;
     private Label[] info_declination;
+
+    private final int ENABLE_MOTORS_CODE = 91;
+    private final int DISABLE_MOTORS_CODE = 93;
+    private final int STOP_RA_CODE = 87;
+    private final int STOP_DE_CODE = 119;
+    private final int CALIBRATION_CODE = 99;
+    private final int SLEW_RA_POSITIVE_CODE = 77;
+    private final int SLEW_DE_POSITIVE_CODE = 72;
+    private final int SLEW_RA_NEGATIVE_CODE = 75;
+    private final int SLEW_DE_NEGATIVE_CODE = 80;
 
     public void init(Pane p) {
         pane = p;
@@ -42,66 +49,106 @@ public class Axis implements GUIModule {
        ((Button)GUIModule.GetById(pane,"Correction")).setOnAction(actionEvent -> Correction());
        ((Button)GUIModule.GetById(pane,"SlewRA")).setOnAction(actionEvent -> SlewRA());
        ((Button)GUIModule.GetById(pane,"SlewDE")).setOnAction(actionEvent -> SlewDE());
-       ((Button)GUIModule.GetById(pane,"GoTo")).setOnAction(actionEvent -> GoTo());
+    }
+
+    public static boolean isInteger(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            int integerValue = Integer.parseInt(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
     }
 
     public void EnableDisableMotors() {
         Button button = (Button) GUIModule.GetById(pane, "EnableDisableMotors");
-        if(button.getText().equals("Enable Motors")) button.setText("Disable Motors");
-        else button.setText("Enable Motors");
-        System.out.println("Hello from the modules side");
+        if(button.getText().equals("Enable Motors")) {
+            Platform.runLater(() -> {button.setText("Disable Motors");});
+            Communication.sendData(String.valueOf(ENABLE_MOTORS_CODE));
+        }
+        else {
+            Platform.runLater(() -> {button.setText("Enable Motors");});
+            Communication.sendData(String.valueOf(DISABLE_MOTORS_CODE));
+        }
     }
 
     public void StopRA(){
-        System.out.println("Stop RA");
-        //Communication.send_data("StopRA");
+        Communication.sendData(String.valueOf(STOP_RA_CODE));
     }
 
     public void StopDE(){
-        System.out.println("Stop DE");
-        //Communication.send_data("StopDE");
+        Communication.sendData(String.valueOf(STOP_DE_CODE));
     }
 
     public void StopRAandDE(){
-        System.out.println("Stop RA and DE");
-        //Communication.send_data("StopRAandDE");
+        Communication.sendData(String.valueOf(STOP_RA_CODE));
+        Communication.sendData(String.valueOf(STOP_DE_CODE));
     }
 
     public void Calibrate(){
-        System.out.println("Calibrate");
-        //Communication.send_data("Calibrate");
+        Communication.sendData(String.valueOf(CALIBRATION_CODE));
     }
 
     public void  Correction(){
+        // TO DOOOO
         System.out.println("Correction");
-        //Communication.send_data("Correction");
     }
 
     public void SlewRA() {
         TextField slew_ra = ((TextField)GUIModule.GetById(pane,"SlewRAField"));
-        System.out.println("Slew RA: " + slew_ra.getText());
-        //Communication.send_data("Prikaz123 25");
+        String slew_ra_text = slew_ra.getText();
+
+        if(isInteger(slew_ra_text)) {
+            int input_value = Integer.parseInt(slew_ra_text);
+            if(input_value >= 0) Communication.sendData(SLEW_RA_POSITIVE_CODE+";"+input_value);
+            else Communication.sendData(SLEW_RA_NEGATIVE_CODE+";"+(input_value*-1));
+        }
+        else {
+            InputConfirmation.warn("Data was entered incorrectly!");
+        }
+
         slew_ra.setText("");
     }
 
     public void SlewDE() {
         TextField slew_de = ((TextField)GUIModule.GetById(pane,"SlewDEField"));
-        System.out.println("Slew DE: " + slew_de.getText());
-        //Communication.send_data("Prikaz123 25");
+        String slew_de_text = slew_de.getText();
+
+        if(isInteger(slew_de_text)) {
+            int input_value = Integer.parseInt(slew_de_text);
+            if(input_value >= 0) Communication.sendData(SLEW_DE_POSITIVE_CODE+";"+input_value);
+            else Communication.sendData(SLEW_DE_NEGATIVE_CODE+";"+(input_value*-1));
+        }
+        else {
+            InputConfirmation.warn("Data was entered incorrectly!");
+        }
+
         slew_de.setText("");
     }
 
-    public void GoTo() {
-        TextField goto_ra = ((TextField)GUIModule.GetById(pane,"GoToRAField"));
-        TextField goto_de = ((TextField)GUIModule.GetById(pane,"GoToDEField"));
-        System.out.println("Go To: " + goto_ra.getText() + ", " + goto_de.getText());
-        //Communication.send_data("Prikaz123 25");
-        goto_ra.setText("");
-        goto_de.setText("");
-    }
-
     public void update(JsonObject jo) {
+        if(jo.get("PAEncoder") != null) Platform.runLater(() -> {info_polar[0].setText(jo.get("PAEncoder").getAsString());});
 
+        if(jo.get("PAHAApparent") != null) Platform.runLater(() -> {info_polar[1].setText(jo.get("PAHAApparent").getAsString());});
+
+        if(jo.get("PAHARAJ2000") != null) Platform.runLater(() -> {info_polar[2].setText(jo.get("PAHARAJ2000").getAsString());});
+
+        if(jo.get("PAAzimuth") != null) Platform.runLater(() -> {info_polar[3].setText(jo.get("PAAzimuth").getAsString());});
+
+        if(jo.get("PAStatus") != null) Platform.runLater(() -> {info_polar[4].setText(jo.get("PAStatus").getAsString());});
+
+        if(jo.get("DEEncoder") != null) Platform.runLater(() -> {info_declination[0].setText(jo.get("DEEncoder").getAsString());});
+
+        if(jo.get("DEApparent") != null) Platform.runLater(() -> {info_declination[1].setText(jo.get("DEApparent").getAsString());});
+
+        if(jo.get("DEDEJ2000") != null) Platform.runLater(() -> {info_declination[2].setText(jo.get("DEDEJ2000").getAsString());});
+
+        if(jo.get("DEElevation") != null) Platform.runLater(() -> {info_declination[3].setText(jo.get("DEElevation").getAsString());});
+
+        if(jo.get("DEStatus") != null) Platform.runLater(() -> {info_declination[4].setText(jo.get("DEStatus").getAsString());});
     }
 
     @Override
@@ -141,7 +188,5 @@ public class Axis implements GUIModule {
         // T - correction
         Pair<Boolean, KeyCode> correction = new Pair<>(true, KeyCode.T);
         shortcuts.put(correction, this::Correction);
-
-        // goto
     }
 }

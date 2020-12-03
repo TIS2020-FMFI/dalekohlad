@@ -50,7 +50,7 @@ public class CommunicationTest {
             String name = jo.get("name").getAsString();
             System.out.println(name);
             assert name.equals("John");
-            Communication.send_data("Prikaz123 25");
+            Communication.sendData("Prikaz123 25");
         }
     }
 
