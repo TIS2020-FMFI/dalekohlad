@@ -15,6 +15,11 @@ import java.util.Map;
 public class Filterwheel implements GUIModule {
     private Pane pane;
     private Label info;
+    private final int FILTER_B_CODE = 67;
+    private final int FILTER_V_CODE = 66;
+    private final int FILTER_R_CODE = 86;
+    private final int FILTER_I_CODE = 82;
+    private final int FILTER_C_CODE = 73;
 
     public void init(Pane p) {
         pane = p;
@@ -64,11 +69,11 @@ public class Filterwheel implements GUIModule {
 
     public void SetFilter(String s){
         switch(s){
-            case "B": Communication.send_data(String.valueOf(67));
-            case "V": Communication.send_data(String.valueOf(66));
-            case "R": Communication.send_data(String.valueOf(86));
-            case "I": Communication.send_data(String.valueOf(82));
-            case "C": Communication.send_data(String.valueOf(73));
+            case "B": Communication.send_data(String.valueOf(FILTER_B_CODE));
+            case "V": Communication.send_data(String.valueOf(FILTER_V_CODE));
+            case "R": Communication.send_data(String.valueOf(FILTER_R_CODE));
+            case "I": Communication.send_data(String.valueOf(FILTER_I_CODE));
+            case "C": Communication.send_data(String.valueOf(FILTER_C_CODE));
         }
         System.out.println("Set Filter: " + s);
     }
@@ -82,16 +87,16 @@ public class Filterwheel implements GUIModule {
         // B - filter B
         Pair<Boolean, KeyCode> filter_B = new Pair<>(true, KeyCode.B);
         shortcuts.put(filter_B, () -> SetFilter("B"));
-        // V - filter B
+        // V - filter V
         Pair<Boolean, KeyCode> filter_V = new Pair<>(true, KeyCode.V);
         shortcuts.put(filter_V, () -> SetFilter("V"));
-        // R - filter B
+        // R - filter R
         Pair<Boolean, KeyCode> filter_R = new Pair<>(true, KeyCode.R);
         shortcuts.put(filter_R, () -> SetFilter("R"));
-        // I - filter B
+        // I - filter I
         Pair<Boolean, KeyCode> filter_I = new Pair<>(true, KeyCode.I);
         shortcuts.put(filter_I, () -> SetFilter("I"));
-        // C - filter B
+        // C - filter C
         Pair<Boolean, KeyCode> filter_C = new Pair<>(true, KeyCode.C);
         shortcuts.put(filter_C, () -> SetFilter("C"));
     }

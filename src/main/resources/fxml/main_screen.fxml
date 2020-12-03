@@ -162,7 +162,7 @@
                <Label layoutX="10.0" layoutY="65.0" text="RBI flush count:" textFill="WHITE" />
                <Label layoutX="10.0" layoutY="45.0" text="Mode:" textFill="WHITE" />
                <Label layoutX="10.0" layoutY="25.0" text="Exposure:" textFill="WHITE" />
-               <Button fx:id="TurnCameraOn" layoutX="45.0" layoutY="585.0" mnemonicParsing="false" prefWidth="120.0" style="-fx-background-color: rgb(250,250,100);" text="Turn camera ON ">
+               <Button fx:id="ExposeSequenceButton" layoutX="10.0" layoutY="585.0" mnemonicParsing="false" prefWidth="120.0" style="-fx-background-color: rgb(250,250,100);" text="Expose sequence">
                   <cursor>
                      <Cursor fx:constant="HAND" />
                   </cursor></Button>
@@ -195,18 +195,19 @@
                 <ChoiceBox fx:id="CameraModeChoiceBox" layoutX="110.0" layoutY="395.0" prefWidth="106.0">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
-                            <String fx:value="Light" />
-                            <String fx:value="Dark" />
-                            <String fx:value="Flat" />
+                            <String fx:value="1MHz low noise" />
+                            <String fx:value="3.4MHz low noise" />
+                            <String fx:value="1MHz high dynamic range" />
+
                         </FXCollections>
                     </items>
                 </ChoiceBox>
                 <ChoiceBox fx:id="ImageTypeChoiceBox" layoutX="110.0" layoutY="360.0" prefWidth="106.0">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
-                            <String fx:value="1MHz low noise" />
-                            <String fx:value="3.4MHz low noise" />
-                            <String fx:value="1MHz high dynamic range" />
+                            <String fx:value="Light" />
+                            <String fx:value="Dark" />
+                            <String fx:value="Flat" />
                         </FXCollections>
                     </items>
                 </ChoiceBox>
@@ -248,6 +249,8 @@
                <Label fx:id="CAMSubframe1" layoutX="110.0" layoutY="165.0" text="Label" textFill="WHITE" />
                <Label fx:id="CAMCooler1" layoutX="110.0" layoutY="265.0" text="Label" textFill="WHITE" />
                <Label fx:id="CAMRemaining1" layoutX="110.0" layoutY="305.0" text="Label" textFill="WHITE" />
+               <Button fx:id="ExposeFromNearestSecondButton" layoutX="140.0" layoutY="585.0" mnemonicParsing="false" style="-fx-background-color: rgb(250,250,100);" text="Expose from nearest second" />
+               <Button fx:id="AbortImagingButton" layoutX="315.0" layoutY="585.0" mnemonicParsing="false" style="-fx-background-color: rgb(250,250,100);" text="Abort imaging" />
             </children>
          </Pane>
          <Pane fx:id="module_Target" layoutX="520.0" layoutY="180.0" prefHeight="345.0" prefWidth="240.0" style="-fx-background-color: rgb(80,80,80);">

@@ -17,6 +17,13 @@ import java.util.Objects;
 public class Dome implements GUIModule {
     private Pane pane;
     private HashMap<String, Label> info;
+    private final int DOME_WEST_CODE = 297;
+    private final int DOME_EAST_CODE = 306;
+    private final int DOME_STOP_CODE = 295;
+    private final int FREQUENCY_CODE = 102;
+    private final int CALIBRATE_AZIMUTH_CODE = 97;
+    private final int SYNCHRONIZE_CODE = 121;
+
 
     public void init(Pane p) {
         pane = p;
@@ -43,45 +50,56 @@ public class Dome implements GUIModule {
 
         try{
             double value = Double.parseDouble(frequency.getText());
-            Communication.send_data(102 + ";" + value);
-        }
-        catch(Exception e){ InputConfirmation.warn(e.getMessage()); }
+            boolean confirm = true;
 
-        System.out.println("Frequency: " + frequency.getText());
-        frequency.setText("");
+            if(value < 0 || value > 60) confirm = InputConfirmation.confirm("frequency should be in interval <0,60>", "warning");
+            if(confirm){
+                Communication.send_data(FREQUENCY_CODE + ";" + value);
+                System.out.println("Frequency: " + value);
+                frequency.setText("");
+            }
+        }
+        catch(Exception e){
+            InputConfirmation.warn("Data was entered incorrectly!");
+        }
     }
 
     public void CalibrateAzimuth() {
         TextField calibrate_azimuth = ((TextField)GUIModule.GetById(pane,"CalibrateAzimuthField"));
 
         try{
-            // To Do - skontrolovať uhol
             double value = Double.parseDouble(calibrate_azimuth.getText());
-            Communication.send_data(97 + ";" + value);
-        }
-        catch(Exception e){ InputConfirmation.warn(e.getMessage()); }
+            boolean confirm = true;
 
-        System.out.println("Calibrate azimuth: " + calibrate_azimuth.getText());
-        calibrate_azimuth.setText("");
+            if(value < 0 || value > 360) confirm = InputConfirmation.confirm("azimuth should be in interval <0,360>", "warning");
+            if(confirm){
+                Communication.send_data(CALIBRATE_AZIMUTH_CODE + ";" + value);
+                System.out.println("Calibrate azimuth: " + value);
+                calibrate_azimuth.setText("");
+            }
+        }
+        catch(Exception e){
+            InputConfirmation.warn("Data was entered incorrectly!");
+        }
     }
 
     public void DomeWest(){
-        Communication.send_data(String.valueOf(297));
+        Communication.send_data(String.valueOf(DOME_WEST_CODE));
         System.out.println("Dome West");
     }
 
     public void DomeStop(){
-        Communication.send_data(String.valueOf(295));
+        Communication.send_data(String.valueOf(DOME_STOP_CODE));
         System.out.println("Dome Stop");
     }
 
     public void DomeEast(){
-        Communication.send_data(String.valueOf(306));
+        Communication.send_data(String.valueOf(DOME_EAST_CODE));
         System.out.println("Dome East");
     }
 
     public void Synchronize(){
-        Communication.send_data(String.valueOf(121));
+        Communication.send_data(String.valueOf(SYNCHRONIZE_CODE));
         System.out.println("Synchronize");
     }
 
@@ -96,7 +114,7 @@ public class Dome implements GUIModule {
         // f - frequency  (0 - 60)
         Pair<Boolean, KeyCode> frequency = new Pair<>(false, KeyCode.F);
         shortcuts.put(frequency, () -> FocusTextField(false,"FrequencyField", pane));
-        // a - azimuth
+        // a - azimuth (0-360)
         Pair<Boolean, KeyCode> calibrate_azimuth = new Pair<>(false, KeyCode.A);
         shortcuts.put(calibrate_azimuth, () -> FocusTextField(false,"CalibrateAzimuthField", pane));
         // y - synchronize
