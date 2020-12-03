@@ -69,11 +69,11 @@ public class Filterwheel implements GUIModule {
 
     public void SetFilter(String s){
         switch(s){
-            case "B": Communication.send_data(String.valueOf(FILTER_B_CODE));
-            case "V": Communication.send_data(String.valueOf(FILTER_V_CODE));
-            case "R": Communication.send_data(String.valueOf(FILTER_R_CODE));
-            case "I": Communication.send_data(String.valueOf(FILTER_I_CODE));
-            case "C": Communication.send_data(String.valueOf(FILTER_C_CODE));
+            case "B": Communication.sendData(String.valueOf(FILTER_B_CODE));
+            case "V": Communication.sendData(String.valueOf(FILTER_V_CODE));
+            case "R": Communication.sendData(String.valueOf(FILTER_R_CODE));
+            case "I": Communication.sendData(String.valueOf(FILTER_I_CODE));
+            case "C": Communication.sendData(String.valueOf(FILTER_C_CODE));
         }
         System.out.println("Set Filter: " + s);
     }
