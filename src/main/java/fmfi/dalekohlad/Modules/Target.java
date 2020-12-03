@@ -16,6 +16,9 @@ public class Target implements GUIModule {
     private Pane pane;
     private Label[] info;
 
+    private final int GOTO_CANCEL_CODE = 71;
+    private final int SWITCH_POLE_CROSSING_CODE = 112;
+
     public void init(Pane p) {
         pane = p;
         info = new Label[10];
@@ -31,9 +34,8 @@ public class Target implements GUIModule {
     }
 
     public static boolean goodFormat(String input) {
-        if (input == null) {
-            return false;
-        }
+        if (input == null) return false;
+
         if(!input.matches("[0-9][0-9][.][0-9][0-9][0-9]") && !input.matches("[0-9][0-9][:][0-9][0-9][:][0-9][0-9][.][0-9]")) {
             return false;
         }
@@ -41,7 +43,6 @@ public class Target implements GUIModule {
     }
 
     public void LoadTarget(){
-        // nova kontrolna jednotka - vstupy formatu dd.ddd & hh:mm:ss.s ! goto function
         TextField ra = ((TextField)GUIModule.GetById(pane,"LoadTargetRA"));
         TextField de = ((TextField)GUIModule.GetById(pane,"LoadTargetDE"));
 
@@ -49,28 +50,22 @@ public class Target implements GUIModule {
         String de_text = de.getText();
 
         if(goodFormat(ra_text) && goodFormat(de_text)) {
-            // OLD: Communication.send_data(76+";"+ra_text+";"+de_text);
-            // NEW: Not implemented in emulator
             InputConfirmation.warn("Currently not implemented!");
         }
         else {
             InputConfirmation.warn("Data was entered incorrectly!");
         }
 
-
-        System.out.println("Load Target: " + ra.getText() + ", " + de.getText());
         ra.setText("");
         de.setText("");
     }
 
     public void GoToCancel(){
-        Communication.sendData(String.valueOf(71));
-        System.out.println("Go To / Cancel");
+        Communication.sendData(String.valueOf(GOTO_CANCEL_CODE));
     }
 
     public void PoleCrossing(){
-        Communication.sendData(String.valueOf(112));
-        System.out.println("Pole Crossing");
+        Communication.sendData(String.valueOf(SWITCH_POLE_CROSSING_CODE));
     }
 
     public void update(JsonObject jo) {
