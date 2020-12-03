@@ -13,12 +13,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.awt.*;
 import java.io.RandomAccessFile;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Others implements GUIModule {
     private static final String shortcuts_screen = "/fxml/shortcuts_scene.fxml";
@@ -26,6 +31,9 @@ public class Others implements GUIModule {
     private final int FITS_SIZE = 170;
     private final Dimension DIMENSION = new Dimension(FITS_SIZE, FITS_SIZE);
     private final int IMAGE_HDU = 0;
+    private static boolean wasUpdated = true;
+    private static boolean connectionFailed = false;
+
     private Parent main_screen_root;
     private Pane pane;
     private Label info;
@@ -67,6 +75,7 @@ public class Others implements GUIModule {
 
     @Override
     public void update(JsonObject jo) {
+        markFlagsAsConnected();
         String infoText = "";
         try {
             String time = jo.get("TIMEUTC").getAsString();
@@ -91,6 +100,14 @@ public class Others implements GUIModule {
         Platform.runLater(() -> {
             this.info.setText(finalInfoText);
         });
+    }
+
+
+    private void markFlagsAsConnected() {
+        Others.wasUpdated = true;
+        if (connectionFailed) {
+            connectionFailed = false;
+        }
     }
 
     private void setDisplayingShortcuts() {
@@ -124,7 +141,28 @@ public class Others implements GUIModule {
         this.pathFITS = (Label) GUIModule.GetById(pane, "path_to_last_frame");
         this.swingNode = (SwingNode) GUIModule.GetById(pane, "node_FITS");
         this.main_screen_root = pane.getParent().getScene().getRoot();
+        displayConnectionStatus();
 
         ((Button) GUIModule.GetById(pane,"Shortcuts")).setOnAction(event -> this.setDisplayingShortcuts());
+    }
+
+    private void displayConnectionStatus() {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if(!Others.wasUpdated) {
+                    BackgroundFill redBackground = new BackgroundFill(Color.RED, null, null);
+                    Platform.runLater(() -> status.setBackground(new Background(redBackground)));
+                }
+                else if(Others.connectionFailed && Others.wasUpdated) {
+                    Others.connectionFailed = false;
+                    BackgroundFill greenBackground = new BackgroundFill(Color.GREEN, null, null);
+                    Platform.runLater(() -> status.setBackground(new Background(greenBackground)));
+                }
+
+                Others.wasUpdated = false;
+            }
+        }, 6000,2500);
     }
 }
