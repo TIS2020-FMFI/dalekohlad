@@ -7,6 +7,7 @@
 <?import javafx.scene.Scene?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -92,7 +93,7 @@
               <children>
                   <Label layoutY="-25.0" text="Dome:" textFill="WHITE">
                       <font><Font size="18.0" /></font></Label>
-                  <Button fx:id="DomeEast" layoutX="180.0" layoutY="120.0" prefWidth="80.0" style="-fx-background-color: rgb(250,250,100);" text="Dome East">
+                  <Button fx:id="DomeEastButton" layoutX="180.0" layoutY="120.0" prefWidth="80.0" style="-fx-background-color: rgb(250,250,100);" text="Dome East">
                   <cursor>
                      <Cursor fx:constant="HAND" />
                   </cursor></Button>
@@ -101,35 +102,35 @@
                   <Label layoutX="10.0" layoutY="65.0" text="Synchronize:" textFill="WHITE" />
                   <Label layoutX="10.0" layoutY="45.0" text="Target azimuth:" textFill="WHITE" />
                   <Label layoutX="10.0" layoutY="5.0" text="Encoder:" textFill="WHITE" />
-                  <Button fx:id="DomeStop" layoutX="95.0" layoutY="120.0" mnemonicParsing="false" prefWidth="80.0" style="-fx-background-color: rgb(250,250,100);" text="Dome Stop">
+                  <Button fx:id="DomeStopButton" layoutX="95.0" layoutY="120.0" mnemonicParsing="false" prefWidth="80.0" style="-fx-background-color: rgb(250,250,100);" text="Dome Stop">
                   <cursor>
                      <Cursor fx:constant="HAND" />
                   </cursor></Button>
-                  <Button fx:id="DomeWest" layoutX="10.0" layoutY="120.0" mnemonicParsing="false" prefWidth="80.0" style="-fx-background-color: rgb(250,250,100);" text="Dome West">
+                  <Button fx:id="DomeWestButton" layoutX="10.0" layoutY="120.0" mnemonicParsing="false" prefWidth="80.0" style="-fx-background-color: rgb(250,250,100);" text="Dome West">
                   <cursor>
                      <Cursor fx:constant="HAND" />
                   </cursor></Button>
                   <TextField fx:id="FrequencyField" layoutX="80.0" layoutY="155.0" prefWidth="80.0" />
-                  <Button fx:id="Frequency" layoutX="160.0" layoutY="155.0" mnemonicParsing="false" style="-fx-background-color: rgb(250,250,100);" text="→">
+                  <Button fx:id="FrequencyButton" layoutX="160.0" layoutY="155.0" mnemonicParsing="false" style="-fx-background-color: rgb(250,250,100);" text="→">
                   <cursor>
                      <Cursor fx:constant="HAND" />
                   </cursor></Button>
                   <TextField fx:id="CalibrateAzimuthField" layoutX="80.0" layoutY="190.0" prefWidth="80.0" />
-                  <Button fx:id="CalibrateAzimuth" layoutX="160.0" layoutY="190.0" mnemonicParsing="false" style="-fx-background-color: rgb(250,250,100);" text="→">
+                  <Button fx:id="CalibrateAzimuthButton" layoutX="160.0" layoutY="190.0" mnemonicParsing="false" style="-fx-background-color: rgb(250,250,100);" text="→">
                   <cursor>
                      <Cursor fx:constant="HAND" />
                   </cursor></Button>
-                  <Button fx:id="Synchronize" layoutX="75.0" layoutY="225.0" mnemonicParsing="false" prefWidth="120.0" style="-fx-background-color: rgb(250,250,100);" text="Synchronize">
+                  <Button fx:id="SynchronizeButton" layoutX="75.0" layoutY="225.0" mnemonicParsing="false" prefWidth="120.0" style="-fx-background-color: rgb(250,250,100);" text="Synchronize">
                   <cursor>
                      <Cursor fx:constant="HAND" />
                   </cursor></Button>
                   <Label layoutX="10.0" layoutY="160.0" text="Frequency:" textFill="WHITE" />
                   <Label layoutX="10.0" layoutY="195.0" text="Azimuth:" textFill="WHITE" />
-               <Label fx:id="dome1" layoutX="230.0" layoutY="5.0" text="Label" textFill="WHITE" />
-               <Label fx:id="dome5" layoutX="230.0" layoutY="85.0" text="Label" textFill="WHITE" />
-               <Label fx:id="dome4" layoutX="230.0" layoutY="65.0" text="Label" textFill="WHITE" />
-               <Label fx:id="dome3" layoutX="230.0" layoutY="45.0" text="Label" textFill="WHITE" />
-               <Label fx:id="dome2" layoutX="230.0" layoutY="25.0" text="Label" textFill="WHITE" />
+               <Label fx:id="DOMEEncoder" layoutX="230.0" layoutY="5.0" text="Label" textFill="WHITE" />
+               <Label fx:id="DOMEStatus" layoutX="230.0" layoutY="85.0" text="Label" textFill="WHITE" />
+               <Label fx:id="DOMESynch" layoutX="230.0" layoutY="65.0" text="Label" textFill="WHITE" />
+               <Label fx:id="DOMETargetAzimuth" layoutX="230.0" layoutY="45.0" text="Label" textFill="WHITE" />
+               <Label fx:id="DOMEAzimuth" layoutX="230.0" layoutY="25.0" text="Label" textFill="WHITE" />
               </children>
           </Pane>
 
@@ -155,27 +156,30 @@
                <Label layoutX="10.0" layoutY="65.0" text="RBI flush count:" textFill="WHITE" />
                <Label layoutX="10.0" layoutY="45.0" text="Mode:" textFill="WHITE" />
                <Label layoutX="10.0" layoutY="25.0" text="Exposure:" textFill="WHITE" />
-               <Button fx:id="TurnCameraOn" layoutX="45.0" layoutY="585.0" mnemonicParsing="false" prefWidth="120.0" style="-fx-background-color: rgb(250,250,100);" text="Turn camera ON ">
-                  <cursor>
-                     <Cursor fx:constant="HAND" />
-                  </cursor></Button>
+               <Button fx:id="ExposeSequenceButton" layoutX="10.0" layoutY="585.0" mnemonicParsing="false" prefWidth="120.0" style="-fx-background-color: rgb(250,250,100);" text="Expose sequence">
+                  <cursor><Cursor fx:constant="HAND" /></cursor></Button>
+               <Button fx:id="ExposeFromNearestSecondButton" layoutX="140.0" layoutY="585.0" mnemonicParsing="false"  style="-fx-background-color: rgb(250,250,100);" text="Expose from nearest second">
+                  <cursor><Cursor fx:constant="HAND" /></cursor></Button>
+               <Button fx:id="AbortImagingButton" layoutX="315.0" layoutY="585.0" mnemonicParsing="false"  style="-fx-background-color: rgb(250,250,100);" text="Abort imaging">
+                  <cursor><Cursor fx:constant="HAND" /></cursor></Button>
+
                <TextField fx:id="ExposureTimeField" layoutX="110.0" layoutY="430.0" prefWidth="80.0" />
                <TextField fx:id="CoolerSetPointField" layoutX="110.0" layoutY="465.0" prefWidth="80.0" />
                <TextField fx:id="ExposureDelayField" layoutX="110.0" layoutY="500.0" prefWidth="80.0" />
                <TextField fx:id="SequenceRepeatsField" layoutX="110.0" layoutY="535.0" prefHeight="0.0" prefWidth="80.0" />
-               <Button fx:id="CoolerSetpoint" layoutX="190.0" layoutY="465.0" mnemonicParsing="false" prefHeight="25.0" style="-fx-background-color: rgb(250,250,100);" text="→">
+               <Button fx:id="CoolerSetpointButton" layoutX="190.0" layoutY="465.0" mnemonicParsing="false" prefHeight="25.0" style="-fx-background-color: rgb(250,250,100);" text="→">
                   <cursor>
                      <Cursor fx:constant="HAND" />
                   </cursor></Button>
-               <Button fx:id="ExposureTime" layoutX="190.0" layoutY="430.0" mnemonicParsing="false" prefHeight="25.0" style="-fx-background-color: rgb(250,250,100);" text="→">
+               <Button fx:id="ExposureTimeButton" layoutX="190.0" layoutY="430.0" mnemonicParsing="false" prefHeight="25.0" style="-fx-background-color: rgb(250,250,100);" text="→">
                   <cursor>
                      <Cursor fx:constant="HAND" />
                   </cursor></Button>
-               <Button fx:id="SequenceRepeats" layoutX="190.0" layoutY="535.0" mnemonicParsing="false" prefHeight="25.0" style="-fx-background-color: rgb(250,250,100);" text="→">
+               <Button fx:id="SequenceRepeatsButton" layoutX="190.0" layoutY="535.0" mnemonicParsing="false" prefHeight="25.0" style="-fx-background-color: rgb(250,250,100);" text="→">
                   <cursor>
                      <Cursor fx:constant="HAND" />
                   </cursor></Button>
-               <Button fx:id="ExposureDelay" layoutX="190.0" layoutY="500.0" mnemonicParsing="false" prefHeight="25.0" style="-fx-background-color: rgb(250,250,100);" text="→">
+               <Button fx:id="ExposureDelayButton" layoutX="190.0" layoutY="500.0" mnemonicParsing="false" prefHeight="25.0" style="-fx-background-color: rgb(250,250,100);" text="→">
                   <cursor>
                      <Cursor fx:constant="HAND" />
                   </cursor></Button>
@@ -185,33 +189,34 @@
                <Label layoutX="10.0" layoutY="365.0" text="Image type:" textFill="WHITE" />
                <Label layoutX="10.0" layoutY="400.0" text="Camera mode:" textFill="WHITE" />
                <Label layoutX="10.0" layoutY="435.0" text="Exposure time:" textFill="WHITE" />
-                <ChoiceBox fx:id="CameraMode" layoutX="110.0" layoutY="395.0" prefWidth="106.0" >
+                <ChoiceBox fx:id="CAMModeChoiceBox" layoutX="110.0" layoutY="395.0" prefWidth="106.0">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="1MHz low noise" />
+                            <String fx:value="3.4MHz low noise" />
+                            <String fx:value="1MHz high dynamic range" />
+                        </FXCollections>
+                    </items>
+                </ChoiceBox>
+                <ChoiceBox fx:id="CAMTypeChoiceBox" layoutX="110.0" layoutY="360.0" prefWidth="106.0">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
                             <String fx:value="Light" />
                             <String fx:value="Dark" />
                             <String fx:value="Flat" />
                         </FXCollections>
+
                     </items>
                 </ChoiceBox>
-                <ChoiceBox fx:id="ImageType" layoutX="110.0" layoutY="360.0" prefWidth="106.0">
-                    <items>
-                        <FXCollections fx:factory="observableArrayList">
-                            <String fx:value="1MHz low noise"/>
-                            <String fx:value="3.4MHz low noise" />
-                            <String fx:value="1MHz high dynamic range"/>
-                        </FXCollections>
-                    </items>
-                </ChoiceBox>
-               <Button fx:id="Notes" layoutX="380.0" layoutY="520.0" mnemonicParsing="false" prefHeight="40.0" style="-fx-background-color: rgb(250,250,100);" text="→">
+               <Button fx:id="NotesButton" layoutX="380.0" layoutY="520.0" mnemonicParsing="false" prefHeight="40.0" style="-fx-background-color: rgb(250,250,100);" text="→">
                   <cursor>
                      <Cursor fx:constant="HAND" />
                   </cursor></Button>
-               <Button fx:id="Object" layoutX="380.0" layoutY="470.0" mnemonicParsing="false" prefHeight="40.0" style="-fx-background-color: rgb(250,250,100);" text="→">
+               <Button fx:id="ObjectButton" layoutX="380.0" layoutY="470.0" mnemonicParsing="false" prefHeight="40.0" style="-fx-background-color: rgb(250,250,100);" text="→">
                   <cursor>
                      <Cursor fx:constant="HAND" />
                   </cursor></Button>
-               <Button fx:id="Observer" layoutX="380.0" layoutY="420.0" mnemonicParsing="false" prefHeight="40.0" style="-fx-background-color: rgb(250,250,100);" text="→">
+               <Button fx:id="ObserverButton" layoutX="380.0" layoutY="420.0" mnemonicParsing="false" prefHeight="40.0" style="-fx-background-color: rgb(250,250,100);" text="→">
                   <cursor>
                      <Cursor fx:constant="HAND" />
                   </cursor></Button>
@@ -221,23 +226,26 @@
                <TextArea fx:id="NotesField" layoutX="300.0" layoutY="520.0" prefHeight="40.0" prefWidth="80.0" />
                <TextArea fx:id="ObjectField" layoutX="300.0" layoutY="470.0" prefHeight="40.0" prefWidth="80.0" />
                <TextArea fx:id="ObserverField" layoutX="300.0" layoutY="420.0" prefHeight="40.0" prefWidth="80.0" />
-               <Label fx:id="camera17" layoutX="200.0" layoutY="325.0" text="Label" textFill="WHITE" />
-               <Label fx:id="camera16" layoutX="200.0" layoutY="305.0" text="Label" textFill="WHITE" />
-               <Label fx:id="camera15" layoutX="200.0" layoutY="285.0" text="Label" textFill="WHITE" />
-               <Label fx:id="camera14" layoutX="200.0" layoutY="265.0" text="Label" textFill="WHITE" />
-               <Label fx:id="camera13" layoutX="200.0" layoutY="245.0" text="Label" textFill="WHITE" />
-               <Label fx:id="camera12" layoutX="200.0" layoutY="225.0" text="Label" textFill="WHITE" />
-               <Label fx:id="camera11" layoutX="200.0" layoutY="205.0" text="Label" textFill="WHITE" />
-               <Label fx:id="camera10" layoutX="200.0" layoutY="185.0" text="Label" textFill="WHITE" />
-               <Label fx:id="camera9" layoutX="200.0" layoutY="165.0" text="Label" textFill="WHITE" />
-               <Label fx:id="camera8" layoutX="200.0" layoutY="145.0" text="Label" textFill="WHITE" />
-               <Label fx:id="camera7" layoutX="200.0" layoutY="125.0" text="Label" textFill="WHITE" />
-               <Label fx:id="camera6" layoutX="200.0" layoutY="105.0" text="Label" textFill="WHITE" />
-               <Label fx:id="camera5" layoutX="200.0" layoutY="85.0" text="Label" textFill="WHITE" />
-               <Label fx:id="camera4" layoutX="200.0" layoutY="65.0" text="Label" textFill="WHITE" />
-               <Label fx:id="camera3" layoutX="200.0" layoutY="45.0" text="Label" textFill="WHITE" />
-               <Label fx:id="camera2" layoutX="200.0" layoutY="25.0" text="Label" textFill="WHITE" />
-               <Label fx:id="camera1" layoutX="200.0" layoutY="5.0" text="Label" textFill="WHITE" />
+               <Label fx:id="CAMStatus" layoutX="200.0" layoutY="325.0" text="Label" textFill="WHITE" />
+               <Label fx:id="CAMRemaining2" layoutX="200.0" layoutY="305.0" text="Label" textFill="WHITE" />
+               <Label fx:id="CAMDelay" layoutX="200.0" layoutY="285.0" text="Label" textFill="WHITE" />
+               <Label fx:id="CAMCooler2" layoutX="200.0" layoutY="265.0" text="Label" textFill="WHITE" />
+               <Label fx:id="CAMSetpoint" layoutX="200.0" layoutY="245.0" text="Label" textFill="WHITE" />
+               <Label fx:id="CAMNotes" layoutX="200.0" layoutY="225.0" text="Label" textFill="WHITE" />
+               <Label fx:id="CAMObject" layoutX="200.0" layoutY="205.0" text="Label" textFill="WHITE" />
+               <Label fx:id="CAMObserver" layoutX="200.0" layoutY="185.0" text="Label" textFill="WHITE" />
+               <Label fx:id="CAMSubframe2" layoutX="200.0" layoutY="165.0" text="Label" textFill="WHITE" />
+               <Label fx:id="CAMBinning" layoutX="200.0" layoutY="145.0" text="Label" textFill="WHITE" />
+               <Label fx:id="CAMBGFlush" layoutX="200.0" layoutY="125.0" text="Label" textFill="WHITE" />
+               <Label fx:id="CAMTDIMode" layoutX="200.0" layoutY="105.0" text="Label" textFill="WHITE" />
+               <Label fx:id="CAMRBIFloodTime" layoutX="200.0" layoutY="85.0" text="Label" textFill="WHITE" />
+               <Label fx:id="CAMRBIFlushCount" layoutX="200.0" layoutY="65.0" text="Label" textFill="WHITE" />
+               <Label fx:id="CAMMode" layoutX="200.0" layoutY="45.0" text="Label" textFill="WHITE" />
+               <Label fx:id="CAMExposure" layoutX="200.0" layoutY="25.0" text="Label" textFill="WHITE" />
+               <Label fx:id="CAMType" layoutX="200.0" layoutY="5.0" text="Label" textFill="WHITE" />
+               <Label fx:id="CAMSubframe1" layoutX="110.0" layoutY="165.0" text="Label" textFill="WHITE" />
+               <Label fx:id="CAMCooler1" layoutX="110.0" layoutY="265.0" text="Label" textFill="WHITE" />
+               <Label fx:id="CAMRemaining1" layoutX="110.0" layoutY="305.0" text="Label" textFill="WHITE" />
             </children>
          </Pane>
          <Pane fx:id="module_Target" layoutX="520.0" layoutY="180.0" prefHeight="345.0" prefWidth="240.0" style="-fx-background-color: rgb(80,80,80);">
@@ -287,7 +295,7 @@
             <children>
                <Label layoutY="-25.0" text="Filterwheel:" textFill="WHITE">
                   <font><Font size="18.0" /></font></Label>
-               <ChoiceBox fx:id="Filterwheel" layoutX="55.0" layoutY="50.0" prefWidth="130.0">
+               <ComboBox fx:id="FWFilterComboBox" layoutX="55.0" layoutY="50.0" prefWidth="130.0">
                   <items>
                     <FXCollections fx:factory="observableArrayList">
                         <String fx:value="Filter B" />
@@ -297,9 +305,9 @@
                         <String fx:value="Filter C" />
                     </FXCollections>
                   </items>
-	            </ChoiceBox>
+	            </ComboBox>
                <Label layoutX="10.0" layoutY="5.0" text="filter:" textFill="WHITE" />
-               <Label fx:id="filter1" layoutX="200.0" layoutY="5.0" text="Label" textFill="WHITE" />
+               <Label fx:id="FWFilter" layoutX="200.0" layoutY="5.0" text="Label" textFill="WHITE" />
             </children>
          </Pane>
 
@@ -329,7 +337,7 @@
                <Label layoutY="-25.0" text="Operations:" textFill="WHITE">
                   <font><Font size="18.0" /></font>
                </Label>
-               <TextArea fx:id="text_area" layoutY="30" layoutX="30" prefWidth="160.0">
+               <TextArea fx:id="text_area" layoutX="30" layoutY="30" prefWidth="160.0">
                </TextArea>
             </children>
          </Pane>

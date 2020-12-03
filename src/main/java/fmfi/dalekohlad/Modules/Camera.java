@@ -2,109 +2,196 @@ package fmfi.dalekohlad.Modules;
 
 import com.google.gson.JsonObject;
 import fmfi.dalekohlad.Communication.Communication;
-import javafx.scene.Node;
+import fmfi.dalekohlad.InputHandling.InputConfirmation;
+import javafx.application.Platform;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Camera implements GUIModule {
     private Pane pane;
-    private Label[] info;
+    private HashMap<String, Label> info;
+    private final int IMAGE_TYPE_CODE = 116;
+    private final int CAMERA_MODE_CODE = 109;
+    private final int EXPOSURE_TIME_CODE = 101;
+    private final int COOLER_SET_POINT_CODE = 115;
+    private final int EXPOSURE_DELAY_CODE = 100;
+    private final int SEQUENCE_REPEATS_CODE = 114;
+    private final int OBSERVER_CODE = 79;
+    private final int OBJECT_CODE = 111;
+    private final int NOTES_CODE = 110;
+    private final int EXPOSE_SEQUENCE_CODE = 69;
+    private final int EXPOSE_FROM_NEAREST_SECOND_CODE = 88;
+    private final int ABORT_IMAGING_CODE = 65;
 
     public void init(Pane p) {
         pane = p;
-        info = new Label[17];
+        info = new HashMap<>();
 
-        for(int i = 0; i < 17; i++){
-            info[i] = (Label) GUIModule.GetById(pane, "camera" + (i+1));
-            info[i].setText("...");
+        for(String s:new String[]{
+                "CAMType","CAMExposure","CAMMode","CAMRBIFlushCount","CAMRBIFloodTime","CAMTDIMode","CAMBGFlush",
+                "CAMBinning","CAMSubframe1","CAMSubframe2","CAMObserver","CAMObject","CAMNotes","CAMSetpoint",
+                "CAMCooler1","CAMCooler2","CAMDelay","CAMRemaining1","CAMRemaining2","CAMStatus"}){
+            info.put(s, (Label) GUIModule.GetById(pane, s));
+            info.get(s).setText("...");
         }
 
-        ((ChoiceBox)GUIModule.GetById(pane, "ImageType")).setOnAction(actionEvent -> ImageType());
-        ((ChoiceBox)GUIModule.GetById(pane, "CameraMode")).setOnAction(actionEvent -> CameraMode());
-        ((Button)GUIModule.GetById(pane,"ExposureTime")).setOnAction(actionEvent -> ExposureTime());
-        ((Button)GUIModule.GetById(pane,"CoolerSetpoint")).setOnAction(actionEvent -> CoolerSetPoint());
-        ((Button)GUIModule.GetById(pane,"ExposureDelay")).setOnAction(actionEvent -> ExposureDelay());
-        ((Button)GUIModule.GetById(pane,"SequenceRepeats")).setOnAction(actionEvent -> SequenceRepeats());
-        ((Button)GUIModule.GetById(pane,"Observer")).setOnAction(actionEvent -> Observer());
-        ((Button)GUIModule.GetById(pane,"Object")).setOnAction(actionEvent -> Object());
-        ((Button)GUIModule.GetById(pane,"Notes")).setOnAction(actionEvent -> Notes());
-        ((Button)GUIModule.GetById(pane,"TurnCameraOn")).setOnAction(actionEvent -> TurnCameraOn());
+        ((ChoiceBox) Objects.requireNonNull(GUIModule.GetById(pane, "CAMTypeChoiceBox"))).setOnAction(actionEvent -> ChoiceBoxCommand("CAMType", IMAGE_TYPE_CODE));
+        ((ChoiceBox) Objects.requireNonNull(GUIModule.GetById(pane, "CAMModeChoiceBox"))).setOnAction(actionEvent -> ChoiceBoxCommand("CAMMode", CAMERA_MODE_CODE));
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "ExposureTimeButton"))).setOnAction(actionEvent -> ExposureTime());
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "CoolerSetpointButton"))).setOnAction(actionEvent -> CoolerSetPoint());
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "ExposureDelayButton"))).setOnAction(actionEvent -> ExposureDelay());
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "SequenceRepeatsButton"))).setOnAction(actionEvent -> SequenceRepeats());
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "ObserverButton"))).setOnAction(actionEvent -> Observer());
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "ObjectButton"))).setOnAction(actionEvent -> Object());
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "NotesButton"))).setOnAction(actionEvent -> Notes());
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "ExposeSequenceButton"))).setOnAction(actionEvent -> ExposeSequence());
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "ExposeFromNearestSecondButton"))).setOnAction(actionEvent -> ExposeFromNearestSecond());
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "AbortImagingButton"))).setOnAction(actionEvent -> AbortImaging());
+
+        ((TextField) Objects.requireNonNull(GUIModule.GetById(pane, "ExposureTimeField"))).setOnAction(actionEvent -> ExposureTime());
+        ((TextField) Objects.requireNonNull(GUIModule.GetById(pane, "CoolerSetPointField"))).setOnAction(actionEvent -> CoolerSetPoint());
+        ((TextField) Objects.requireNonNull(GUIModule.GetById(pane, "ExposureDelayField"))).setOnAction(actionEvent -> ExposureDelay());
+        ((TextField) Objects.requireNonNull(GUIModule.GetById(pane, "SequenceRepeatsField"))).setOnAction(actionEvent -> SequenceRepeats());
+    }
+
+    public void ChoiceBoxCommand(String element, int CODE){
+        ChoiceBox choiceBox = (ChoiceBox)GUIModule.GetById(pane, element + "ChoiceBox");
+        String data = (String) choiceBox.getValue();
+
+        int actual = choiceBox.getItems().indexOf(info.get(element).getText());
+        int wanted = choiceBox.getItems().indexOf(choiceBox.getValue());
+        int num = wanted - actual;
+        if(num < 0) num += 3;
+        if(actual == -1) num = wanted;
+        for(int i = 0; i < num; i++) Communication.sendData(String.valueOf(CODE));
+
+        System.out.println("Set " + element + ": " + data);
     }
 
     public void ImageType(){
-        ChoiceBox choiceBox = (ChoiceBox)GUIModule.GetById(pane, "ImageType");
-        String data = (String) choiceBox.getValue();
-        System.out.println("Set image type: " + data);
-        //Communication.send_data("Prikaz123 25");
+        Communication.sendData(String.valueOf(IMAGE_TYPE_CODE));
+        System.out.println("image type has benn changed");
     }
 
     public void CameraMode(){
-        ChoiceBox choiceBox = (ChoiceBox)GUIModule.GetById(pane, "CameraMode");
-        String data = (String) choiceBox.getValue();
-        System.out.println("Set camera mode: " + data);
-        //Communication.send_data("Prikaz123 25");
+        Communication.sendData(String.valueOf(CAMERA_MODE_CODE));
+        System.out.println("camera mode has been changed");
     }
 
     public void ExposureTime(){
         TextField exposure_time = ((TextField)GUIModule.GetById(pane,"ExposureTimeField"));
-        System.out.println("Exposure time: " + exposure_time.getText());
-        //Communication.send_data("Prikaz123 25");
-        exposure_time.setText("");
+
+        try{
+            double value = Double.parseDouble(exposure_time.getText());
+            boolean confirm = true;
+
+            if(value <= 0) confirm = InputConfirmation.confirm("time should be positive", "warning");
+            if(confirm){
+                Communication.sendData(EXPOSURE_TIME_CODE + ";" + value);
+                System.out.println("Exposure time: " + value);
+                exposure_time.setText("");
+            }
+        }
+        catch(Exception e){
+            InputConfirmation.warn("Data was entered incorrectly!");
+        }
     }
 
     public void CoolerSetPoint(){
         TextField cooler_setpoint = ((TextField)GUIModule.GetById(pane,"CoolerSetPointField"));
-        System.out.println("Cooler setpoint: " + cooler_setpoint.getText());
-        //Communication.send_data("Prikaz123 25");
-        cooler_setpoint.setText("");
+        try{
+            double value = Double.parseDouble(cooler_setpoint.getText());
+            Communication.sendData(COOLER_SET_POINT_CODE + ";" + value);
+            System.out.println("Cooler set point: " + value);
+            cooler_setpoint.setText("");
+        }
+        catch(Exception e){
+            InputConfirmation.warn("Data was entered incorrectly!");
+        }
     }
 
     public void ExposureDelay(){
         TextField exposure_delay = ((TextField)GUIModule.GetById(pane,"ExposureDelayField"));
-        System.out.println("Exposure delay: " + exposure_delay.getText());
-        //Communication.send_data("Prikaz123 25");
-        exposure_delay.setText("");
+        try{
+            double value = Double.parseDouble(exposure_delay.getText());
+            boolean confirm = true;
+
+            if(value <= 0) confirm = InputConfirmation.confirm("exposure delay should be positive", "warning");
+            if(confirm){
+                Communication.sendData(EXPOSURE_DELAY_CODE + ";" + value);
+                System.out.println("Exposure delay: " + value);
+                exposure_delay.setText("");
+            }
+        }
+        catch(Exception e){
+            InputConfirmation.warn("Data was entered incorrectly!");
+        }
     }
 
     public void SequenceRepeats(){
         TextField sequence_repeats = ((TextField)GUIModule.GetById(pane,"SequenceRepeatsField"));
-        System.out.println("Sequence repeats: " + sequence_repeats.getText());
-        //Communication.send_data("Prikaz123 25");
-        sequence_repeats.setText("");
+        try{
+            int value = Integer.parseInt(sequence_repeats.getText());
+            boolean confirm = true;
+
+            if(value <= 0) confirm = InputConfirmation.confirm("sequence repeats should be positive", "warning");
+            if(confirm){
+                Communication.sendData(SEQUENCE_REPEATS_CODE + ";" + value);
+                System.out.println("Sequence repeats: " + value);
+                sequence_repeats.setText("");
+            }
+        }
+        catch(Exception e){
+            InputConfirmation.warn("Data was entered incorrectly!");
+        }
     }
 
     public void Observer(){
         TextArea observer = ((TextArea)GUIModule.GetById(pane,"ObserverField"));
+        Communication.sendData(OBSERVER_CODE + ";" + observer.getText());
         System.out.println("Observer: " + observer.getText());
-        //Communication.send_data("Prikaz123 25");
         observer.setText("");
     }
 
     public void Object(){
         TextArea object = ((TextArea)GUIModule.GetById(pane,"ObjectField"));
+        Communication.sendData(OBJECT_CODE + ";" + object.getText());
         System.out.println("Object: " + object.getText());
-        //Communication.send_data("Prikaz123 25");
         object.setText("");
     }
 
     public void Notes(){
         TextArea notes = ((TextArea)GUIModule.GetById(pane,"NotesField"));
+        Communication.sendData(NOTES_CODE + ";" + notes.getText());
         System.out.println("Notes: " + notes.getText());
-        //Communication.send_data("Prikaz123 25");
         notes.setText("");
     }
 
-    public void TurnCameraOn(){
-        System.out.println("Turn Camera On");
-        //Communication.send_data("TurnCameraOn");
+    public void ExposeSequence(){
+        Communication.sendData(String.valueOf(EXPOSE_SEQUENCE_CODE));
+        System.out.println("expose sequence");
     }
 
-    public void update(JsonObject jo) {
+    public void ExposeFromNearestSecond(){
+        Communication.sendData(String.valueOf(EXPOSE_FROM_NEAREST_SECOND_CODE));
+        System.out.println("expose from nearest second");
+    }
 
+    public void AbortImaging(){
+        Communication.sendData(String.valueOf(ABORT_IMAGING_CODE));
+        System.out.println("abort imaging");
+    }
+
+    public void update(JsonObject jo){
+        for(String s:info.keySet()){
+            if(jo.get(s) != null) Platform.runLater(() -> info.get(s).setText(jo.get(s).getAsString()));
+        }
     }
 
     @Override
@@ -139,10 +226,14 @@ public class Camera implements GUIModule {
         Pair<Boolean, KeyCode> image_type = new Pair<>(false, KeyCode.T);
         shortcuts.put(image_type, this::ImageType);
 
-        // E - turn on camera
-        Pair<Boolean, KeyCode> turn_on_camera = new Pair<>(true, KeyCode.E);
-        shortcuts.put(turn_on_camera, this::TurnCameraOn);
-        // X
-        // A
+        // E - expose sequence
+        Pair<Boolean, KeyCode> expose_sequence = new Pair<>(true, KeyCode.E);
+        shortcuts.put(expose_sequence, this::ExposeSequence);
+        // X - expose from nearest second
+        Pair<Boolean, KeyCode> expose_from_nearest_second = new Pair<>(true, KeyCode.X);
+        shortcuts.put(expose_from_nearest_second, this::ExposeFromNearestSecond);
+        // A - abort imaging
+        Pair<Boolean, KeyCode> abort_imaging = new Pair<>(true, KeyCode.A);
+        shortcuts.put(abort_imaging, this::AbortImaging);
     }
 }

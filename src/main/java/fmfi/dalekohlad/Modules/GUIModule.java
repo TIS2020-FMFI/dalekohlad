@@ -1,6 +1,8 @@
 package fmfi.dalekohlad.Modules;
 
 import com.google.gson.JsonObject;
+import fmfi.dalekohlad.Communication.Communication;
+import fmfi.dalekohlad.InputHandling.InputConfirmation;
 import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -38,8 +40,10 @@ public interface GUIModule {
 
     default void FocusTextField(boolean textArea, String id, Pane pane){
         Node field;
-        if(textArea) field = ((TextArea)GetById(pane,id));
-        else field = ((TextField)GetById(pane,id));
+        field = GetById(pane,id);
         field.requestFocus();
+
+        if(textArea)((TextArea) field).setText("");
+        else((TextField) field).setText("");
     }
 }
