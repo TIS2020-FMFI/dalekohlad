@@ -2,72 +2,111 @@ package fmfi.dalekohlad.Modules;
 
 import com.google.gson.JsonObject;
 import fmfi.dalekohlad.Communication.Communication;
+import fmfi.dalekohlad.InputHandling.InputConfirmation;
+import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
-
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Dome implements GUIModule {
     private Pane pane;
-    private Label[] info;
+    private HashMap<String, Label> info;
+
+    private final int DOME_WEST_CODE = 297;
+    private final int DOME_EAST_CODE = 306;
+    private final int DOME_STOP_CODE = 295;
+    private final int FREQUENCY_CODE = 102;
+    private final int CALIBRATE_AZIMUTH_CODE = 97;
+    private final int SYNCHRONIZE_CODE = 121;
 
     public void init(Pane p) {
         pane = p;
-        info = new Label[5];
+        info = new HashMap<>();
 
-        for(int i = 0; i < 5; i++){
-            info[i] = (Label) GUIModule.GetById(pane, "dome" + (i+1));
-            info[i].setText("...");
+        for(String s: new String[]{"DOMEEncoder", "DOMEAzimuth", "DOMETargetAzimuth", "DOMESynch", "DOMEStatus"}){
+            info.put(s, (Label) GUIModule.GetById(pane, s));
+            info.get(s).setText("...");
         }
 
-        ((Button)GUIModule.GetById(pane,"Frequency")).setOnAction(actionEvent -> Frequency());
-        ((Button)GUIModule.GetById(pane,"CalibrateAzimuth")).setOnAction(actionEvent -> Frequency());
-        ((Button)GUIModule.GetById(pane,"DomeWest")).setOnAction(actionEvent -> DomeWest());
-        ((Button)GUIModule.GetById(pane,"DomeStop")).setOnAction(actionEvent -> DomeStop());
-        ((Button)GUIModule.GetById(pane,"DomeEast")).setOnAction(actionEvent -> DomeEast());
-        ((Button)GUIModule.GetById(pane,"Synchronize")).setOnAction(actionEvent -> Synchronize());
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "FrequencyButton"))).setOnAction(actionEvent -> Frequency());
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "CalibrateAzimuthButton"))).setOnAction(actionEvent -> CalibrateAzimuth());
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "DomeWestButton"))).setOnAction(actionEvent -> DomeWest());
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "DomeStopButton"))).setOnAction(actionEvent -> DomeStop());
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "DomeEastButton"))).setOnAction(actionEvent -> DomeEast());
+        ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "SynchronizeButton"))).setOnAction(actionEvent -> Synchronize());
+
+        ((TextField) Objects.requireNonNull(GUIModule.GetById(pane, "FrequencyField"))).setOnAction(actionEvent -> Frequency());
+        ((TextField) Objects.requireNonNull(GUIModule.GetById(pane, "CalibrateAzimuthField"))).setOnAction(actionEvent -> CalibrateAzimuth());
     }
 
     public void Frequency() {
         TextField frequency = ((TextField)GUIModule.GetById(pane,"FrequencyField"));
-        System.out.println("Frequency: " + frequency.getText());
-        //Communication.send_data("Prikaz123 25");
-        frequency.setText("");
+
+        try{
+            double value = Double.parseDouble(frequency.getText());
+            boolean confirm = true;
+
+            if(value< 0 || value > 60) confirm = InputConfirmation.confirm("frequency should be in interval <0,60>, still continue?", "warning");
+            if(confirm){
+                Communication.send_data(FREQUENCY_CODE + ";" + value);
+                System.out.println("Frequency: " + frequency.getText());
+                frequency.setText("");
+            }
+        }
+        catch(Exception e){
+            InputConfirmation.warn("Data was entered incorrectly!");
+        }
     }
 
     public void CalibrateAzimuth() {
         TextField calibrate_azimuth = ((TextField)GUIModule.GetById(pane,"CalibrateAzimuthField"));
-        System.out.println("Calibrate azimuth: " + calibrate_azimuth.getText());
-        //Communication.send_data("Prikaz123 25");
-        calibrate_azimuth.setText("");
+
+        try{
+            double value = Double.parseDouble(calibrate_azimuth.getText());
+            boolean confirm = true;
+
+            if(value < 0 || value > 360) confirm = InputConfirmation.confirm("azimuth should be in interval <0,360>, still continue?", "warning");
+            if(confirm){
+                Communication.send_data(CALIBRATE_AZIMUTH_CODE + ";" + value);
+                System.out.println("Calibrate azimuth: " + calibrate_azimuth.getText());
+                calibrate_azimuth.setText("");
+            }
+        }
+        catch(Exception e){
+            InputConfirmation.warn("Data was entered incorrectly!");
+        }
     }
 
     public void DomeWest(){
+        Communication.send_data(String.valueOf(DOME_WEST_CODE));
         System.out.println("Dome West");
-        //Communication.send_data("Dome West");
     }
 
     public void DomeStop(){
+        Communication.send_data(String.valueOf(DOME_STOP_CODE));
         System.out.println("Dome Stop");
-        //Communication.send_data("Dome Stop");
     }
 
     public void DomeEast(){
+        Communication.send_data(String.valueOf(DOME_EAST_CODE));
         System.out.println("Dome East");
-        //Communication.send_data("Dome East");
     }
 
     public void Synchronize(){
+        Communication.send_data(String.valueOf(SYNCHRONIZE_CODE));
         System.out.println("Synchronize");
-        //Communication.send_data("Synchronize");
     }
 
-    public void update(JsonObject jo) {
-
+    public void update(JsonObject jo){
+        for(String s:info.keySet()){
+            if(jo.get(s) != null) Platform.runLater(() -> info.get(s).setText(jo.get(s).getAsString()));
+        }
     }
 
     @Override
@@ -78,10 +117,10 @@ public class Dome implements GUIModule {
         // a - azimuth
         Pair<Boolean, KeyCode> calibrate_azimuth = new Pair<>(false, KeyCode.A);
         shortcuts.put(calibrate_azimuth, () -> FocusTextField(false,"CalibrateAzimuthField", pane));
-
         // y - synchronize
         Pair<Boolean, KeyCode> synchronize = new Pair<>(false, KeyCode.Y);
         shortcuts.put(synchronize, this::Synchronize);
+
         // Insert - dome east
         Pair<Boolean, KeyCode> dome_east = new Pair<>(false, KeyCode.INSERT);
         shortcuts.put(dome_east, this::DomeEast);
