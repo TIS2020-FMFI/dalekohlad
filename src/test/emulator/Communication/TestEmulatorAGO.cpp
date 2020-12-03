@@ -462,7 +462,7 @@ DWORD WINAPI refreshLoop(LPVOID lpParam) {
 
 	while (true) {
 		send_data = get_refresh_data();
-		iSendResult = send(*clientSocket, send_data.c_str(), send_data.length(), 0);
+		iSendResult = send(*clientSocket, send_data.c_str(), send_data.length()+1, 0);
 		if (iSendResult == SOCKET_ERROR) {
 			return 1;
 		}
@@ -585,7 +585,7 @@ int main()
 			sendbuflen = receive_respond(recvbuf, sendbuf);
 			printf("Sendbuflen %d\n", sendbuflen);
 
-			iSendResult = send(ClientSocket, sendbuf, sendbuflen, 0);
+			iSendResult = send(ClientSocket, sendbuf, sendbuflen+1, 0);
 
 			if (iSendResult == SOCKET_ERROR) {
 				printf("send failed with error: %d\n", WSAGetLastError());
