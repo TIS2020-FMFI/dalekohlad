@@ -48,7 +48,7 @@ public class Mediator {
         loadScene(stage);
         bindModules(stage);
         InetSocketAddress host = loadHostFromConfig();
-        //Communication.init(host, modules);
+        Communication.init(host, modules);
     }
 
     private static void loadScene(Stage stage) {
