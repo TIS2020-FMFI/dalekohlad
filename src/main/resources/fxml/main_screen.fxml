@@ -156,10 +156,13 @@
                <Label layoutX="10.0" layoutY="65.0" text="RBI flush count:" textFill="WHITE" />
                <Label layoutX="10.0" layoutY="45.0" text="Mode:" textFill="WHITE" />
                <Label layoutX="10.0" layoutY="25.0" text="Exposure:" textFill="WHITE" />
-               <Button fx:id="TurnCameraOn" layoutX="45.0" layoutY="585.0" mnemonicParsing="false" prefWidth="120.0" style="-fx-background-color: rgb(250,250,100);" text="Turn camera ON ">
-                  <cursor>
-                     <Cursor fx:constant="HAND" />
-                  </cursor></Button>
+               <Button fx:id="ExposeSequenceButton" layoutX="10.0" layoutY="585.0" mnemonicParsing="false" prefWidth="120.0" style="-fx-background-color: rgb(250,250,100);" text="Expose sequence">
+                  <cursor><Cursor fx:constant="HAND" /></cursor></Button>
+               <Button fx:id="ExposeFromNearestSecondButton" layoutX="140.0" layoutY="585.0" mnemonicParsing="false"  style="-fx-background-color: rgb(250,250,100);" text="Expose from nearest second">
+                  <cursor><Cursor fx:constant="HAND" /></cursor></Button>
+               <Button fx:id="AbortImagingButton" layoutX="315.0" layoutY="585.0" mnemonicParsing="false"  style="-fx-background-color: rgb(250,250,100);" text="Abort imaging">
+                  <cursor><Cursor fx:constant="HAND" /></cursor></Button>
+
                <TextField fx:id="ExposureTimeField" layoutX="110.0" layoutY="430.0" prefWidth="80.0" />
                <TextField fx:id="CoolerSetPointField" layoutX="110.0" layoutY="465.0" prefWidth="80.0" />
                <TextField fx:id="ExposureDelayField" layoutX="110.0" layoutY="500.0" prefWidth="80.0" />
@@ -186,7 +189,7 @@
                <Label layoutX="10.0" layoutY="365.0" text="Image type:" textFill="WHITE" />
                <Label layoutX="10.0" layoutY="400.0" text="Camera mode:" textFill="WHITE" />
                <Label layoutX="10.0" layoutY="435.0" text="Exposure time:" textFill="WHITE" />
-                <ChoiceBox fx:id="CameraModeChoiceBox" layoutX="110.0" layoutY="395.0" prefWidth="106.0">
+                <ChoiceBox fx:id="CAMModeChoiceBox" layoutX="110.0" layoutY="395.0" prefWidth="106.0">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
                             <String fx:value="1MHz low noise" />
@@ -195,7 +198,7 @@
                         </FXCollections>
                     </items>
                 </ChoiceBox>
-                <ChoiceBox fx:id="ImageTypeChoiceBox" layoutX="110.0" layoutY="360.0" prefWidth="106.0">
+                <ChoiceBox fx:id="CAMTypeChoiceBox" layoutX="110.0" layoutY="360.0" prefWidth="106.0">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
                             <String fx:value="Light" />

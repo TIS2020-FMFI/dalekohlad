@@ -41,8 +41,8 @@ public class Camera implements GUIModule {
             info.get(s).setText("...");
         }
 
-        ((ChoiceBox) Objects.requireNonNull(GUIModule.GetById(pane, "ImageTypeChoiceBox"))).setOnAction(actionEvent -> ChoiceBoxCommand("ImageType", IMAGE_TYPE_CODE));
-        ((ChoiceBox) Objects.requireNonNull(GUIModule.GetById(pane, "CameraModeChoiceBox"))).setOnAction(actionEvent -> ChoiceBoxCommand("CameraMode", CAMERA_MODE_CODE));
+        ((ChoiceBox) Objects.requireNonNull(GUIModule.GetById(pane, "CAMTypeChoiceBox"))).setOnAction(actionEvent -> ChoiceBoxCommand("CAMType", IMAGE_TYPE_CODE));
+        ((ChoiceBox) Objects.requireNonNull(GUIModule.GetById(pane, "CAMModeChoiceBox"))).setOnAction(actionEvent -> ChoiceBoxCommand("CAMMode", CAMERA_MODE_CODE));
         ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "ExposureTimeButton"))).setOnAction(actionEvent -> ExposureTime());
         ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "CoolerSetpointButton"))).setOnAction(actionEvent -> CoolerSetPoint());
         ((Button) Objects.requireNonNull(GUIModule.GetById(pane, "ExposureDelayButton"))).setOnAction(actionEvent -> ExposureDelay());
@@ -61,7 +61,7 @@ public class Camera implements GUIModule {
     }
 
     public void ChoiceBoxCommand(String element, int CODE){
-        ChoiceBox choiceBox = (ChoiceBox)GUIModule.GetById(pane, element);
+        ChoiceBox choiceBox = (ChoiceBox)GUIModule.GetById(pane, element + "ChoiceBox");
         String data = (String) choiceBox.getValue();
 
         int actual = choiceBox.getItems().indexOf(info.get(element).getText());
