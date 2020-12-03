@@ -14,7 +14,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,31 +22,25 @@ import java.io.RandomAccessFile;
 
 public class Others implements GUIModule {
     private static final String shortcuts_screen = "/fxml/shortcuts_scene.fxml";
-    private Parent main_screen_root;
-    private Pane pane;
-    private Scene ultimateScene;
-    private Button shortcuts;
-    private Label info;
-    private Label status;
-    private Label pathFITS;
     private static final Logger lgr = LogManager.getLogger(Others.class);
     private final int FITS_SIZE = 170;
     private final Dimension DIMENSION = new Dimension(FITS_SIZE, FITS_SIZE);
+    private final int IMAGE_HDU = 0;
+    private Parent main_screen_root;
+    private Pane pane;
+    private Label info;
+    private Label status;
+    private Label pathFITS;
     private SwingNode swingNode;
 
     private void fitsHandle(String pathToFITS) {
         //suppose FITS file is never rewritten -> new photo is written to new file
-        if(pathToFITS == null || pathToFITS.compareTo(pathFITS.getText()) == 0) {
+        if(changingImageNotNecessary(pathToFITS)) {
             lgr.debug("FITS hasn't changed.");
             return;
         }
-        pathFITS.setText(pathToFITS);
         try {
-            RandomAccessFile lastFrame = new RandomAccessFile(pathToFITS.toString(), "r");
-            RandomAccessFitsFile fitFile = new RandomAccessFitsFile(lastFrame);
-            FitsHDU hdu = fitFile.getHDU(0);
-            FitsImageData imageData = (FitsImageData) hdu.getData();
-            FitsImageViewer image = new FitsImageViewer(imageData);
+            FitsImageViewer image = loadImageFromFits(pathToFITS);
 
             image.setMaximumSize(DIMENSION);
 
@@ -55,53 +48,83 @@ public class Others implements GUIModule {
         } catch (Exception e) {
             lgr.error("Failed load FITS file");
         }
+
+        Platform.runLater(() -> pathFITS.setText(pathToFITS));
+    }
+
+    private boolean changingImageNotNecessary(String pathToFits) {
+        return (pathToFits == null || pathToFits.compareTo(pathFITS.getText()) == 0);
+    }
+
+    private FitsImageViewer loadImageFromFits(String pathoTiFits) throws Exception {
+        RandomAccessFile lastFrame = new RandomAccessFile(pathoTiFits.toString(), "r");
+        RandomAccessFitsFile fitFile = new RandomAccessFitsFile(lastFrame);
+        FitsHDU hdu = fitFile.getHDU(IMAGE_HDU);
+        FitsImageData imageData = (FitsImageData) hdu.getData();
+        FitsImageViewer image = new FitsImageViewer(imageData);
+        return image;
     }
 
     @Override
     public void update(JsonObject jo) {
-        String time = jo.get("TIMEUTC").getAsString();
-        String timeUT1 = jo.get("TIMEUT1UTC").getAsString();
-        String fits_path = jo.get("FITSpath").getAsString();
-        String infoText = time + " " + timeUT1;
-        this.fitsHandle(fits_path);
+        String infoText = "";
+        try {
+            String time = jo.get("TIMEUTC").getAsString();
+            infoText += time + " ";
+        } catch (Exception e) {
+            lgr.debug("Time UTC wasn't loaded.");
+        }
+        try {
+            String timeUT1 = jo.get("TIMEUT1UTC").getAsString();
+            infoText += timeUT1 + " ";
+        } catch (Exception e) {
+            lgr.debug("Time UTC wasn't loaded.");
+        }
+        try {
+            String fits_path = jo.get("FITSpath").getAsString();
+            this.fitsHandle(fits_path);
+        } catch (Exception e) {
+            lgr.debug("Path to FITS wasn't loaded");
+        }
+
+        String finalInfoText = infoText;
         Platform.runLater(() -> {
-            this.info.setText(infoText);
+            this.info.setText(finalInfoText);
         });
     }
 
-    private void displayShortcuts() {
-        VBox parent = null;
+    private void setDisplayingShortcuts() {
+        Pane shortcutsPane = null;
+        Scene scene;
         try {
-            parent = FXMLLoader.load(Others.class.getResource(shortcuts_screen));
+            shortcutsPane = FXMLLoader.load(Others.class.getResource(shortcuts_screen));
         }
         catch (Exception e) {
             lgr.fatal("Unable to load FXML resource: " + shortcuts_screen, e);
-            System.exit(1);
+            System.exit(Mediator.EXIT_FXML_ERROR);
         }
-        ultimateScene = pane.getParent().getScene();
-        pane.getParent().getScene().setRoot(parent);
+        scene = pane.getParent().getScene();
+        setReturningToMain(shortcutsPane);
 
-        Pane otherPane = (Pane) parent.getChildren().get(0);
-        Button back = (Button) GUIModule.GetById(otherPane, "back");
-        back.setOnAction(e -> dislapyMain());
-        lgr.debug("Loaded FXML " + shortcuts_screen);
+        scene.setRoot(shortcutsPane);
     }
 
-    private void dislapyMain() {
-        ultimateScene.setRoot(main_screen_root);
+    private void setReturningToMain(Pane shortcutsPane) {
+        Scene scene = pane.getParent().getScene();
+        Button backToMain = (Button) GUIModule.GetById(shortcutsPane, "back");
+        backToMain.setOnAction(e -> scene.setRoot(main_screen_root));
     }
 
     @Override
     public void init(Pane pane) {
         this.pane = pane;
         ((Button) GUIModule.GetById(pane,"Exit")).setOnAction(event -> System.exit(0));
-        this.shortcuts = (Button) GUIModule.GetById(pane, "Shortcuts");
         this.info = (Label) GUIModule.GetById(pane, "info");
         this.status = (Label) GUIModule.GetById(pane, "Connected");
         this.pathFITS = (Label) GUIModule.GetById(pane, "path_to_last_frame");
         this.swingNode = (SwingNode) GUIModule.GetById(pane, "node_FITS");
         this.main_screen_root = pane.getParent().getScene().getRoot();
 
-        ((Button) GUIModule.GetById(pane,"Shortcuts")).setOnAction(event -> this.displayShortcuts());
+        ((Button) GUIModule.GetById(pane,"Shortcuts")).setOnAction(event -> this.setDisplayingShortcuts());
     }
 }
