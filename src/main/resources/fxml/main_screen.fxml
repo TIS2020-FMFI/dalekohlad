@@ -314,9 +314,17 @@
             <children>
                 <Label fx:id="aplication_name" layoutX="500.0" layoutY="2.0" text="Názov Aplikácie" textFill="WHITE">
                   <font><Font size="22.0" /></font></Label>
-                <Button fx:id="Shortcuts" layoutX="1060.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: rgb(80,80,250);" text="Shortcuts" />
+                <Button fx:id="Shortcuts" layoutX="1060.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: rgb(80,80,250);" text="Shortcuts">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
                 <Label fx:id="info" layoutX="23.0" layoutY="10.0" text="UTC: yyyy-mm-dd hh:mm:ss   UTC1-UTC=0.9 leapsec=37 p=715.5mmHg T=12.6°" textFill="WHITE" />
-                <Button fx:id="Exit" layoutX="1140.0" layoutY="7.0" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: rgb(250,80,80);" text="Exit" />
+                <Button fx:id="Exit" layoutX="1140.0" layoutY="7.0" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: rgb(250,80,80);" text="Exit" >
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
                 <Label fx:id="Connected" layoutX="990.0" layoutY="12.0" style="-fx-background-color: rgb(80,250,80);" text="connected" />
                <Label fx:id="path_to_last_frame" layoutX="1060.0" layoutY="240.0" text="" textFill="WHITE" />
                 <SwingNode fx:id="node_FITS" layoutX="1025" layoutY="70" />
