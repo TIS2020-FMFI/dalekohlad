@@ -19,6 +19,16 @@ public class Axis implements GUIModule {
     private Label[] info_polar;
     private Label[] info_declination;
 
+    private final int ENABLE_MOTORS_CODE = 91;
+    private final int DISABLE_MOTORS_CODE = 93;
+    private final int STOP_RA_CODE = 87;
+    private final int STOP_DE_CODE = 119;
+    private final int CALIBRATION_CODE = 99;
+    private final int SLEW_RA_POSITIVE_CODE = 77;
+    private final int SLEW_DE_POSITIVE_CODE = 72;
+    private final int SLEW_RA_NEGATIVE_CODE = 75;
+    private final int SLEW_DE_NEGATIVE_CODE = 80;
+
     public void init(Pane p) {
         pane = p;
         info_polar = new Label[5];
@@ -39,7 +49,6 @@ public class Axis implements GUIModule {
        ((Button)GUIModule.GetById(pane,"Correction")).setOnAction(actionEvent -> Correction());
        ((Button)GUIModule.GetById(pane,"SlewRA")).setOnAction(actionEvent -> SlewRA());
        ((Button)GUIModule.GetById(pane,"SlewDE")).setOnAction(actionEvent -> SlewDE());
-       //((Button)GUIModule.GetById(pane,"GoTo")).setOnAction(actionEvent -> GoTo());
     }
 
     public static boolean isInteger(String strNum) {
@@ -47,7 +56,7 @@ public class Axis implements GUIModule {
             return false;
         }
         try {
-            int d = Integer.parseInt(strNum);
+            int integerValue = Integer.parseInt(strNum);
         } catch (NumberFormatException nfe) {
             return false;
         }
@@ -58,38 +67,33 @@ public class Axis implements GUIModule {
         Button button = (Button) GUIModule.GetById(pane, "EnableDisableMotors");
         if(button.getText().equals("Enable Motors")) {
             Platform.runLater(() -> {button.setText("Disable Motors");});
-            Communication.sendData(String.valueOf(91));
+            Communication.sendData(String.valueOf(ENABLE_MOTORS_CODE));
         }
         else {
             Platform.runLater(() -> {button.setText("Enable Motors");});
-            Communication.sendData(String.valueOf(93));
+            Communication.sendData(String.valueOf(DISABLE_MOTORS_CODE));
         }
-        System.out.println("Enable/Disable motors");
     }
 
     public void StopRA(){
-        Communication.sendData(String.valueOf(87));
-        System.out.println("Stop RA");
+        Communication.sendData(String.valueOf(STOP_RA_CODE));
     }
 
     public void StopDE(){
-        Communication.sendData(String.valueOf(119));
-        System.out.println("Stop DE");
+        Communication.sendData(String.valueOf(STOP_DE_CODE));
     }
 
     public void StopRAandDE(){
-        Communication.sendData(String.valueOf(87));
-        Communication.sendData(String.valueOf(119));
-        System.out.println("Stop RA and DE");
+        Communication.sendData(String.valueOf(STOP_RA_CODE));
+        Communication.sendData(String.valueOf(STOP_DE_CODE));
     }
 
     public void Calibrate(){
-        Communication.sendData(String.valueOf(99));
-        System.out.println("Calibrate");
+        Communication.sendData(String.valueOf(CALIBRATION_CODE));
     }
 
     public void  Correction(){
-        // TO DOOOO ???
+        // TO DOOOO
         System.out.println("Correction");
     }
 
@@ -99,14 +103,13 @@ public class Axis implements GUIModule {
 
         if(isInteger(slew_ra_text)) {
             int input_value = Integer.parseInt(slew_ra_text);
-            if(input_value >= 0) Communication.sendData(77+";"+input_value);
-            else Communication.sendData(75+";"+(input_value*-1));
+            if(input_value >= 0) Communication.sendData(SLEW_RA_POSITIVE_CODE+";"+input_value);
+            else Communication.sendData(SLEW_RA_NEGATIVE_CODE+";"+(input_value*-1));
         }
         else {
             InputConfirmation.warn("Data was entered incorrectly!");
         }
 
-        System.out.println("Slew RA: " + slew_ra.getText());
         slew_ra.setText("");
     }
 
@@ -116,68 +119,36 @@ public class Axis implements GUIModule {
 
         if(isInteger(slew_de_text)) {
             int input_value = Integer.parseInt(slew_de_text);
-            if(input_value >= 0) Communication.sendData(72+";"+input_value);
-            else Communication.sendData(80+";"+(input_value*-1));
+            if(input_value >= 0) Communication.sendData(SLEW_DE_POSITIVE_CODE+";"+input_value);
+            else Communication.sendData(SLEW_DE_NEGATIVE_CODE+";"+(input_value*-1));
         }
         else {
             InputConfirmation.warn("Data was entered incorrectly!");
         }
 
-        System.out.println("Slew DE: " + slew_de.getText());
         slew_de.setText("");
     }
 
     public void update(JsonObject jo) {
-        if(jo.get("PAEncoder") != null) {
-            Platform.runLater(() -> {
-                info_polar[0].setText(jo.get("PAEncoder").getAsString());
-            });
-        }
-        if(jo.get("PAHAApparent") != null) {
-            Platform.runLater(() -> {
-                info_polar[1].setText(jo.get("PAHAApparent").getAsString());
-            });
-        }
-        if(jo.get("PAHARAJ2000") != null) {
-            Platform.runLater(() -> {
-                info_polar[2].setText(jo.get("PAHARAJ2000").getAsString());
-            });
-        }
-        if(jo.get("PAAzimuth") != null) {
-            Platform.runLater(() -> {
-                info_polar[3].setText(jo.get("PAAzimuth").getAsString());
-            });
-        }
-        if(jo.get("PAStatus") != null) {
-            Platform.runLater(() -> {
-                info_polar[4].setText(jo.get("PAStatus").getAsString());
-            });
-        }
-        if(jo.get("DEEncoder") != null) {
-            Platform.runLater(() -> {
-                info_declination[0].setText(jo.get("DEEncoder").getAsString());
-            });
-        }
-        if(jo.get("DEApparent") != null) {
-            Platform.runLater(() -> {
-                info_declination[1].setText(jo.get("DEApparent").getAsString());
-            });
-        }
-        if(jo.get("DEDEJ2000") != null) {
-            Platform.runLater(() -> {
-                info_declination[2].setText(jo.get("DEDEJ2000").getAsString());
-            });
-        }
-        if(jo.get("DEElevation") != null) {
-            Platform.runLater(() -> {
-                info_declination[3].setText(jo.get("DEElevation").getAsString());
-            });
-        }
-        if(jo.get("DEStatus") != null) {
-            Platform.runLater(() -> {
-                info_declination[4].setText(jo.get("DEStatus").getAsString());
-            });
-        }
+        if(jo.get("PAEncoder") != null) Platform.runLater(() -> {info_polar[0].setText(jo.get("PAEncoder").getAsString());});
+
+        if(jo.get("PAHAApparent") != null) Platform.runLater(() -> {info_polar[1].setText(jo.get("PAHAApparent").getAsString());});
+
+        if(jo.get("PAHARAJ2000") != null) Platform.runLater(() -> {info_polar[2].setText(jo.get("PAHARAJ2000").getAsString());});
+
+        if(jo.get("PAAzimuth") != null) Platform.runLater(() -> {info_polar[3].setText(jo.get("PAAzimuth").getAsString());});
+
+        if(jo.get("PAStatus") != null) Platform.runLater(() -> {info_polar[4].setText(jo.get("PAStatus").getAsString());});
+
+        if(jo.get("DEEncoder") != null) Platform.runLater(() -> {info_declination[0].setText(jo.get("DEEncoder").getAsString());});
+
+        if(jo.get("DEApparent") != null) Platform.runLater(() -> {info_declination[1].setText(jo.get("DEApparent").getAsString());});
+
+        if(jo.get("DEDEJ2000") != null) Platform.runLater(() -> {info_declination[2].setText(jo.get("DEDEJ2000").getAsString());});
+
+        if(jo.get("DEElevation") != null) Platform.runLater(() -> {info_declination[3].setText(jo.get("DEElevation").getAsString());});
+
+        if(jo.get("DEStatus") != null) Platform.runLater(() -> {info_declination[4].setText(jo.get("DEStatus").getAsString());});
     }
 
     @Override
