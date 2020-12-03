@@ -54,7 +54,7 @@ public class Dome implements GUIModule {
 
             if(value < 0 || value > 60) confirm = InputConfirmation.confirm("frequency should be in interval <0,60>", "warning");
             if(confirm){
-                Communication.send_data(FREQUENCY_CODE + ";" + value);
+                Communication.sendData(FREQUENCY_CODE + ";" + value);
                 System.out.println("Frequency: " + value);
                 frequency.setText("");
             }
@@ -73,7 +73,7 @@ public class Dome implements GUIModule {
 
             if(value < 0 || value > 360) confirm = InputConfirmation.confirm("azimuth should be in interval <0,360>", "warning");
             if(confirm){
-                Communication.send_data(CALIBRATE_AZIMUTH_CODE + ";" + value);
+                Communication.sendData(CALIBRATE_AZIMUTH_CODE + ";" + value);
                 System.out.println("Calibrate azimuth: " + value);
                 calibrate_azimuth.setText("");
             }
@@ -84,22 +84,22 @@ public class Dome implements GUIModule {
     }
 
     public void DomeWest(){
-        Communication.send_data(String.valueOf(DOME_WEST_CODE));
+        Communication.sendData(String.valueOf(DOME_WEST_CODE));
         System.out.println("Dome West");
     }
 
     public void DomeStop(){
-        Communication.send_data(String.valueOf(DOME_STOP_CODE));
+        Communication.sendData(String.valueOf(DOME_STOP_CODE));
         System.out.println("Dome Stop");
     }
 
     public void DomeEast(){
-        Communication.send_data(String.valueOf(DOME_EAST_CODE));
+        Communication.sendData(String.valueOf(DOME_EAST_CODE));
         System.out.println("Dome East");
     }
 
     public void Synchronize(){
-        Communication.send_data(String.valueOf(SYNCHRONIZE_CODE));
+        Communication.sendData(String.valueOf(SYNCHRONIZE_CODE));
         System.out.println("Synchronize");
     }
 
@@ -114,7 +114,7 @@ public class Dome implements GUIModule {
         // f - frequency  (0 - 60)
         Pair<Boolean, KeyCode> frequency = new Pair<>(false, KeyCode.F);
         shortcuts.put(frequency, () -> FocusTextField(false,"FrequencyField", pane));
-        // a - azimuth (0-360)
+        // a - azimuth (0 - 360)
         Pair<Boolean, KeyCode> calibrate_azimuth = new Pair<>(false, KeyCode.A);
         shortcuts.put(calibrate_azimuth, () -> FocusTextField(false,"CalibrateAzimuthField", pane));
         // y - synchronize

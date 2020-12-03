@@ -69,18 +69,18 @@ public class Camera implements GUIModule {
         int num = wanted - actual;
         if(num < 0) num += 3;
         if(actual == -1) num = wanted;
-        for(int i = 0; i < num; i++) Communication.send_data(String.valueOf(CODE));
+        for(int i = 0; i < num; i++) Communication.sendData(String.valueOf(CODE));
 
         System.out.println("Set " + element + ": " + data);
     }
 
     public void ImageType(){
-        Communication.send_data(String.valueOf(IMAGE_TYPE_CODE));
+        Communication.sendData(String.valueOf(IMAGE_TYPE_CODE));
         System.out.println("image type has benn changed");
     }
 
     public void CameraMode(){
-        Communication.send_data(String.valueOf(CAMERA_MODE_CODE));
+        Communication.sendData(String.valueOf(CAMERA_MODE_CODE));
         System.out.println("camera mode has been changed");
     }
 
@@ -93,7 +93,7 @@ public class Camera implements GUIModule {
 
             if(value <= 0) confirm = InputConfirmation.confirm("time should be positive", "warning");
             if(confirm){
-                Communication.send_data(EXPOSURE_TIME_CODE + ";" + value);
+                Communication.sendData(EXPOSURE_TIME_CODE + ";" + value);
                 System.out.println("Exposure time: " + value);
                 exposure_time.setText("");
             }
@@ -107,7 +107,7 @@ public class Camera implements GUIModule {
         TextField cooler_setpoint = ((TextField)GUIModule.GetById(pane,"CoolerSetPointField"));
         try{
             double value = Double.parseDouble(cooler_setpoint.getText());
-            Communication.send_data(COOLER_SET_POINT_CODE + ";" + value);
+            Communication.sendData(COOLER_SET_POINT_CODE + ";" + value);
             System.out.println("Cooler set point: " + value);
             cooler_setpoint.setText("");
         }
@@ -124,7 +124,7 @@ public class Camera implements GUIModule {
 
             if(value <= 0) confirm = InputConfirmation.confirm("exposure delay should be positive", "warning");
             if(confirm){
-                Communication.send_data(EXPOSURE_DELAY_CODE + ";" + value);
+                Communication.sendData(EXPOSURE_DELAY_CODE + ";" + value);
                 System.out.println("Exposure delay: " + value);
                 exposure_delay.setText("");
             }
@@ -142,7 +142,7 @@ public class Camera implements GUIModule {
 
             if(value <= 0) confirm = InputConfirmation.confirm("sequence repeats should be positive", "warning");
             if(confirm){
-                Communication.send_data(SEQUENCE_REPEATS_CODE + ";" + value);
+                Communication.sendData(SEQUENCE_REPEATS_CODE + ";" + value);
                 System.out.println("Sequence repeats: " + value);
                 sequence_repeats.setText("");
             }
@@ -154,37 +154,37 @@ public class Camera implements GUIModule {
 
     public void Observer(){
         TextArea observer = ((TextArea)GUIModule.GetById(pane,"ObserverField"));
-        Communication.send_data(OBSERVER_CODE + ";" + observer.getText());
+        Communication.sendData(OBSERVER_CODE + ";" + observer.getText());
         System.out.println("Observer: " + observer.getText());
         observer.setText("");
     }
 
     public void Object(){
         TextArea object = ((TextArea)GUIModule.GetById(pane,"ObjectField"));
-        Communication.send_data(OBJECT_CODE + ";" + object.getText());
+        Communication.sendData(OBJECT_CODE + ";" + object.getText());
         System.out.println("Object: " + object.getText());
         object.setText("");
     }
 
     public void Notes(){
         TextArea notes = ((TextArea)GUIModule.GetById(pane,"NotesField"));
-        Communication.send_data(NOTES_CODE + ";" + notes.getText());
+        Communication.sendData(NOTES_CODE + ";" + notes.getText());
         System.out.println("Notes: " + notes.getText());
         notes.setText("");
     }
 
     public void ExposeSequence(){
-        Communication.send_data(String.valueOf(EXPOSE_SEQUENCE_CODE));
+        Communication.sendData(String.valueOf(EXPOSE_SEQUENCE_CODE));
         System.out.println("expose sequence");
     }
 
     public void ExposeFromNearestSecond(){
-        Communication.send_data(String.valueOf(EXPOSE_FROM_NEAREST_SECOND_CODE));
+        Communication.sendData(String.valueOf(EXPOSE_FROM_NEAREST_SECOND_CODE));
         System.out.println("expose from nearest second");
     }
 
     public void AbortImaging(){
-        Communication.send_data(String.valueOf(ABORT_IMAGING_CODE));
+        Communication.sendData(String.valueOf(ABORT_IMAGING_CODE));
         System.out.println("abort imaging");
     }
 
