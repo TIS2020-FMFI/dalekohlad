@@ -29,7 +29,8 @@ public class Target implements GUIModule {
 
         for(int i = 0; i < 10; i++){
             info[i] = (Label) GUIModule.GetById(pane, "target" + (i+1));
-            info[i].setText("...");
+            int finalI = i;
+            Platform.runLater(() -> {info[finalI].setText("...");});
         }
 
         ((Button)GUIModule.GetById(pane,"LoadTarget")).setOnAction(actionEvent -> LoadTarget());
@@ -60,8 +61,8 @@ public class Target implements GUIModule {
             InputConfirmation.warn("Data was entered incorrectly!");
         }
 
-        ra.setText("");
-        de.setText("");
+        Platform.runLater(() -> {ra.setText("");});
+        Platform.runLater(() -> {de.setText("");});
     }
 
     public void GoToCancel(){
@@ -73,13 +74,7 @@ public class Target implements GUIModule {
     }
 
     public void update(JsonObject jo) {
-
-        for(int i = 0; i < 10; i++) {
-            if(jo.get(INFO_NAMES.get(i)) != null) {
-                int finalI = i;
-                Platform.runLater(() -> {info[finalI].setText(jo.get(INFO_NAMES.get(finalI)).getAsString());});
-            }
-        }
+        updateInformations(jo,INFO_NAMES,info);
     }
 
     @Override

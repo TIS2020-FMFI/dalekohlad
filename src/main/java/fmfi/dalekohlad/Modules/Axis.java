@@ -41,8 +41,9 @@ public class Axis implements GUIModule {
         for(int i = 0; i < 5; i++){
             info_polar[i] = (Label) GUIModule.GetById(pane, "polar" + (i+1));
             info_declination[i] = (Label) GUIModule.GetById(pane, "declination" + (i+1));
-            info_polar[i].setText("...");
-            info_declination[i].setText("...");
+            int finalI = i;
+            Platform.runLater(() -> {info_polar[finalI].setText("...");});
+            Platform.runLater(() -> {info_declination[finalI].setText("...");});
         }
 
        ((Button)GUIModule.GetById(pane,"EnableDisableMotors")).setOnAction(actionEvent -> EnableDisableMotors());
@@ -97,7 +98,7 @@ public class Axis implements GUIModule {
     }
 
     public void  Correction(){
-        // TO DOOOO
+        // TO DO - no info in emulator
         System.out.println("Correction");
     }
 
@@ -114,7 +115,7 @@ public class Axis implements GUIModule {
             InputConfirmation.warn("Data was entered incorrectly!");
         }
 
-        slew_ra.setText("");
+        Platform.runLater(() -> {slew_ra.setText("");});
     }
 
     public void SlewDE() {
@@ -129,20 +130,12 @@ public class Axis implements GUIModule {
         else {
             InputConfirmation.warn("Data was entered incorrectly!");
         }
-
-        slew_de.setText("");
+        Platform.runLater(() -> {slew_de.setText("");});
     }
 
     public void update(JsonObject jo) {
-        for(int i = 0; i < 5;i++) {
-            int finalI = i;
-            if(jo.get(INFO_NAMES_POLAR.get(i)) != null) {
-                Platform.runLater(() -> {info_polar[finalI].setText(jo.get(INFO_NAMES_POLAR.get(finalI)).getAsString());});
-            }
-            if(jo.get(INFO_NAMES_DECLINATION.get(i)) != null) {
-                Platform.runLater(() -> {info_declination[finalI].setText(jo.get(INFO_NAMES_DECLINATION.get(finalI)).getAsString());});
-            }
-        }
+        updateInformations(jo,INFO_NAMES_POLAR,info_polar);
+        updateInformations(jo,INFO_NAMES_DECLINATION,info_declination);
     }
 
     @Override

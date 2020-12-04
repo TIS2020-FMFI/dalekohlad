@@ -3,13 +3,16 @@ package fmfi.dalekohlad.Modules;
 import com.google.gson.JsonObject;
 import fmfi.dalekohlad.Communication.Communication;
 import fmfi.dalekohlad.InputHandling.InputConfirmation;
+import javafx.application.Platform;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 
+import java.util.List;
 import java.util.Map;
 
 public interface GUIModule {
@@ -45,5 +48,14 @@ public interface GUIModule {
 
         if(textArea)((TextArea) field).setText("");
         else((TextField) field).setText("");
+    }
+
+    default void updateInformations(JsonObject jo, List<String> namesOfCells, Label[] infoLabels) {
+        for(int i = 0; i < infoLabels.length; i++) {
+            if(jo.get(namesOfCells.get(i)) != null) {
+                int finalI = i;
+                Platform.runLater(() -> {infoLabels[finalI].setText(jo.get(namesOfCells.get(finalI)).getAsString());});
+            }
+        }
     }
 }
