@@ -10,6 +10,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 
+import java.util.List;
 import java.util.Map;
 import fmfi.dalekohlad.InputHandling.InputConfirmation;
 
@@ -29,6 +30,9 @@ public class Axis implements GUIModule {
     private final int SLEW_RA_NEGATIVE_CODE = 75;
     private final int SLEW_DE_NEGATIVE_CODE = 80;
 
+    private final List<String> INFO_NAMES_POLAR = List.of("PAEncoder","PAHAApparent","PAHARAJ2000","PAAzimuth","PAStatus");
+    private final List<String> INFO_NAMES_DECLINATION = List.of("DEEncoder","DEApparent","DEDEJ2000","DEElevation","DEStatus");
+
     public void init(Pane p) {
         pane = p;
         info_polar = new Label[5];
@@ -37,8 +41,9 @@ public class Axis implements GUIModule {
         for(int i = 0; i < 5; i++){
             info_polar[i] = (Label) GUIModule.GetById(pane, "polar" + (i+1));
             info_declination[i] = (Label) GUIModule.GetById(pane, "declination" + (i+1));
-            info_polar[i].setText("...");
-            info_declination[i].setText("...");
+            int finalI = i;
+            Platform.runLater(() -> {info_polar[finalI].setText("...");});
+            Platform.runLater(() -> {info_declination[finalI].setText("...");});
         }
 
        ((Button)GUIModule.GetById(pane,"EnableDisableMotors")).setOnAction(actionEvent -> EnableDisableMotors());
@@ -93,7 +98,7 @@ public class Axis implements GUIModule {
     }
 
     public void  Correction(){
-        // TO DOOOO
+        // TO DO - no info in emulator
         System.out.println("Correction");
     }
 
@@ -110,7 +115,7 @@ public class Axis implements GUIModule {
             InputConfirmation.warn("Data was entered incorrectly!");
         }
 
-        slew_ra.setText("");
+        Platform.runLater(() -> {slew_ra.setText("");});
     }
 
     public void SlewDE() {
@@ -125,30 +130,12 @@ public class Axis implements GUIModule {
         else {
             InputConfirmation.warn("Data was entered incorrectly!");
         }
-
-        slew_de.setText("");
+        Platform.runLater(() -> {slew_de.setText("");});
     }
 
     public void update(JsonObject jo) {
-        if(jo.get("PAEncoder") != null) Platform.runLater(() -> {info_polar[0].setText(jo.get("PAEncoder").getAsString());});
-
-        if(jo.get("PAHAApparent") != null) Platform.runLater(() -> {info_polar[1].setText(jo.get("PAHAApparent").getAsString());});
-
-        if(jo.get("PAHARAJ2000") != null) Platform.runLater(() -> {info_polar[2].setText(jo.get("PAHARAJ2000").getAsString());});
-
-        if(jo.get("PAAzimuth") != null) Platform.runLater(() -> {info_polar[3].setText(jo.get("PAAzimuth").getAsString());});
-
-        if(jo.get("PAStatus") != null) Platform.runLater(() -> {info_polar[4].setText(jo.get("PAStatus").getAsString());});
-
-        if(jo.get("DEEncoder") != null) Platform.runLater(() -> {info_declination[0].setText(jo.get("DEEncoder").getAsString());});
-
-        if(jo.get("DEApparent") != null) Platform.runLater(() -> {info_declination[1].setText(jo.get("DEApparent").getAsString());});
-
-        if(jo.get("DEDEJ2000") != null) Platform.runLater(() -> {info_declination[2].setText(jo.get("DEDEJ2000").getAsString());});
-
-        if(jo.get("DEElevation") != null) Platform.runLater(() -> {info_declination[3].setText(jo.get("DEElevation").getAsString());});
-
-        if(jo.get("DEStatus") != null) Platform.runLater(() -> {info_declination[4].setText(jo.get("DEStatus").getAsString());});
+        updateInformations(jo,INFO_NAMES_POLAR,info_polar);
+        updateInformations(jo,INFO_NAMES_DECLINATION,info_declination);
     }
 
     @Override

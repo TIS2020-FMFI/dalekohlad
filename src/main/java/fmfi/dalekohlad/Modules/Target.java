@@ -10,6 +10,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 import fmfi.dalekohlad.InputHandling.InputConfirmation;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Target implements GUIModule {
@@ -18,6 +21,7 @@ public class Target implements GUIModule {
 
     private final int GOTO_CANCEL_CODE = 71;
     private final int SWITCH_POLE_CROSSING_CODE = 112;
+    private final List<String> INFO_NAMES = List.of("TAREncoder1","TARdEnc1","TARHAApparent","TARDEApparent","TARRAJ2000","TARDEJ2000","TARAzimuth","TARElevation","TARPoleCrossing","TARStatus");
 
     public void init(Pane p) {
         pane = p;
@@ -25,7 +29,8 @@ public class Target implements GUIModule {
 
         for(int i = 0; i < 10; i++){
             info[i] = (Label) GUIModule.GetById(pane, "target" + (i+1));
-            info[i].setText("...");
+            int finalI = i;
+            Platform.runLater(() -> {info[finalI].setText("...");});
         }
 
         ((Button)GUIModule.GetById(pane,"LoadTarget")).setOnAction(actionEvent -> LoadTarget());
@@ -56,8 +61,8 @@ public class Target implements GUIModule {
             InputConfirmation.warn("Data was entered incorrectly!");
         }
 
-        ra.setText("");
-        de.setText("");
+        Platform.runLater(() -> {ra.setText("");});
+        Platform.runLater(() -> {de.setText("");});
     }
 
     public void GoToCancel(){
@@ -69,16 +74,7 @@ public class Target implements GUIModule {
     }
 
     public void update(JsonObject jo) {
-        if(jo.get("TAREncoder1") != null) Platform.runLater(() -> {info[0].setText(jo.get("TAREncoder1").getAsString());});
-        if(jo.get("TARdEnc1") != null) Platform.runLater(() -> {info[1].setText(jo.get("TARdEnc1").getAsString());});
-        if(jo.get("TARHAApparent") != null) Platform.runLater(() -> {info[2].setText(jo.get("TARHAApparent").getAsString());});
-        if(jo.get("TARDEApparent") != null) Platform.runLater(() -> {info[3].setText(jo.get("TARDEApparent").getAsString());});
-        if(jo.get("TARRAJ2000") != null) Platform.runLater(() -> {info[4].setText(jo.get("TARRAJ2000").getAsString());});
-        if(jo.get("TARDEJ2000") != null) Platform.runLater(() -> {info[5].setText(jo.get("TARDEJ2000").getAsString());});
-        if(jo.get("TARAzimuth") != null) Platform.runLater(() -> {info[6].setText(jo.get("TARAzimuth").getAsString());});
-        if(jo.get("TARElevation") != null) Platform.runLater(() -> {info[7].setText(jo.get("TARElevation").getAsString());});
-        if(jo.get("TARPoleCrossing") != null) Platform.runLater(() -> {info[8].setText(jo.get("TARPoleCrossing").getAsString());});
-        if(jo.get("TARStatus") != null) Platform.runLater(() -> {info[9].setText(jo.get("TARStatus").getAsString());});
+        updateInformations(jo,INFO_NAMES,info);
     }
 
     @Override
