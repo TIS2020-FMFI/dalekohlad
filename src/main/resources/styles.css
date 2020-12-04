@@ -1,0 +1,61 @@
+.button{
+    -fx-background-color: linear-gradient(#fafa64, #8dff32);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0;
+    -fx-text-fill: black;
+}
+
+.button:hover{
+    -fx-background-color: linear-gradient(#d2d23c, #64d70a);
+}
+
+.button:pressed{
+    -fx-background-color: linear-gradient(#b4b41e, #3ca000);
+}
+
+.text-field{
+    -fx-background-radius: 30;
+}
+
+.text-area{
+
+}
+
+.choice-box{
+    -fx-background-color: linear-gradient(#fafa64, #8dff32);
+    -fx-background-radius: 30;
+}
+
+.combo-box{
+    -fx-background-radius: 30;
+    -fx-background-insets: 0;
+    -fx-text-fill: white;
+}
+
+.exit{
+    -fx-text-fill: white;
+    -fx-background-color: linear-gradient(#ff0000, #880000);
+}
+
+.exit:hover{
+    -fx-background-color: linear-gradient(#800000, #600000);
+}
+
+.exit:pressed{
+    -fx-background-color: linear-gradient(#600000, #400000);
+}
+
+.shortcuts{
+    -fx-text-fill: white;
+    -fx-background-color:linear-gradient(#0000ff , #000088);
+}
+
+.shortcuts:hover{
+    -fx-background-color: linear-gradient(#000080 , #000060);
+}
+
+.shortcuts:pressed{
+    -fx-background-color: linear-gradient(#000060 , #000040);
+}
+
+
