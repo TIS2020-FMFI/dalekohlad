@@ -10,6 +10,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 
+import java.util.List;
 import java.util.Map;
 import fmfi.dalekohlad.InputHandling.InputConfirmation;
 
@@ -28,6 +29,9 @@ public class Axis implements GUIModule {
     private final int SLEW_DE_POSITIVE_CODE = 72;
     private final int SLEW_RA_NEGATIVE_CODE = 75;
     private final int SLEW_DE_NEGATIVE_CODE = 80;
+
+    private final List<String> INFO_NAMES_POLAR = List.of("PAEncoder","PAHAApparent","PAHARAJ2000","PAAzimuth","PAStatus");
+    private final List<String> INFO_NAMES_DECLINATION = List.of("DEEncoder","DEApparent","DEDEJ2000","DEElevation","DEStatus");
 
     public void init(Pane p) {
         pane = p;
@@ -130,25 +134,15 @@ public class Axis implements GUIModule {
     }
 
     public void update(JsonObject jo) {
-        if(jo.get("PAEncoder") != null) Platform.runLater(() -> {info_polar[0].setText(jo.get("PAEncoder").getAsString());});
-
-        if(jo.get("PAHAApparent") != null) Platform.runLater(() -> {info_polar[1].setText(jo.get("PAHAApparent").getAsString());});
-
-        if(jo.get("PAHARAJ2000") != null) Platform.runLater(() -> {info_polar[2].setText(jo.get("PAHARAJ2000").getAsString());});
-
-        if(jo.get("PAAzimuth") != null) Platform.runLater(() -> {info_polar[3].setText(jo.get("PAAzimuth").getAsString());});
-
-        if(jo.get("PAStatus") != null) Platform.runLater(() -> {info_polar[4].setText(jo.get("PAStatus").getAsString());});
-
-        if(jo.get("DEEncoder") != null) Platform.runLater(() -> {info_declination[0].setText(jo.get("DEEncoder").getAsString());});
-
-        if(jo.get("DEApparent") != null) Platform.runLater(() -> {info_declination[1].setText(jo.get("DEApparent").getAsString());});
-
-        if(jo.get("DEDEJ2000") != null) Platform.runLater(() -> {info_declination[2].setText(jo.get("DEDEJ2000").getAsString());});
-
-        if(jo.get("DEElevation") != null) Platform.runLater(() -> {info_declination[3].setText(jo.get("DEElevation").getAsString());});
-
-        if(jo.get("DEStatus") != null) Platform.runLater(() -> {info_declination[4].setText(jo.get("DEStatus").getAsString());});
+        for(int i = 0; i < 5;i++) {
+            int finalI = i;
+            if(jo.get(INFO_NAMES_POLAR.get(i)) != null) {
+                Platform.runLater(() -> {info_polar[finalI].setText(jo.get(INFO_NAMES_POLAR.get(finalI)).getAsString());});
+            }
+            if(jo.get(INFO_NAMES_DECLINATION.get(i)) != null) {
+                Platform.runLater(() -> {info_declination[finalI].setText(jo.get(INFO_NAMES_DECLINATION.get(finalI)).getAsString());});
+            }
+        }
     }
 
     @Override
