@@ -3,8 +3,12 @@ package fmfi.dalekohlad.Modules;
 import com.google.gson.JsonObject;
 import fmfi.dalekohlad.Communication.Communication;
 import javafx.application.Platform;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -28,10 +32,10 @@ public class Filterwheel implements GUIModule {
 
         ComboBox comboBox = ((ComboBox)GUIModule.GetById(pane, "FWFilterComboBox"));
         comboBox.setOnAction(actionEvent -> SetFilter());
-        SetColors(comboBox);
+        SetItemsColors(comboBox);
     }
 
-    public void SetColors(ComboBox comboBox){
+    public void SetItemsColors(ComboBox comboBox){
         comboBox.setCellFactory(new Callback<ListView<String>, ListCell<String>>(){
             @Override public ListCell<String> call(ListView<String> p){
                 return new ListCell<>() {
@@ -60,9 +64,26 @@ public class Filterwheel implements GUIModule {
         });
     }
 
+    public void SetComboBoxColor(String s){
+        ComboBox comboBox = (ComboBox) GUIModule.GetById(pane, "FWFilterComboBox");
+        Color color = Color.WHITE;
+
+        if(s.length() > 1) s = s.split(" ")[1];
+        switch(s){
+            case "B": color = Color.BLUE; break;
+            case "V": color = Color.GREEN; break;
+            case "R": color = Color.RED; break;
+            case "I": color = Color.ORANGE; break;
+            case "C": color = Color.GRAY; break;
+        }
+        assert comboBox != null;
+        comboBox.setBackground(new Background(new BackgroundFill(color, new CornerRadii(30), Insets.EMPTY)));
+    }
+
     public void SetFilter(){
-        ComboBox choiceBox = (ComboBox) GUIModule.GetById(pane, "FWFilterComboBox");
-        String data = (String)choiceBox.getValue();
+        ComboBox comboBox = (ComboBox) GUIModule.GetById(pane, "FWFilterComboBox");
+        assert comboBox != null;
+        String data = (String)comboBox.getValue();
 
         SetFilter(data.split(" ")[1]);
     }
@@ -75,11 +96,15 @@ public class Filterwheel implements GUIModule {
             case "I": Communication.sendData(String.valueOf(FILTER_I_CODE));
             case "C": Communication.sendData(String.valueOf(FILTER_C_CODE));
         }
+        SetComboBoxColor(s);
         System.out.println("Set Filter: " + s);
     }
 
     public void update(JsonObject jo) {
-        if(jo.get("FWFilter") != null) Platform.runLater(() -> info.setText(jo.get("FWFilter").getAsString()));
+        if(jo.get("FWFilter") != null) {
+            Platform.runLater(() -> info.setText(jo.get("FWFilter").getAsString()));
+            SetComboBoxColor(jo.get("FWFilter").getAsString());
+        }
     }
 
     @Override
