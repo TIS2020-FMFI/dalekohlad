@@ -1,22 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.collections.FXCollections?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.Scene?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.embed.swing.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.embed.swing.SwingNode?>
 <Scene xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <AnchorPane prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: rgb(50,50,50);">
       <children>
@@ -158,9 +151,9 @@
                <Label layoutX="10.0" layoutY="25.0" text="Exposure:" textFill="WHITE" />
                <Button fx:id="ExposeSequenceButton" layoutX="10.0" layoutY="585.0" mnemonicParsing="false" prefWidth="120.0" style="-fx-background-color: rgb(250,250,100);" text="Expose sequence">
                   <cursor><Cursor fx:constant="HAND" /></cursor></Button>
-               <Button fx:id="ExposeFromNearestSecondButton" layoutX="140.0" layoutY="585.0" mnemonicParsing="false"  style="-fx-background-color: rgb(250,250,100);" text="Expose from nearest second">
+               <Button fx:id="ExposeFromNearestSecondButton" layoutX="140.0" layoutY="585.0" mnemonicParsing="false" style="-fx-background-color: rgb(250,250,100);" text="Expose from nearest second">
                   <cursor><Cursor fx:constant="HAND" /></cursor></Button>
-               <Button fx:id="AbortImagingButton" layoutX="315.0" layoutY="585.0" mnemonicParsing="false"  style="-fx-background-color: rgb(250,250,100);" text="Abort imaging">
+               <Button fx:id="AbortImagingButton" layoutX="315.0" layoutY="585.0" mnemonicParsing="false" style="-fx-background-color: rgb(250,250,100);" text="Abort imaging">
                   <cursor><Cursor fx:constant="HAND" /></cursor></Button>
 
                <TextField fx:id="ExposureTimeField" layoutX="110.0" layoutY="430.0" prefWidth="80.0" />
@@ -321,12 +314,12 @@
                     </cursor>
                 </Button>
                 <Label fx:id="info" layoutX="23.0" layoutY="10.0" text="UTC: yyyy-mm-dd hh:mm:ss   UTC1-UTC=0.9 leapsec=37 p=715.5mmHg T=12.6°" textFill="WHITE" />
-                <Button fx:id="Exit" layoutX="1140.0" layoutY="7.0" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: rgb(250,80,80);" text="Exit" >
+                <Button fx:id="Exit" layoutX="1140.0" layoutY="7.0" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: rgb(250,80,80);" text="Exit">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Label fx:id="Connected" layoutX="990.0" layoutY="12.0" style="-fx-background-color: rgb(80,250,80);" text="connected" />
+                <Label fx:id="Connected" alignment="CENTER" layoutX="968.0" layoutY="5.0" prefHeight="30.0" prefWidth="81.0" style="-fx-background-color: rgb(80,250,80);" text="connected" textAlignment="CENTER" />
                <Label fx:id="path_to_last_frame" layoutX="1060.0" layoutY="240.0" text="" textFill="WHITE" />
                 <SwingNode fx:id="node_FITS" layoutX="1025" layoutY="70" />
             </children>
@@ -339,6 +332,25 @@
                </Label>
                <TextArea fx:id="text_area" layoutX="30" layoutY="30" prefWidth="160.0">
                </TextArea>
+            </children>
+         </Pane>
+         <Pane layoutX="1000.0" layoutY="312.0" prefHeight="135.0" prefWidth="200.0">
+            <children>
+               <Button layoutX="49.0" layoutY="30.0" mnemonicParsing="false" style="-fx-background-color: rgb(250,250,100);" text="Start scheduling">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
+               </Button>
+               <Button layoutX="48.0" layoutY="96.0" mnemonicParsing="false" style="-fx-background-color: rgb(250,250,100);" text="Not implemented">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
+               </Button>
+               <ProgressBar layoutX="16.0" layoutY="68.0" prefHeight="18.0" prefWidth="170.0" progress="0.37" style="-fx-accent: rgb(114,187,83);">
+                  <cursor>
+                     <Cursor fx:constant="WAIT" />
+                  </cursor>
+               </ProgressBar>
             </children>
          </Pane>
 
