@@ -135,7 +135,6 @@ public class Others implements GUIModule {
     @Override
     public void init(Pane pane) {
         this.pane = pane;
-        ((Button) GUIModule.GetById(pane,"Exit")).setOnAction(event -> System.exit(0));
         this.info = (Label) GUIModule.GetById(pane, "info");
         this.status = (Label) GUIModule.GetById(pane, "Connected");
         this.pathFITS = (Label) GUIModule.GetById(pane, "path_to_last_frame");
@@ -143,6 +142,7 @@ public class Others implements GUIModule {
         this.main_screen_root = pane.getParent().getScene().getRoot();
         displayConnectionStatus();
 
+        ((Button) GUIModule.GetById(pane,"Exit")).setOnAction(event -> System.exit(0));
         ((Button) GUIModule.GetById(pane,"Shortcuts")).setOnAction(event -> this.setDisplayingShortcuts());
     }
 
@@ -154,11 +154,13 @@ public class Others implements GUIModule {
                 if(!Others.wasUpdated) {
                     BackgroundFill redBackground = new BackgroundFill(Color.RED, null, null);
                     Platform.runLater(() -> status.setBackground(new Background(redBackground)));
+                    Platform.runLater(() -> status.setText("disconnected"));
                 }
                 else if(Others.connectionFailed && Others.wasUpdated) {
                     Others.connectionFailed = false;
                     BackgroundFill greenBackground = new BackgroundFill(Color.GREEN, null, null);
                     Platform.runLater(() -> status.setBackground(new Background(greenBackground)));
+                    Platform.runLater(() -> status.setText("connected"));
                 }
 
                 Others.wasUpdated = false;

@@ -334,7 +334,7 @@
                </TextArea>
             </children>
          </Pane>
-         <Pane layoutX="1000.0" layoutY="312.0" prefHeight="135.0" prefWidth="200.0">
+         <Pane fx:id="Scheduler" layoutX="1000.0" layoutY="312.0" prefHeight="135.0" prefWidth="200.0">
             <children>
                <Button layoutX="49.0" layoutY="30.0" mnemonicParsing="false" style="-fx-background-color: rgb(250,250,100);" text="Start scheduling">
                   <cursor>
