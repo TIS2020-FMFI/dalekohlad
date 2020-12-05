@@ -322,6 +322,23 @@
                 <Label fx:id="Connected" alignment="CENTER" layoutX="968.0" layoutY="5.0" prefHeight="30.0" prefWidth="81.0" style="-fx-background-color: rgb(80,250,80);" text="connected" textAlignment="CENTER" />
                <Label fx:id="path_to_last_frame" layoutX="1060.0" layoutY="240.0" text="" textFill="WHITE" />
                 <SwingNode fx:id="node_FITS" layoutX="1025" layoutY="70" />
+
+
+                <Button fx:id="start_scheduling" layoutX="1049.0" layoutY="342.0" mnemonicParsing="false" style="-fx-background-color: rgb(250,250,100);" text="Start scheduling">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+                <Button fx:id="load_scheduling" layoutX="1048.0" layoutY="408.0" mnemonicParsing="false" style="-fx-background-color: rgb(250,250,100);" text="Not implemented" visible="false">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+                <ProgressBar fx:id="progress" disable="true" layoutX="1016.0" layoutY="380.0" prefHeight="18.0" prefWidth="170.0" progress="0.0" style="-fx-accent: rgb(114,187,83);">
+                    <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                    </cursor>
+                </ProgressBar>
             </children>
          </Pane>
 
@@ -332,25 +349,6 @@
                </Label>
                <TextArea fx:id="text_area" layoutX="30" layoutY="30" prefWidth="160.0">
                </TextArea>
-            </children>
-         </Pane>
-         <Pane fx:id="Scheduler" layoutX="1000.0" layoutY="312.0" prefHeight="135.0" prefWidth="200.0">
-            <children>
-               <Button layoutX="49.0" layoutY="30.0" mnemonicParsing="false" style="-fx-background-color: rgb(250,250,100);" text="Start scheduling">
-                  <cursor>
-                     <Cursor fx:constant="HAND" />
-                  </cursor>
-               </Button>
-               <Button layoutX="48.0" layoutY="96.0" mnemonicParsing="false" style="-fx-background-color: rgb(250,250,100);" text="Not implemented">
-                  <cursor>
-                     <Cursor fx:constant="HAND" />
-                  </cursor>
-               </Button>
-               <ProgressBar layoutX="16.0" layoutY="68.0" prefHeight="18.0" prefWidth="170.0" progress="0.37" style="-fx-accent: rgb(114,187,83);">
-                  <cursor>
-                     <Cursor fx:constant="WAIT" />
-                  </cursor>
-               </ProgressBar>
             </children>
          </Pane>
 

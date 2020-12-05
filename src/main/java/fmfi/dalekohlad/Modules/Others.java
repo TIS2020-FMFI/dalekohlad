@@ -5,7 +5,9 @@ import eap.fits.FitsHDU;
 import eap.fits.FitsImageData;
 import eap.fits.RandomAccessFitsFile;
 import eap.fitsbrowser.FitsImageViewer;
+import fmfi.dalekohlad.Communication.Communication;
 import fmfi.dalekohlad.Mediator;
+import fmfi.dalekohlad.Operations;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXMLLoader;
@@ -13,15 +15,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.util.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.awt.*;
 import java.io.RandomAccessFile;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -33,6 +38,8 @@ public class Others implements GUIModule {
     private final int IMAGE_HDU = 0;
     private static boolean wasUpdated = true;
     private static boolean connectionFailed = false;
+    private final int START_SCHEDULING = 59;
+    private final int STOP_SCHEDULING = 46;
 
     private Parent main_screen_root;
     private Pane pane;
@@ -40,6 +47,7 @@ public class Others implements GUIModule {
     private Label status;
     private Label pathFITS;
     private SwingNode swingNode;
+    private Button startStopScheduling;
 
     private void fitsHandle(String pathToFITS) {
         //suppose FITS file is never rewritten -> new photo is written to new file
@@ -102,6 +110,41 @@ public class Others implements GUIModule {
         });
     }
 
+    private void startStopScheduling() {
+        String actualState = startStopScheduling.getText();
+        if(actualState.equals("Start scheduling")) {
+            startScheduling();
+        }
+        else {
+            stopScheduling();
+        }
+    }
+
+    private void startScheduling() {
+        String actualState = startStopScheduling.getText();
+        if(actualState.equals("Stop scheduling")) {
+            Operations.add("You can't start scheduling.\nScheduling is already running.");
+        }
+        else {
+            Platform.runLater(() -> {
+                startStopScheduling.setText("Stop scheduling");
+            });
+            Communication.sendData(String.valueOf(START_SCHEDULING));
+        }
+    }
+
+    private void stopScheduling() {
+        String actualState = startStopScheduling.getText();
+        if (actualState.equals("Start scheduling")) {
+            Operations.add("You can't stop scheduling.\nScheduling is not running.");
+        } else {
+            Platform.runLater(() -> {
+                startStopScheduling.setText("Start scheduling");
+            });
+            Communication.sendData(String.valueOf(STOP_SCHEDULING));
+        }
+    }
+
 
     private void markFlagsAsConnected() {
         Others.wasUpdated = true;
@@ -139,11 +182,21 @@ public class Others implements GUIModule {
         this.status = (Label) GUIModule.GetById(pane, "Connected");
         this.pathFITS = (Label) GUIModule.GetById(pane, "path_to_last_frame");
         this.swingNode = (SwingNode) GUIModule.GetById(pane, "node_FITS");
+        this.startStopScheduling = (Button) GUIModule.GetById(pane, "start_scheduling");
         this.main_screen_root = pane.getParent().getScene().getRoot();
         displayConnectionStatus();
 
+        startStopScheduling.setOnAction(event -> startStopScheduling());
         ((Button) GUIModule.GetById(pane,"Exit")).setOnAction(event -> System.exit(0));
         ((Button) GUIModule.GetById(pane,"Shortcuts")).setOnAction(event -> this.setDisplayingShortcuts());
+    }
+
+    @Override
+    public void registerShortcuts(Map<Pair<Boolean, KeyCode>, Runnable> shortcuts) {
+        Pair<Boolean, KeyCode> startScheduling = new Pair<>(true, KeyCode.J);
+        shortcuts.put(startScheduling, () -> startScheduling());
+        Pair<Boolean, KeyCode> stopScheduling = new Pair<>(true, KeyCode.K);
+        shortcuts.put(stopScheduling, () -> stopScheduling());
     }
 
     private void displayConnectionStatus() {
