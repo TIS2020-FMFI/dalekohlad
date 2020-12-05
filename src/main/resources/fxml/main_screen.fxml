@@ -17,9 +17,45 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.embed.swing.SwingNode?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+
 <Scene xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <AnchorPane prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: rgb(50,50,50);">
       <children>
+          <Pane fx:id="module_Graphics" layoutX="190.0" layoutY="33.0" prefHeight="125.0" prefWidth="400.0" style="-fx-background-color: rgb(50,50,50);">
+              <children>
+                  <Rectangle fx:id="Horizont" height="115" width="151" y="5" x="5" fill="transparent" strokeWidth="3.5" stroke="green"></Rectangle>
+                  <Circle fx:id="HorizontCircle" centerX="79" centerY="73" stroke="white" strokeWidth="2.5" radius="45" fill="transparent"></Circle>
+                  <Rectangle fx:id="HorizontCover" height="44" width="100" x="30" y="75" fill="rgb(50,50,50)"></Rectangle>
+                  <Label layoutX="118.0" layoutY="72.0" text="90°" textFill="white">
+                      <font><Font size="16.0" /></font></Label>
+                  <Label layoutX="25.0" layoutY="72.0" text="0°" textFill="white">
+                      <font><Font size="16.0" /></font></Label>
+                  <Label layoutX="71.5" layoutY="6.0" text="45°" textFill="white">
+                      <font><Font size="16.0" /></font></Label>
+                  <Circle fx:id="HorizontCenterCircle" centerX="79" centerY="73" stroke="white" strokeWidth="1.5" radius="6" fill="green"></Circle>
+                  <Line fx:id="HorizontLine" strokeWidth="2" stroke="green" startX="79" startY="73" endX="37" endY="73"></Line>
+
+                  <Rectangle fx:id="NSEW" height="115" width="150" y="5" x="245" fill="transparent" strokeWidth="3.5" stroke="green"></Rectangle>
+                  <Circle fx:id="NSEWCircle" centerX="320" centerY="64" stroke="white" strokeWidth="2.5" radius="41" fill="transparent"></Circle>
+                  <Label layoutX="306.5" layoutY="5.8" text="North" textFill="white">
+                      <font><Font size="11.0" /></font></Label>
+                  <Label layoutX="306.5" layoutY="104" text="South" textFill="white">
+                      <font><Font size="11.0" /></font></Label>
+                  <Label layoutX="364.5" layoutY="58" text="East" textFill="white">
+                      <font><Font size="11.0" /></font></Label>
+                  <Label layoutX="249.5" layoutY="58" text="West" textFill="white">
+                      <font><Font size="11.0" /></font></Label>
+
+                  <Line fx:id="NSEWDomeLine" strokeWidth="28" stroke="dodgerblue" startX="320" startY="64" endX="320" endY="33"></Line>
+                  <Line fx:id="NSEWBinocularsLine" strokeWidth="17.9" stroke="lightskyblue" startX="320" startY="64" endX="320" endY="50"></Line>
+
+                  <Circle centerX="320" centerY="64" stroke="white" strokeWidth="1.5" radius="2.5" fill="darkred"></Circle>
+                  <Circle centerX="320" centerY="64" stroke="white" strokeWidth="1.5" radius="2.5" fill="darkred"></Circle>
+              </children>
+          </Pane>
+
           <Pane fx:id="module_Axis" layoutX="10.0" layoutY="180.0" prefHeight="225.0" prefWidth="500.0" style="-fx-background-color: rgb(80,80,80);">
               <children>
                   <Label layoutY="-25.0" text="Polar Axis:" textFill="WHITE">
