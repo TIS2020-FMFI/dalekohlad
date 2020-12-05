@@ -190,6 +190,9 @@
                             <String fx:value="1MHz high dynamic range" />
                         </FXCollections>
                     </items>
+                  <cursor>
+                     <Cursor fx:constant="CLOSED_HAND" />
+                  </cursor>
                 </ChoiceBox>
                 <ChoiceBox fx:id="CAMTypeChoiceBox" layoutX="110.0" layoutY="360.0" prefWidth="106.0">
                     <items>
@@ -200,6 +203,9 @@
                         </FXCollections>
 
                     </items>
+                  <cursor>
+                     <Cursor fx:constant="CLOSED_HAND" />
+                  </cursor>
                 </ChoiceBox>
                <Button fx:id="NotesButton" layoutX="380.0" layoutY="520.0" mnemonicParsing="false" prefHeight="40.0" style="-fx-background-color: rgb(250,250,100);" text="→">
                   <cursor>
@@ -298,6 +304,9 @@
                         <String fx:value="Filter C" />
                     </FXCollections>
                   </items>
+                  <cursor>
+                     <Cursor fx:constant="CLOSED_HAND" />
+                  </cursor>
 	            </ComboBox>
                <Label layoutX="10.0" layoutY="5.0" text="filter:" textFill="WHITE" />
                <Label fx:id="FWFilter" layoutX="200.0" layoutY="5.0" text="Label" textFill="WHITE" />
@@ -306,8 +315,6 @@
 
          <Pane fx:id="module_Others" prefHeight="0.0" prefWidth="0.0" style="-fx-background-color: rgb(30,30,30);">
             <children>
-                <Label fx:id="aplication_name" layoutX="500.0" layoutY="2.0" text="Názov Aplikácie" textFill="WHITE">
-                  <font><Font size="22.0" /></font></Label>
                 <Button fx:id="Shortcuts" layoutX="1060.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: rgb(80,80,250);" text="Shortcuts">
                     <cursor>
                         <Cursor fx:constant="HAND" />
@@ -347,7 +354,7 @@
                <Label layoutY="-25.0" text="Operations:" textFill="WHITE">
                   <font><Font size="18.0" /></font>
                </Label>
-               <TextArea fx:id="text_area" layoutX="30" layoutY="30" prefWidth="160.0">
+               <TextArea fx:id="text_area" editable="false" layoutX="30" layoutY="30" prefWidth="160.0" style="-fx-control-inner-background: rgb(80,80,80); -fx-text-fill: rgb(114,187,83);" wrapText="true">
                </TextArea>
             </children>
          </Pane>
