@@ -113,16 +113,14 @@ public class Mediator {
             return;
         }
         Pane pane = (Pane) node;
-        String id = pane.getId();
         pane.setOnMouseClicked(actionEvent -> pane.requestFocus());
+        String id = pane.getId();
         if (id.equals("Operations")) {
             Operations.init(pane);
-            return;
         }
-        else if (!id.startsWith(module_prefix)) {
-            return;
+        else if (id.startsWith(module_prefix)) {
+            loadModuleByID(id, pane);
         }
-        loadModuleByID(id, pane);
     }
 
     private static void bindModules(Stage stage) {
