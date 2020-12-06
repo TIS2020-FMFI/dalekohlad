@@ -1,12 +1,26 @@
+.main_background{
+    -fx-background-color: rgb(20,20,20);
+    -fx-fill: rgb(20,20,20);
+}
+
+.module_background{
+    -fx-background-color: rgb(25,25,25);
+    -fx-fill: rgb(25,25,25);
+}
+
+.label{
+    -fx-text-fill: white;
+}
+
 .button{
     -fx-background-color: linear-gradient(#fafa64, #8dff32);
-    -fx-background-radius: 30;
-    -fx-background-insets: 0;
+    -fx-background-radius: 10;
     -fx-text-fill: black;
 }
 
 .button:hover{
     -fx-background-color: linear-gradient(#d2d23c, #64d70a);
+    -fx-cursor: hand;
 }
 
 .button:pressed{
@@ -14,11 +28,7 @@
 }
 
 .text-field{
-    -fx-background-radius: 30;
-}
-
-.text-area{
-
+    -fx-background-radius: 10;
 }
 
 .choice-box{
