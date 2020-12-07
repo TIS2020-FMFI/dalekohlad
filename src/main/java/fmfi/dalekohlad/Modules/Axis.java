@@ -29,6 +29,7 @@ public class Axis implements GUIModule {
     private final int SLEW_DE_POSITIVE_CODE = 72;
     private final int SLEW_RA_NEGATIVE_CODE = 75;
     private final int SLEW_DE_NEGATIVE_CODE = 80;
+    private final int CORRECTION_CODE = 84;
 
     private final List<String> INFO_NAMES_POLAR = List.of("PAEncoder","PAHAApparent","PAHARAJ2000","PAAzimuth","PAStatus");
     private final List<String> INFO_NAMES_DECLINATION = List.of("DEEncoder","DEApparent","DEDEJ2000","DEElevation","DEStatus");
@@ -98,8 +99,7 @@ public class Axis implements GUIModule {
     }
 
     public void  Correction(){
-        // TO DO - no info in emulator
-        System.out.println("Correction");
+        Communication.sendData(String.valueOf(CORRECTION_CODE));
     }
 
     public void SlewRA() {
