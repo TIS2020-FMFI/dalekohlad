@@ -93,12 +93,11 @@ public class Others implements GUIModule {
         }
         try {
             String timeUT1 = jo.get("TIMEUT1UTC").getAsString();
-            infoText += timeUT1 + " ";
         } catch (Exception e) {
             lgr.debug("Time UTC wasn't loaded.");
         }
         try {
-            String fits_path = jo.get("FITSpath").getAsString();
+            String fits_path = jo.get("LastFITSPath").getAsString();
             this.fitsHandle(fits_path);
         } catch (Exception e) {
             lgr.debug("Path to FITS wasn't loaded");
