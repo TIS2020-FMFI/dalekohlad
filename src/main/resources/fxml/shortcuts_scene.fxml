@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="700.0" prefWidth="1200.0" stylesheets="@/styles.css" styleClass="main_background" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label alignment="CENTER" layoutX="310.0" layoutY="2.0" style="&#10;" text="Shortcut" textAlignment="CENTER" textFill="#f1f436" wrapText="false">
          <font>
@@ -551,7 +551,7 @@
             <Font size="13.0" />
          </font>
       </Label>
-      <Button fx:id="back" layoutX="1021.0" layoutY="642.0" mnemonicParsing="false" prefWidth="150.0" style="-fx-background-color: #FEF67F;" text="Back" textAlignment="CENTER">
+      <Button fx:id="back" layoutX="1021.0" layoutY="642.0" mnemonicParsing="false" prefWidth="150.0"  text="Back" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
