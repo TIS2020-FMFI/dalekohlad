@@ -1,7 +1,6 @@
 package fmfi.dalekohlad.Modules;
 
 import com.google.gson.JsonObject;
-import com.google.gson.stream.JsonReader;
 import eap.fits.FitsHDU;
 import eap.fits.FitsImageData;
 import eap.fits.RandomAccessFitsFile;
@@ -24,13 +23,10 @@ import javafx.scene.paint.Color;
 import javafx.util.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import javax.script.ScriptContext;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.SimpleScriptContext;
-import java.awt.*;
-import java.io.*;
+import java.awt.Dimension;
+import java.io.BufferedReader;
+import java.io.RandomAccessFile;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -58,6 +54,58 @@ public class Others implements GUIModule {
     private SwingNode swingNode;
     private Button startStopScheduling;
 
+    @Override
+    public void init(Pane pane) {
+        this.pane = pane;
+        this.info = (Label) GUIModule.GetById(pane, "info");
+        this.status = (Label) GUIModule.GetById(pane, "Connected");
+        this.pathFITS = (Label) GUIModule.GetById(pane, "path_to_last_frame");
+        this.swingNode = (SwingNode) GUIModule.GetById(pane, "node_FITS");
+        this.startStopScheduling = (Button) GUIModule.GetById(pane, "start_scheduling");
+        this.main_screen_root = pane.getParent().getScene().getRoot();
+        displayConnectionStatus();
+
+        startStopScheduling.setOnAction(event -> startStopScheduling());
+        ((Button) GUIModule.GetById(pane, "load_scheduling")).setOnAction(event -> this.runScript());
+        ((Button) GUIModule.GetById(pane,"Exit")).setOnAction(event -> System.exit(0));
+        ((Button) GUIModule.GetById(pane,"Shortcuts")).setOnAction(event -> this.setDisplayingShortcuts());
+    }
+
+    @Override
+    public void update(JsonObject jo) {
+        markFlagsAsConnected();
+        String infoText = "";
+        try {
+            String time = jo.get("TIMEUTC").getAsString();
+            infoText += time + " ";
+        } catch (Exception e) {
+            lgr.debug("Time UTC wasn't loaded.");
+        }
+        try {
+            String timeUT1 = jo.get("TIMEUT1UTC").getAsString();
+            infoText += timeUT1;
+        } catch (Exception e) {
+            lgr.debug("Time UTC wasn't loaded.");
+        }
+        try {
+            String fits_path = jo.get("LastFITSPath").getAsString();
+            this.fitsHandle(fits_path);
+        } catch (Exception e) {
+            lgr.debug("Path to FITS wasn't loaded");
+        }
+
+        String finalInfoText = infoText;
+        Platform.runLater(() -> this.info.setText(finalInfoText));
+    }
+
+    @Override
+    public void registerShortcuts(Map<Pair<Boolean, KeyCode>, Runnable> shortcuts) {
+        Pair<Boolean, KeyCode> startScheduling = new Pair<>(true, KeyCode.J);
+        shortcuts.put(startScheduling, this::startScheduling);
+        Pair<Boolean, KeyCode> stopScheduling = new Pair<>(true, KeyCode.K);
+        shortcuts.put(stopScheduling, this::stopScheduling);
+    }
+
     private void fitsHandle(String pathToFITS) {
         //suppose FITS file is never rewritten -> new photo is written to new file
         if(changingImageNotNecessary(pathToFITS)) {
@@ -82,40 +130,11 @@ public class Others implements GUIModule {
     }
 
     private FitsImageViewer loadImageFromFits(String pathoTiFits) throws Exception {
-        RandomAccessFile lastFrame = new RandomAccessFile(pathoTiFits.toString(), "r");
+        RandomAccessFile lastFrame = new RandomAccessFile(pathoTiFits, "r");
         RandomAccessFitsFile fitFile = new RandomAccessFitsFile(lastFrame);
         FitsHDU hdu = fitFile.getHDU(IMAGE_HDU);
         FitsImageData imageData = (FitsImageData) hdu.getData();
-        FitsImageViewer image = new FitsImageViewer(imageData);
-        return image;
-    }
-
-    @Override
-    public void update(JsonObject jo) {
-        markFlagsAsConnected();
-        String infoText = "";
-        try {
-            String time = jo.get("TIMEUTC").getAsString();
-            infoText += time + " ";
-        } catch (Exception e) {
-            lgr.debug("Time UTC wasn't loaded.");
-        }
-        try {
-            String timeUT1 = jo.get("TIMEUT1UTC").getAsString();
-        } catch (Exception e) {
-            lgr.debug("Time UTC wasn't loaded.");
-        }
-        try {
-            String fits_path = jo.get("LastFITSPath").getAsString();
-            this.fitsHandle(fits_path);
-        } catch (Exception e) {
-            lgr.debug("Path to FITS wasn't loaded");
-        }
-
-        String finalInfoText = infoText;
-        Platform.runLater(() -> {
-            this.info.setText(finalInfoText);
-        });
+        return new FitsImageViewer(imageData);
     }
 
     private void startStopScheduling() {
@@ -134,9 +153,7 @@ public class Others implements GUIModule {
             Operations.add("You can't start scheduling.\nScheduling is already running.");
         }
         else {
-            Platform.runLater(() -> {
-                startStopScheduling.setText("Stop scheduling");
-            });
+            Platform.runLater(() -> startStopScheduling.setText("Stop scheduling"));
             Communication.sendData(String.valueOf(START_SCHEDULING));
         }
     }
@@ -146,9 +163,7 @@ public class Others implements GUIModule {
         if (actualState.equals("Start scheduling")) {
             Operations.add("You can't stop scheduling.\nScheduling is not running.");
         } else {
-            Platform.runLater(() -> {
-                startStopScheduling.setText("Start scheduling");
-            });
+            Platform.runLater(() -> startStopScheduling.setText("Start scheduling"));
             Communication.sendData(String.valueOf(STOP_SCHEDULING));
         }
     }
@@ -181,31 +196,6 @@ public class Others implements GUIModule {
         Scene scene = pane.getParent().getScene();
         Button backToMain = (Button) GUIModule.GetById(shortcutsPane, "back");
         backToMain.setOnAction(e -> scene.setRoot(main_screen_root));
-    }
-
-    @Override
-    public void init(Pane pane) {
-        this.pane = pane;
-        this.info = (Label) GUIModule.GetById(pane, "info");
-        this.status = (Label) GUIModule.GetById(pane, "Connected");
-        this.pathFITS = (Label) GUIModule.GetById(pane, "path_to_last_frame");
-        this.swingNode = (SwingNode) GUIModule.GetById(pane, "node_FITS");
-        this.startStopScheduling = (Button) GUIModule.GetById(pane, "start_scheduling");
-        this.main_screen_root = pane.getParent().getScene().getRoot();
-        displayConnectionStatus();
-
-        startStopScheduling.setOnAction(event -> startStopScheduling());
-        ((Button) GUIModule.GetById(pane, "load_scheduling")).setOnAction(event -> this.runScript());
-        ((Button) GUIModule.GetById(pane,"Exit")).setOnAction(event -> System.exit(0));
-        ((Button) GUIModule.GetById(pane,"Shortcuts")).setOnAction(event -> this.setDisplayingShortcuts());
-    }
-
-    @Override
-    public void registerShortcuts(Map<Pair<Boolean, KeyCode>, Runnable> shortcuts) {
-        Pair<Boolean, KeyCode> startScheduling = new Pair<>(true, KeyCode.J);
-        shortcuts.put(startScheduling, () -> startScheduling());
-        Pair<Boolean, KeyCode> stopScheduling = new Pair<>(true, KeyCode.K);
-        shortcuts.put(stopScheduling, () -> stopScheduling());
     }
 
     private void displayConnectionStatus() {
