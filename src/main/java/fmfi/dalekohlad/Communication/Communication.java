@@ -79,7 +79,7 @@ public class Communication {
                 reconnect();
             }
             catch (Exception e) {
-                lgr.error("Failed to read data, repeating...", e);
+                lgr.error("Failed to read data, repeating...");
                 sleep(1000);
             }
         }
