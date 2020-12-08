@@ -12,6 +12,8 @@ import javafx.util.Pair;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+
 import fmfi.dalekohlad.InputHandling.InputConfirmation;
 
 
@@ -25,6 +27,7 @@ public class Axis implements GUIModule {
     private final int STOP_RA_CODE = 87;
     private final int STOP_DE_CODE = 119;
     private final int CALIBRATION_CODE = 99;
+    private final int CALIBRATION_TO_ZENITH_CODE = 122;
     private final int SLEW_RA_POSITIVE_CODE = 77;
     private final int SLEW_DE_POSITIVE_CODE = 72;
     private final int SLEW_RA_NEGATIVE_CODE = 75;
@@ -52,9 +55,13 @@ public class Axis implements GUIModule {
        ((Button)GUIModule.GetById(pane,"StopDE")).setOnAction(actionEvent -> StopDE());
        ((Button)GUIModule.GetById(pane,"StopRAandDE")).setOnAction(actionEvent -> StopRAandDE());
        ((Button)GUIModule.GetById(pane,"Calibrate")).setOnAction(actionEvent -> Calibrate());
+       ((Button)GUIModule.GetById(pane,"CalibrateToZenith")).setOnAction(actionEvent -> CalibrateToZenith());
        ((Button)GUIModule.GetById(pane,"Correction")).setOnAction(actionEvent -> Correction());
        ((Button)GUIModule.GetById(pane,"SlewRA")).setOnAction(actionEvent -> SlewRA());
        ((Button)GUIModule.GetById(pane,"SlewDE")).setOnAction(actionEvent -> SlewDE());
+
+       ((TextField) Objects.requireNonNull(GUIModule.GetById(pane, "SlewRAField"))).setOnAction(actionEvent -> SlewRA());
+       ((TextField) Objects.requireNonNull(GUIModule.GetById(pane, "SlewDEField"))).setOnAction(actionEvent -> SlewDE());
     }
 
     public static boolean isInteger(String strNum) {
@@ -97,6 +104,8 @@ public class Axis implements GUIModule {
     public void Calibrate(){
         Communication.sendData(String.valueOf(CALIBRATION_CODE));
     }
+
+    public void CalibrateToZenith(){ Communication.sendData(String.valueOf(CALIBRATION_TO_ZENITH_CODE)); }
 
     public void  Correction(){
         Communication.sendData(String.valueOf(CORRECTION_CODE));
@@ -172,6 +181,9 @@ public class Axis implements GUIModule {
         // c - calibrate
         Pair<Boolean, KeyCode> calibrate = new Pair<>(false, KeyCode.C);
         shortcuts.put(calibrate, this::Calibrate);
+        // z - calibrate to zenith
+        Pair<Boolean, KeyCode> calibrate_to_zenith = new Pair<>(false, KeyCode.Z);
+        shortcuts.put(calibrate_to_zenith, this::CalibrateToZenith);
         // T - correction
         Pair<Boolean, KeyCode> correction = new Pair<>(true, KeyCode.T);
         shortcuts.put(correction, this::Correction);

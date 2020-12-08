@@ -3,7 +3,6 @@
 <?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.Scene?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
@@ -60,6 +59,8 @@
               <children>
                   <Label layoutY="-25.0" text="Polar Axis:" textFill="WHITE">
                       <font><Font size="18.0" /></font></Label>
+                  <Label layoutX="250.0" layoutY="-25.0" text="Declination Axis:" textFill="WHITE">
+                      <font><Font size="18.0" /></font></Label>
                   <Button fx:id="StopRAandDE" layoutX="10.0" layoutY="190.0" prefWidth="140.0"  text="Stop RA &amp; DE"/>
                   <Button fx:id="StopDE" layoutX="85.0" layoutY="155.0" prefWidth="65.0"  text="Stop DE"/>
                   <Button fx:id="EnableDisableMotors" layoutX="10.0" layoutY="120.0" mnemonicParsing="false" prefWidth="140.0"  text="Enable Motors">
@@ -67,36 +68,35 @@
                   <Button fx:id="StopRA" layoutX="10.0" layoutY="155.0" mnemonicParsing="false" prefWidth="65.0"  text="Stop RA"/>
                   <Button fx:id="Correction" layoutX="362.0" layoutY="190.0" mnemonicParsing="false" prefWidth="100.0"  text="Correction"/>
                   <Button fx:id="Calibrate" layoutX="362.0" layoutY="155.0" mnemonicParsing="false" prefWidth="100.0" text="Calibrate"/>
+                  <Button fx:id="CalibrateToZenith" layoutX="242.0" layoutY="190.0" mnemonicParsing="false"  text="Calibrate to zenith"/>
 
                   <TextField fx:id="SlewRAField" layoutX="220.0" layoutY="120.0" prefHeight="25.0" prefWidth="70.0" />
                   <TextField fx:id="SlewDEField" layoutX="394.0" layoutY="120.0" prefHeight="25.0" prefWidth="70.0" />
                   <Button fx:id="SlewDE" layoutX="464.0" layoutY="120.0" mnemonicParsing="false"  text="→"/>
                   <Button fx:id="SlewRA" layoutX="290.0" layoutY="120.0" mnemonicParsing="false" text="→"/>
 
-                  <Label layoutX="10.0" layoutY="5.0" text="Encoder:" textFill="WHITE" />
-                  <Label layoutX="250.0" layoutY="-25.0" text="Declination Axis:" textFill="WHITE">
-                      <font><Font size="18.0" /></font></Label>
-                  <Label layoutX="10.0" layoutY="25.0" text="HA apparen:t" textFill="WHITE" />
-                  <Label layoutX="10.0" layoutY="65.0" text="Azimut:" textFill="WHITE" />
-                  <Label layoutX="10.0" layoutY="45.0" text="RA J2000:" textFill="WHITE" />
-                  <Label layoutX="10.0" layoutY="85.0" text="Status:" textFill="WHITE" />
-                  <Label layoutX="260.0" layoutY="5.0" text="Encoder:" textFill="WHITE" />
-                  <Label layoutX="260.0" layoutY="25.0" text="DE apparent:" textFill="WHITE" />
-                  <Label layoutX="260.0" layoutY="45.0" text="DE J2000:" textFill="WHITE" />
-                  <Label layoutX="260.0" layoutY="65.0" text="Elevation:" textFill="WHITE" />
-                  <Label layoutX="260.0" layoutY="85.0" text="Status:" textFill="WHITE" />
-                  <Label layoutX="165.0" layoutY="125.0" text="Slew RA:" textFill="WHITE" />
-                  <Label layoutX="340.0" layoutY="125.0" text="Slew DE:" textFill="WHITE" />
-                  <Label fx:id="polar1" layoutX="200.0" layoutY="5.0" text="Label" textFill="WHITE" />
-                  <Label fx:id="polar2" layoutX="200.0" layoutY="25.0" text="Label" textFill="WHITE" />
-                  <Label fx:id="polar3" layoutX="200.0" layoutY="45.0" text="Label" textFill="WHITE" />
-                  <Label fx:id="polar4" layoutX="200.0" layoutY="65.0" text="Label" textFill="WHITE" />
-                  <Label fx:id="polar5" layoutX="200.0" layoutY="85.0" text="Label" textFill="WHITE" />
-                  <Label fx:id="declination1" layoutX="460.0" layoutY="5.0" text="Label" textFill="WHITE" />
-                  <Label fx:id="declination2" layoutX="460.0" layoutY="25.0" text="Label" textFill="WHITE" />
-                  <Label fx:id="declination3" layoutX="460.0" layoutY="45.0" text="Label" textFill="WHITE" />
-                  <Label fx:id="declination4" layoutX="460.0" layoutY="65.0" text="Label" textFill="WHITE" />
-                  <Label fx:id="declination5" layoutX="460.0" layoutY="85.0" text="Label" textFill="WHITE" />
+                  <Label layoutX="10.0" layoutY="5.0" text="Encoder:" styleClass="info_label"/>
+                  <Label layoutX="10.0" layoutY="25.0" text="HA apparent:" styleClass="info_label"/>
+                  <Label layoutX="10.0" layoutY="65.0" text="Azimuth:" styleClass="info_label" />
+                  <Label layoutX="10.0" layoutY="45.0" text="RA J2000:" styleClass="info_label"/>
+                  <Label layoutX="10.0" layoutY="85.0" text="Status:" styleClass="info_label"/>
+                  <Label layoutX="260.0" layoutY="5.0" text="Encoder:" styleClass="info_label"/>
+                  <Label layoutX="260.0" layoutY="25.0" text="DE apparent:" styleClass="info_label"/>
+                  <Label layoutX="260.0" layoutY="45.0" text="DE J2000:" styleClass="info_label"/>
+                  <Label layoutX="260.0" layoutY="65.0" text="Elevation:" styleClass="info_label"/>
+                  <Label layoutX="260.0" layoutY="85.0" text="Status:" styleClass="info_label"/>
+                  <Label layoutX="165.0" layoutY="125.0" text="Slew RA:" styleClass="info_label"/>
+                  <Label layoutX="340.0" layoutY="125.0" text="Slew DE:" styleClass="info_label"/>
+                  <Label fx:id="polar1" layoutX="200.0" layoutY="5.0" text="Label" styleClass="info_label"/>
+                  <Label fx:id="polar2" layoutX="200.0" layoutY="25.0" text="Label" styleClass="info_label"/>
+                  <Label fx:id="polar3" layoutX="200.0" layoutY="45.0" text="Label" styleClass="info_label"/>
+                  <Label fx:id="polar4" layoutX="200.0" layoutY="65.0" text="Label" styleClass="info_label"/>
+                  <Label fx:id="polar5" layoutX="200.0" layoutY="85.0" text="Label" styleClass="info_label"/>
+                  <Label fx:id="declination1" layoutX="460.0" layoutY="5.0" text="Label" styleClass="info_label"/>
+                  <Label fx:id="declination2" layoutX="460.0" layoutY="25.0" text="Label" styleClass="info_label"/>
+                  <Label fx:id="declination3" layoutX="460.0" layoutY="45.0" text="Label" styleClass="info_label"/>
+                  <Label fx:id="declination4" layoutX="460.0" layoutY="65.0" text="Label" styleClass="info_label"/>
+                  <Label fx:id="declination5" layoutX="460.0" layoutY="85.0" text="Label" styleClass="info_label"/>
               </children>
           </Pane>
 
@@ -105,11 +105,6 @@
                   <Label layoutY="-25.0" text="Dome:" textFill="WHITE">
                       <font><Font size="18.0" /></font></Label>
                   <Button fx:id="DomeEastButton" layoutX="180.0" layoutY="120.0" prefWidth="80.0" text="Dome East"/>
-                  <Label layoutX="10.0" layoutY="25.0" text="Azimuth:" textFill="WHITE" />
-                  <Label layoutX="10.0" layoutY="85.0" text="Status:" textFill="WHITE" />
-                  <Label layoutX="10.0" layoutY="65.0" text="Synchronize:" textFill="WHITE" />
-                  <Label layoutX="10.0" layoutY="45.0" text="Target azimuth:" textFill="WHITE" />
-                  <Label layoutX="10.0" layoutY="5.0" text="Encoder:" textFill="WHITE" />
                   <Button fx:id="DomeStopButton" layoutX="95.0" layoutY="120.0" mnemonicParsing="false" prefWidth="80.0" text="Dome Stop"/>
                   <Button fx:id="DomeWestButton" layoutX="10.0" layoutY="120.0" mnemonicParsing="false" prefWidth="80.0" text="Dome West"/>
                   <TextField fx:id="FrequencyField" layoutX="80.0" layoutY="155.0" prefWidth="80.0" />
@@ -117,13 +112,19 @@
                   <TextField fx:id="CalibrateAzimuthField" layoutX="80.0" layoutY="190.0" prefWidth="80.0" />
                   <Button fx:id="CalibrateAzimuthButton" layoutX="160.0" layoutY="190.0" mnemonicParsing="false" text="→"/>
                   <Button fx:id="SynchronizeButton" layoutX="75.0" layoutY="225.0" mnemonicParsing="false" prefWidth="120.0" text="Synchronize"/>
-                  <Label layoutX="10.0" layoutY="160.0" text="Frequency:" textFill="WHITE" />
-                  <Label layoutX="10.0" layoutY="195.0" text="Azimuth:" textFill="WHITE" />
-                  <Label fx:id="DOMEEncoder" layoutX="230.0" layoutY="5.0" text="Label" textFill="WHITE" />
-                  <Label fx:id="DOMEStatus" layoutX="230.0" layoutY="85.0" text="Label" textFill="WHITE" />
-                  <Label fx:id="DOMESynch" layoutX="230.0" layoutY="65.0" text="Label" textFill="WHITE" />
-                  <Label fx:id="DOMETargetAzimuth" layoutX="230.0" layoutY="45.0" text="Label" textFill="WHITE" />
-                  <Label fx:id="DOMEAzimuth" layoutX="230.0" layoutY="25.0" text="Label" textFill="WHITE" />
+
+                  <Label layoutX="10.0" layoutY="25.0" text="Azimuth:" styleClass="info_label"/>
+                  <Label layoutX="10.0" layoutY="85.0" text="Status:" styleClass="info_label"/>
+                  <Label layoutX="10.0" layoutY="65.0" text="Synchronize:" styleClass="info_label"/>
+                  <Label layoutX="10.0" layoutY="45.0" text="Target azimuth:" styleClass="info_label"/>
+                  <Label layoutX="10.0" layoutY="5.0" text="Encoder:" styleClass="info_label"/>
+                  <Label layoutX="10.0" layoutY="160.0" text="Frequency:" styleClass="info_label"/>
+                  <Label layoutX="10.0" layoutY="195.0" text="Azimuth:" styleClass="info_label"/>
+                  <Label fx:id="DOMEEncoder" layoutX="230.0" layoutY="5.0" text="Label" styleClass="info_label"/>
+                  <Label fx:id="DOMEStatus" layoutX="230.0" layoutY="85.0" text="Label" styleClass="info_label"/>
+                  <Label fx:id="DOMESynch" layoutX="230.0" layoutY="65.0" text="Label" styleClass="info_label"/>
+                  <Label fx:id="DOMETargetAzimuth" layoutX="230.0" layoutY="45.0" text="Label" styleClass="info_label"/>
+                  <Label fx:id="DOMEAzimuth" layoutX="230.0" layoutY="25.0" text="Label" styleClass="info_label"/>
               </children>
           </Pane>
 
@@ -132,23 +133,23 @@
                <Rectangle styleClass="module_background" arcHeight="5.0" arcWidth="5.0" height="240.0" layoutX="230.0" layoutY="380.0" strokeType="INSIDE" strokeWidth="0.0" width="190.0" />
                <Label layoutY="-25.0" text="Camera:" textFill="WHITE">
                   <font><Font size="18.0" /></font></Label>
-               <Label layoutX="10.0" layoutY="5.0" text="Type:" textFill="WHITE" />
-               <Label layoutX="10.0" layoutY="325.0" text="Status:" textFill="WHITE" />
-               <Label layoutX="10.0" layoutY="305.0" text="Remaining:" textFill="WHITE" />
-               <Label layoutX="10.0" layoutY="285.0" text="Delay:" textFill="WHITE" />
-               <Label layoutX="10.0" layoutY="265.0" text="Cooler:" textFill="WHITE" />
-               <Label layoutX="10.0" layoutY="245.0" text="Setpoint:" textFill="WHITE" />
-               <Label layoutX="10.0" layoutY="225.0" text="Notes:" textFill="WHITE" />
-               <Label layoutX="10.0" layoutY="205.0" text="Object:" textFill="WHITE" />
-               <Label layoutX="10.0" layoutY="185.0" text="Observer:" textFill="WHITE" />
-               <Label layoutX="10.0" layoutY="165.0" text="Subframe:" textFill="WHITE" />
-               <Label layoutX="10.0" layoutY="145.0" text="Binning:" textFill="WHITE" />
-               <Label layoutX="10.0" layoutY="125.0" text="Background flush:" textFill="WHITE" />
-               <Label layoutX="10.0" layoutY="105.0" text="TDI mode:" textFill="WHITE" />
-               <Label layoutX="10.0" layoutY="85.0" text="RBI flood time:" textFill="WHITE" />
-               <Label layoutX="10.0" layoutY="65.0" text="RBI flush count:" textFill="WHITE" />
-               <Label layoutX="10.0" layoutY="45.0" text="Mode:" textFill="WHITE" />
-               <Label layoutX="10.0" layoutY="25.0" text="Exposure:" textFill="WHITE" />
+               <Label layoutX="10.0" layoutY="5.0" text="Type:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="325.0" text="Status:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="305.0" text="Remaining:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="285.0" text="Delay:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="265.0" text="Cooler:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="245.0" text="Setpoint:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="225.0" text="Notes:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="205.0" text="Object:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="185.0" text="Observer:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="165.0" text="Subframe:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="145.0" text="Binning:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="125.0" text="Background flush:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="105.0" text="TDI mode:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="85.0" text="RBI flood time:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="65.0" text="RBI flush count:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="45.0" text="Mode:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="25.0" text="Exposure:" styleClass="info_label"/>
                <Button fx:id="ExposeSequenceButton" layoutX="10.0" layoutY="585.0" mnemonicParsing="false" prefWidth="120.0"  text="Expose sequence"/>
                <Button fx:id="ExposeFromNearestSecondButton" layoutX="140.0" layoutY="585.0" mnemonicParsing="false"   text="Expose from nearest second"/>
                <Button fx:id="AbortImagingButton" layoutX="315.0" layoutY="585.0" mnemonicParsing="false"  text="Abort imaging"/>
@@ -161,12 +162,12 @@
                <Button fx:id="SequenceRepeatsButton" layoutX="190.0" layoutY="535.0" mnemonicParsing="false" prefHeight="25.0" text="→"/>
                <Button fx:id="ExposureDelayButton" layoutX="190.0" layoutY="500.0" mnemonicParsing="false" prefHeight="25.0" text="→"/>
 
-               <Label layoutX="10.0" layoutY="470.0" text="Cooler setpoint:" textFill="WHITE" />
-               <Label layoutX="10.0" layoutY="540.0" text="Sequence repeats:" textFill="WHITE" />
-               <Label layoutX="10.0" layoutY="505.0" text="Exposure delay:" textFill="WHITE" />
-               <Label layoutX="10.0" layoutY="365.0" text="Image type:" textFill="WHITE" />
-               <Label layoutX="10.0" layoutY="400.0" text="Camera mode:" textFill="WHITE" />
-               <Label layoutX="10.0" layoutY="435.0" text="Exposure time:" textFill="WHITE" />
+               <Label layoutX="10.0" layoutY="470.0" text="Cooler setpoint:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="540.0" text="Sequence repeats:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="505.0" text="Exposure delay:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="365.0" text="Image type:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="400.0" text="Camera mode:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="435.0" text="Exposure time:" styleClass="info_label"/>
                <ChoiceBox fx:id="CAMModeChoiceBox" layoutX="110.0" layoutY="395.0" prefWidth="106.0">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
@@ -189,32 +190,32 @@
                <Button fx:id="ObjectButton" layoutX="380.0" layoutY="470.0" mnemonicParsing="false" prefHeight="40.0"  text="→"/>
                <Button fx:id="ObserverButton" layoutX="380.0" layoutY="420.0" mnemonicParsing="false" prefHeight="40.0"  text="→"/>
 
-               <Label layoutX="230.0" layoutY="430.0" text="Observer:" textFill="WHITE" />
-               <Label layoutX="230.0" layoutY="480.0" text="Object:" textFill="WHITE" />
-               <Label layoutX="230.0" layoutY="530.0" text="Notes:" textFill="WHITE" />
+               <Label layoutX="230.0" layoutY="430.0" text="Observer:" styleClass="info_label"/>
+               <Label layoutX="230.0" layoutY="480.0" text="Object:" styleClass="info_label"/>
+               <Label layoutX="230.0" layoutY="530.0" text="Notes:" styleClass="info_label"/>
                <TextArea fx:id="NotesField" layoutX="300.0" layoutY="520.0" prefHeight="40.0" prefWidth="80.0" />
                <TextArea fx:id="ObjectField" layoutX="300.0" layoutY="470.0" prefHeight="40.0" prefWidth="80.0" />
                <TextArea fx:id="ObserverField" layoutX="300.0" layoutY="420.0" prefHeight="40.0" prefWidth="80.0" />
-               <Label fx:id="CAMStatus" layoutX="200.0" layoutY="325.0" text="Label" textFill="WHITE" />
-               <Label fx:id="CAMRemaining2" layoutX="200.0" layoutY="305.0" text="Label" textFill="WHITE" />
-               <Label fx:id="CAMDelay" layoutX="200.0" layoutY="285.0" text="Label" textFill="WHITE" />
-               <Label fx:id="CAMCooler2" layoutX="200.0" layoutY="265.0" text="Label" textFill="WHITE" />
-               <Label fx:id="CAMSetpoint" layoutX="200.0" layoutY="245.0" text="Label" textFill="WHITE" />
-               <Label fx:id="CAMNotes" layoutX="200.0" layoutY="225.0" text="Label" textFill="WHITE" />
-               <Label fx:id="CAMObject" layoutX="200.0" layoutY="205.0" text="Label" textFill="WHITE" />
-               <Label fx:id="CAMObserver" layoutX="200.0" layoutY="185.0" text="Label" textFill="WHITE" />
-               <Label fx:id="CAMSubframe2" layoutX="200.0" layoutY="165.0" text="Label" textFill="WHITE" />
-               <Label fx:id="CAMBinning" layoutX="200.0" layoutY="145.0" text="Label" textFill="WHITE" />
-               <Label fx:id="CAMBGFlush" layoutX="200.0" layoutY="125.0" text="Label" textFill="WHITE" />
-               <Label fx:id="CAMTDIMode" layoutX="200.0" layoutY="105.0" text="Label" textFill="WHITE" />
-               <Label fx:id="CAMRBIFloodTime" layoutX="200.0" layoutY="85.0" text="Label" textFill="WHITE" />
-               <Label fx:id="CAMRBIFlushCount" layoutX="200.0" layoutY="65.0" text="Label" textFill="WHITE" />
-               <Label fx:id="CAMMode" layoutX="200.0" layoutY="45.0" text="Label" textFill="WHITE" />
-               <Label fx:id="CAMExposure" layoutX="200.0" layoutY="25.0" text="Label" textFill="WHITE" />
-               <Label fx:id="CAMType" layoutX="200.0" layoutY="5.0" text="Label" textFill="WHITE" />
-               <Label fx:id="CAMSubframe1" layoutX="110.0" layoutY="165.0" text="Label" textFill="WHITE" />
-               <Label fx:id="CAMCooler1" layoutX="110.0" layoutY="265.0" text="Label" textFill="WHITE" />
-               <Label fx:id="CAMRemaining1" layoutX="110.0" layoutY="305.0" text="Label" textFill="WHITE" />
+               <Label fx:id="CAMStatus" layoutX="200.0" layoutY="325.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMRemaining2" layoutX="200.0" layoutY="305.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMDelay" layoutX="200.0" layoutY="285.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMCooler2" layoutX="200.0" layoutY="265.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMSetpoint" layoutX="200.0" layoutY="245.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMNotes" layoutX="200.0" layoutY="225.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMObject" layoutX="200.0" layoutY="205.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMObserver" layoutX="200.0" layoutY="185.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMSubframe2" layoutX="200.0" layoutY="165.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMBinning" layoutX="200.0" layoutY="145.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMBGFlush" layoutX="200.0" layoutY="125.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMTDIMode" layoutX="200.0" layoutY="105.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMRBIFloodTime" layoutX="200.0" layoutY="85.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMRBIFlushCount" layoutX="200.0" layoutY="65.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMMode" layoutX="200.0" layoutY="45.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMExposure" layoutX="200.0" layoutY="25.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMType" layoutX="200.0" layoutY="5.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMSubframe1" layoutX="110.0" layoutY="165.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMCooler1" layoutX="110.0" layoutY="265.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMRemaining1" layoutX="110.0" layoutY="305.0" text="Label" styleClass="info_label"/>
             </children>
          </Pane>
 
@@ -222,33 +223,33 @@
             <children>
                <Label layoutY="-25.0" text="Target:" textFill="WHITE">
                   <font><Font size="18.0" /></font></Label>
-               <Label layoutX="10.0" layoutY="5.0" text="Encoder:" textFill="white" />
-               <Label layoutX="10.0" layoutY="185.0" text="Status:" textFill="WHITE" />
-               <Label layoutX="10.0" layoutY="165.0" text="Pole crossing:" textFill="WHITE" />
-               <Label layoutX="10.0" layoutY="145.0" text="Elevation:" textFill="WHITE" />
-               <Label layoutX="10.0" layoutY="125.0" text="Azimuth:" textFill="WHITE" />
-               <Label layoutX="10.0" layoutY="105.0" text="DE J2000:" textFill="WHITE" />
-               <Label layoutX="10.0" layoutY="85.0" text="RA J2000:" textFill="WHITE" />
-               <Label layoutX="10.0" layoutY="65.0" text="DE apparent:" textFill="WHITE" />
-               <Label layoutX="10.0" layoutY="45.0" text="HA apparent:" textFill="WHITE" />
-               <Label layoutX="10.0" layoutY="25.0" text="dEnc:" textFill="WHITE" />
+               <Label layoutX="10.0" layoutY="5.0" text="Encoder:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="185.0" text="Status:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="165.0" text="Pole crossing:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="145.0" text="Elevation:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="125.0" text="Azimuth:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="105.0" text="DE J2000:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="85.0" text="RA J2000:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="65.0" text="DE apparent:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="45.0" text="HA apparent:" styleClass="info_label"/>
+               <Label layoutX="10.0" layoutY="25.0" text="dEnc:" styleClass="info_label"/>
                <Button fx:id="PoleCrossing" layoutX="65.0" layoutY="310.0" mnemonicParsing="false" prefWidth="110.0" text="Pole crossing on"/>
                <Button fx:id="LoadTarget" layoutX="190.0" layoutY="210.0" mnemonicParsing="false" prefHeight="55.0"  text="→"/>
                <TextField fx:id="LoadTargetRA" layoutX="110.0" layoutY="210.0" prefWidth="80.0" />
                <TextField fx:id="LoadTargetDE" layoutX="110.0" layoutY="240.0" prefWidth="80.0" />
-               <Label layoutX="20.0" layoutY="215.0" text="Load target RA:" textFill="WHITE" />
-               <Label layoutX="20.0" layoutY="245.0" text="Load target DE:" textFill="WHITE" />
+               <Label layoutX="20.0" layoutY="215.0" text="Load target RA:" styleClass="info_label"/>
+               <Label layoutX="20.0" layoutY="245.0" text="Load target DE:" styleClass="info_label"/>
                <Button fx:id="GoToCancel" layoutX="65.0" layoutY="275.0" mnemonicParsing="false" prefWidth="110.0"  text="Go To/Cancel"/>
-               <Label fx:id="target10" layoutX="200.0" layoutY="185.0" text="Label" textFill="WHITE" />
-               <Label fx:id="target9" layoutX="200.0" layoutY="165.0" text="Label" textFill="WHITE" />
-               <Label fx:id="target8" layoutX="200.0" layoutY="145.0" text="Label" textFill="WHITE" />
-               <Label fx:id="target7" layoutX="200.0" layoutY="125.0" text="Label" textFill="WHITE" />
-               <Label fx:id="target6" layoutX="200.0" layoutY="105.0" text="Label" textFill="WHITE" />
-               <Label fx:id="target5" layoutX="200.0" layoutY="85.0" text="Label" textFill="WHITE" />
-               <Label fx:id="target4" layoutX="200.0" layoutY="65.0" text="Label" textFill="WHITE" />
-               <Label fx:id="target3" layoutX="200.0" layoutY="45.0" text="Label" textFill="WHITE" />
-               <Label fx:id="target2" layoutX="200.0" layoutY="25.0" text="Label" textFill="WHITE" />
-               <Label fx:id="target1" layoutX="200.0" layoutY="5.0" text="Label" textFill="WHITE" />
+               <Label fx:id="target10" layoutX="200.0" layoutY="185.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="target9" layoutX="200.0" layoutY="165.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="target8" layoutX="200.0" layoutY="145.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="target7" layoutX="200.0" layoutY="125.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="target6" layoutX="200.0" layoutY="105.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="target5" layoutX="200.0" layoutY="85.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="target4" layoutX="200.0" layoutY="65.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="target3" layoutX="200.0" layoutY="45.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="target2" layoutX="200.0" layoutY="25.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="target1" layoutX="200.0" layoutY="5.0" text="Label" styleClass="info_label"/>
             </children>
          </Pane>
 
@@ -267,8 +268,8 @@
                     </FXCollections>
                   </items>
 	            </ComboBox>
-               <Label layoutX="10.0" layoutY="5.0" text="filter:" textFill="WHITE" />
-               <Label fx:id="FWFilter" layoutX="200.0" layoutY="5.0" text="Label" textFill="WHITE" />
+               <Label layoutX="10.0" layoutY="5.0" text="filter:" styleClass="info_label"/>
+               <Label fx:id="FWFilter" layoutX="200.0" layoutY="5.0" text="Label" styleClass="info_label"/>
             </children>
          </Pane>
 
