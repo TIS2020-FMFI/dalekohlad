@@ -48,12 +48,21 @@ public class Communication {
         }
     }
 
+    private static void informModule(GUIModule mod, JsonObject jo) {
+        try {
+            mod.update(jo);
+        }
+        catch (Exception e) {
+            lgr.error(String.format("Update of module %s failed:", mod.getClass().getName()));
+        }
+    }
+
     private static void processUpdate(String data) {
         if (data.startsWith("{")) {
             JsonReader reader = new JsonReader(new StringReader(data.trim()));
             reader.setLenient(true);
             JsonObject json_object = JsonParser.parseReader(reader).getAsJsonObject();
-            modules.forEach(x -> x.update(json_object));
+            modules.forEach(x -> informModule(x, json_object));
         }
         else if (!data.equals("")) {
             Operations.add(data);
