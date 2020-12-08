@@ -1,0 +1,1 @@
+print("Pozdravujem z neimplementovaneho scriptu")

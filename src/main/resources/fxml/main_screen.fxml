@@ -286,7 +286,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button fx:id="load_scheduling" layoutX="1048.0" layoutY="408.0" mnemonicParsing="false" style="-fx-background-color: rgb(250,250,100);" text="Not implemented" visible="false">
+                <Button fx:id="load_scheduling" layoutX="1048.0" layoutY="408.0" mnemonicParsing="false" style="-fx-background-color: rgb(250,250,100);" text="Load scheduling">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>

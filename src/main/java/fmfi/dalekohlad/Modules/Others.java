@@ -1,6 +1,7 @@
 package fmfi.dalekohlad.Modules;
 
 import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonReader;
 import eap.fits.FitsHDU;
 import eap.fits.FitsImageData;
 import eap.fits.RandomAccessFitsFile;
@@ -24,8 +25,15 @@ import javafx.util.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.script.ScriptContext;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.SimpleScriptContext;
 import java.awt.*;
-import java.io.RandomAccessFile;
+import java.io.*;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -40,6 +48,7 @@ public class Others implements GUIModule {
     private static boolean connectionFailed = false;
     private final int START_SCHEDULING = 59;
     private final int STOP_SCHEDULING = 46;
+    private final String pathToScript = "/script.py";
 
     private Parent main_screen_root;
     private Pane pane;
@@ -186,6 +195,7 @@ public class Others implements GUIModule {
         displayConnectionStatus();
 
         startStopScheduling.setOnAction(event -> startStopScheduling());
+        ((Button) GUIModule.GetById(pane, "load_scheduling")).setOnAction(event -> this.runScript());
         ((Button) GUIModule.GetById(pane,"Exit")).setOnAction(event -> System.exit(0));
         ((Button) GUIModule.GetById(pane,"Shortcuts")).setOnAction(event -> this.setDisplayingShortcuts());
     }
@@ -218,5 +228,21 @@ public class Others implements GUIModule {
                 Others.wasUpdated = false;
             }
         }, 6000,2500);
+    }
+
+    private void runScript() {
+        try {
+            URL url = Others.class.getResource(pathToScript);
+            Path script_path = Paths.get(url.toURI());
+            ProcessBuilder pb = new ProcessBuilder("python",script_path.toString());
+            Process p = pb.start();
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            System.out.println(in.readLine());
+
+        } catch(Exception e) {
+            lgr.error("Cant find script");
+        }
+
     }
 }
