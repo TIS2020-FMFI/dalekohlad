@@ -14,6 +14,7 @@ import fmfi.dalekohlad.InputHandling.InputConfirmation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Target implements GUIModule {
     private Pane pane;
@@ -36,12 +37,15 @@ public class Target implements GUIModule {
         ((Button)GUIModule.GetById(pane,"LoadTarget")).setOnAction(actionEvent -> LoadTarget());
         ((Button)GUIModule.GetById(pane,"GoToCancel")).setOnAction(actionEvent -> GoToCancel());
         ((Button)GUIModule.GetById(pane,"PoleCrossing")).setOnAction(actionEvent -> PoleCrossing());
+
+        ((TextField) Objects.requireNonNull(GUIModule.GetById(pane, "LoadTargetRA"))).setOnAction(actionEvent -> LoadTarget());
+        ((TextField) Objects.requireNonNull(GUIModule.GetById(pane, "LoadTargetDE"))).setOnAction(actionEvent -> LoadTarget());
     }
 
     public static boolean goodFormat(String input) {
         if (input == null) return false;
 
-        if(!input.matches("[0-9][0-9][.][0-9][0-9][0-9]") && !input.matches("[0-9][0-9][:][0-9][0-9][:][0-9][0-9][.][0-9]")) {
+        if(!input.matches("[0-9][0-9][.][0-9][0-9][0-9]") && !input.matches("[0-9][0-9][:][0-9][0-9][:][0-9][0-9][.][0-9]")){
             return false;
         }
         return true;
