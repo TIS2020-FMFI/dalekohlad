@@ -13,6 +13,23 @@
 <Scene xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <AnchorPane prefHeight="700.0" prefWidth="1200.0" styleClass="main_background" stylesheets="@/styles.css">
       <children>
+
+         <Pane fx:id="module_Others" layoutX="1020.0" layoutY="-1.0" prefHeight="479.0" prefWidth="340.0" styleClass="module_background">
+            <children>
+                <ProgressBar fx:id="progress" disable="true" layoutX="83.0" layoutY="410.0" prefHeight="18.0" prefWidth="170.0" progress="0.0" style="-fx-accent: rgb(114,187,83);">
+                </ProgressBar>
+                <Button fx:id="start_scheduling" layoutX="117.0" layoutY="377.0" mnemonicParsing="false" text="Start scheduling">
+                </Button>
+                <SwingNode fx:id="node_FITS" layoutX="44.0" layoutY="136.0" />
+                <Label fx:id="path_to_last_frame" layoutX="100.0" layoutY="238.0" text="" textFill="WHITE" />
+                <Button fx:id="Shortcuts" layoutX="206.0" layoutY="5.0" mnemonicParsing="false" styleClass="shortcuts" text="Shortcuts" />
+                <Button fx:id="Exit" layoutX="281.0" layoutY="5.0" mnemonicParsing="false" prefWidth="50.0" styleClass="exit" text="Exit" />
+                <Label fx:id="Connected" layoutX="140.0" layoutY="9.0" style="-fx-background-color: rgb(80,250,80);" text="connected" />
+                <Label fx:id="info" layoutX="-990.0" text="UTC: yyyy-mm-dd hh:mm:ss   UTC1-UTC=0.9 leapsec=37 p=715.5mmHg T=12.6°" textFill="WHITE" />
+                <Button fx:id="load_scheduling" layoutX="117.0" layoutY="436.0" mnemonicParsing="false" text="Load scheduling">
+                </Button>
+            </children>
+         </Pane>
           <Pane fx:id="module_Graphics" layoutX="190.0" layoutY="33.0" prefHeight="125.0" prefWidth="400.0" styleClass="main_background">
               <children>
                   <Rectangle fx:id="Horizont" fill="transparent" height="115" stroke="yellow" strokeWidth="3.5" width="151" x="5" y="5" />
@@ -121,7 +138,6 @@
 
          <Pane fx:id="module_Camera" layoutX="770.0" layoutY="70.0" prefHeight="620.0" prefWidth="240.0" styleClass="module_background">
             <children>
-               <Rectangle arcHeight="5.0" arcWidth="5.0" height="240.0" layoutX="230.0" layoutY="380.0" strokeType="INSIDE" strokeWidth="0.0" styleClass="module_background" width="190.0" />
                <Label layoutY="-25.0" text="Camera:" textFill="WHITE">
                   <font><Font size="18.0" /></font></Label>
                <Label layoutX="10.0" layoutY="5.0" styleClass="info_label" text="Type:" />
@@ -261,23 +277,6 @@
 	            </ComboBox>
                <Label layoutX="10.0" layoutY="5.0" styleClass="info_label" text="filter:" />
                <Label fx:id="FWFilter" layoutX="200.0" layoutY="5.0" styleClass="info_label" text="Label" />
-            </children>
-         </Pane>
-
-         <Pane fx:id="module_Others" layoutX="1004.0" layoutY="3.0" prefHeight="475.0" prefWidth="338.0" styleClass="module_background">
-            <children>
-                <ProgressBar fx:id="progress" disable="true" layoutX="83.0" layoutY="410.0" prefHeight="18.0" prefWidth="170.0" progress="0.0" style="-fx-accent: rgb(114,187,83);">
-                </ProgressBar>
-                <Button fx:id="start_scheduling" layoutX="117.0" layoutY="377.0" mnemonicParsing="false" text="Start scheduling">
-                </Button>
-                <Button fx:id="load_scheduling" layoutX="117.0" layoutY="436.0" mnemonicParsing="false" text="Load scheduling">
-                </Button>
-                <SwingNode fx:id="node_FITS" layoutX="44.0" layoutY="136.0" />
-                <Label fx:id="path_to_last_frame" layoutX="100.0" layoutY="238.0" text="" textFill="WHITE" />
-                <Button fx:id="Shortcuts" layoutX="206.0" layoutY="5.0" mnemonicParsing="false" styleClass="shortcuts" text="Shortcuts" />
-                <Button fx:id="Exit" layoutX="281.0" layoutY="5.0" mnemonicParsing="false" prefWidth="50.0" styleClass="exit" text="Exit" />
-                <Label fx:id="Connected" layoutX="140.0" layoutY="9.0" style="-fx-background-color: rgb(80,250,80);" text="connected" />
-                <Label fx:id="info" layoutX="-990.0" text="UTC: yyyy-mm-dd hh:mm:ss   UTC1-UTC=0.9 leapsec=37 p=715.5mmHg T=12.6°" textFill="WHITE" />
             </children>
          </Pane>
 
