@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -66,7 +67,7 @@ public class Others implements GUIModule {
         displayConnectionStatus();
 
         startStopScheduling.setOnAction(event -> startStopScheduling());
-        ((Button) GUIModule.GetById(pane, "load_scheduling")).setOnAction(event -> this.runScript());
+        ((Button) GUIModule.GetById(pane, "load_scheduling")).setOnAction(event -> this.startLoadingScript());
         ((Button) GUIModule.GetById(pane,"Exit")).setOnAction(event -> System.exit(0));
         ((Button) GUIModule.GetById(pane,"Shortcuts")).setOnAction(event -> this.setDisplayingShortcuts());
     }
@@ -220,18 +221,26 @@ public class Others implements GUIModule {
         }, 6000,2500);
     }
 
-    private void runScript() {
+    private void startLoadingScript() {
         try {
             URL url = Others.class.getResource(pathToScript);
             Path script_path = Paths.get(url.toURI());
             ProcessBuilder pb = new ProcessBuilder("python",script_path.toString());
             Process p = pb.start();
-
             BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            System.out.println(in.readLine());
+            Double loaded = Double.parseDouble(in.readLine());
+            ProgressBar progressBar = ((ProgressBar) GUIModule.GetById(pane, "progress"));
+
+            if(progressBar.isDisabled()) {
+                progressBar.setDisable(false);
+            }
+            if(loaded >= 1) {
+                Operations.add("Scheduler was loaded.");
+            }
+            progressBar.setProgress(loaded);
 
         } catch(Exception e) {
-            lgr.error("Cant find script");
+            lgr.error("Loading script failed");
         }
 
     }

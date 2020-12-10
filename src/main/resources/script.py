@@ -1,1 +1,1 @@
-print("Pozdravujem z neimplementovaneho scriptu")
+print("0.35")
