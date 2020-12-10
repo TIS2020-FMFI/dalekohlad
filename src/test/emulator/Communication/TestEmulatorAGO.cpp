@@ -28,7 +28,7 @@ std::string get_refresh_data() {
 
 	j["PAHARAJ2000"] = "PAHARAJ2000";
 
-	j["PAAzimuth"] = "PAAzimuth";
+	j["PAAzimuth"] = 12.23;
 
 	j["PAStatus"] = "PAStatus";
 
@@ -40,7 +40,7 @@ std::string get_refresh_data() {
 
 	j["DEDEJ2000"] = "DEDEJ2000";
 
-	j["DEElevation"] = "DEElevation";
+	j["DEElevation"] = 23.12;
 
 	j["DEStatus"] = "DEStatus";
 
@@ -48,7 +48,7 @@ std::string get_refresh_data() {
 
 	j["DOMEEncoder"] = "DOMEEncoder";
 
-	j["DOMEAzimuth"] = "DOMEAzimuth";
+	j["DOMEAzimuth"] = 13.13;
 
 	j["DOMETargetAzimuth"] = "DOMETargetAzimuth";
 
@@ -99,7 +99,7 @@ std::string get_refresh_data() {
 	j["CAMStatus"] = "CAMStatus";
 
 
-	j["FWFilter"] = "FWFilter";
+	j["FWFilter"] = "B";
 
 	j["FWStatus"] = "FWStatus";
 

@@ -19,6 +19,7 @@ import java.util.Map;
 public class Filterwheel implements GUIModule {
     private Pane pane;
     private Label info;
+    private ComboBox comboBox;
     private final int FILTER_B_CODE = 67;
     private final int FILTER_V_CODE = 66;
     private final int FILTER_R_CODE = 86;
@@ -30,12 +31,12 @@ public class Filterwheel implements GUIModule {
         info = (Label) GUIModule.GetById(pane, "FWFilter");
         info.setText("...");
 
-        ComboBox comboBox = ((ComboBox)GUIModule.GetById(pane, "FWFilterComboBox"));
+        comboBox = ((ComboBox)GUIModule.GetById(pane, "FWFilterComboBox"));
         comboBox.setOnAction(actionEvent -> SetFilter());
-        SetItemsColors(comboBox);
+        SetItemsColors();
     }
 
-    public void SetItemsColors(ComboBox comboBox){
+    public void SetItemsColors(){
         comboBox.setCellFactory(new Callback<ListView<String>, ListCell<String>>(){
             @Override public ListCell<String> call(ListView<String> p){
                 return new ListCell<>() {
@@ -64,22 +65,6 @@ public class Filterwheel implements GUIModule {
         });
     }
 
-    public void SetComboBoxColor(String s){
-        ComboBox comboBox = (ComboBox) GUIModule.GetById(pane, "FWFilterComboBox");
-        Color color = Color.WHITE;
-
-        if(s.length() > 1) s = s.split(" ")[1];
-        switch(s){
-            case "B": color = Color.BLUE; break;
-            case "V": color = Color.GREEN; break;
-            case "R": color = Color.RED; break;
-            case "I": color = Color.ORANGE; break;
-            case "C": color = Color.GRAY; break;
-        }
-        assert comboBox != null;
-        comboBox.setBackground(new Background(new BackgroundFill(color, new CornerRadii(30), Insets.EMPTY)));
-    }
-
     public void SetFilter(){
         ComboBox comboBox = (ComboBox) GUIModule.GetById(pane, "FWFilterComboBox");
         assert comboBox != null;
@@ -96,15 +81,25 @@ public class Filterwheel implements GUIModule {
             case "I": Communication.sendData(String.valueOf(FILTER_I_CODE));
             case "C": Communication.sendData(String.valueOf(FILTER_C_CODE));
         }
-        SetComboBoxColor(s);
         System.out.println("Set Filter: " + s);
     }
 
     public void update(JsonObject jo) {
-        if(jo.get("FWFilter") != null) {
-            Platform.runLater(() -> info.setText(jo.get("FWFilter").getAsString()));
-            SetComboBoxColor(jo.get("FWFilter").getAsString());
+        if(jo.get("FWFilter") == null) return;
+        Color color = Color.WHITE;
+
+        switch(jo.get("FWFilter").getAsString()){
+            case "B": color = Color.BLUE; break;
+            case "V": color = Color.GREEN; break;
+            case "R": color = Color.RED; break;
+            case "I": color = Color.ORANGE; break;
+            case "C": color = Color.GRAY; break;
         }
+        assert comboBox != null;
+        Color finalColor = color;
+        Platform.runLater(() -> comboBox.setBackground(new Background(new BackgroundFill(finalColor, new CornerRadii(30), Insets.EMPTY))));
+        Platform.runLater(() -> comboBox.setValue(jo.get("FWFilter").getAsString()));
+        Platform.runLater(() -> info.setText(jo.get("FWFilter").getAsString()));
     }
 
     @Override
