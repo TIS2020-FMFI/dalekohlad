@@ -87,16 +87,16 @@
                   <Label layoutX="260.0" layoutY="85.0" text="Status:" styleClass="info_label"/>
                   <Label layoutX="165.0" layoutY="125.0" text="Slew RA:" styleClass="info_label"/>
                   <Label layoutX="340.0" layoutY="125.0" text="Slew DE:" styleClass="info_label"/>
-                  <Label fx:id="polar1" layoutX="200.0" layoutY="5.0" text="Label" styleClass="info_label"/>
-                  <Label fx:id="polar2" layoutX="200.0" layoutY="25.0" text="Label" styleClass="info_label"/>
-                  <Label fx:id="polar3" layoutX="200.0" layoutY="45.0" text="Label" styleClass="info_label"/>
-                  <Label fx:id="polar4" layoutX="200.0" layoutY="65.0" text="Label" styleClass="info_label"/>
-                  <Label fx:id="polar5" layoutX="200.0" layoutY="85.0" text="Label" styleClass="info_label"/>
-                  <Label fx:id="declination1" layoutX="460.0" layoutY="5.0" text="Label" styleClass="info_label"/>
-                  <Label fx:id="declination2" layoutX="460.0" layoutY="25.0" text="Label" styleClass="info_label"/>
-                  <Label fx:id="declination3" layoutX="460.0" layoutY="45.0" text="Label" styleClass="info_label"/>
-                  <Label fx:id="declination4" layoutX="460.0" layoutY="65.0" text="Label" styleClass="info_label"/>
-                  <Label fx:id="declination5" layoutX="460.0" layoutY="85.0" text="Label" styleClass="info_label"/>
+                  <Label fx:id="polar1" layoutX="160.0" layoutY="5.0" text="Label" styleClass="info_label"/>
+                  <Label fx:id="polar2" layoutX="160.0" layoutY="25.0" text="Label" styleClass="info_label"/>
+                  <Label fx:id="polar3" layoutX="160.0" layoutY="45.0" text="Label" styleClass="info_label"/>
+                  <Label fx:id="polar4" layoutX="160.0" layoutY="65.0" text="Label" styleClass="info_label"/>
+                  <Label fx:id="polar5" layoutX="160.0" layoutY="85.0" text="Label" styleClass="info_label"/>
+                  <Label fx:id="declination1" layoutX="420.0" layoutY="5.0" text="Label" styleClass="info_label"/>
+                  <Label fx:id="declination2" layoutX="420.0" layoutY="25.0" text="Label" styleClass="info_label"/>
+                  <Label fx:id="declination3" layoutX="420.0" layoutY="45.0" text="Label" styleClass="info_label"/>
+                  <Label fx:id="declination4" layoutX="420.0" layoutY="65.0" text="Label" styleClass="info_label"/>
+                  <Label fx:id="declination5" layoutX="420.0" layoutY="85.0" text="Label" styleClass="info_label"/>
               </children>
           </Pane>
 
@@ -120,11 +120,11 @@
                   <Label layoutX="10.0" layoutY="5.0" text="Encoder:" styleClass="info_label"/>
                   <Label layoutX="10.0" layoutY="160.0" text="Frequency:" styleClass="info_label"/>
                   <Label layoutX="10.0" layoutY="195.0" text="Azimuth:" styleClass="info_label"/>
-                  <Label fx:id="DOMEEncoder" layoutX="230.0" layoutY="5.0" text="Label" styleClass="info_label"/>
-                  <Label fx:id="DOMEStatus" layoutX="230.0" layoutY="85.0" text="Label" styleClass="info_label"/>
-                  <Label fx:id="DOMESynch" layoutX="230.0" layoutY="65.0" text="Label" styleClass="info_label"/>
-                  <Label fx:id="DOMETargetAzimuth" layoutX="230.0" layoutY="45.0" text="Label" styleClass="info_label"/>
-                  <Label fx:id="DOMEAzimuth" layoutX="230.0" layoutY="25.0" text="Label" styleClass="info_label"/>
+                  <Label fx:id="DOMEEncoder" layoutX="190.0" layoutY="5.0" text="Label" styleClass="info_label"/>
+                  <Label fx:id="DOMEStatus" layoutX="190.0" layoutY="85.0" text="Label" styleClass="info_label"/>
+                  <Label fx:id="DOMESynch" layoutX="190.0" layoutY="65.0" text="Label" styleClass="info_label"/>
+                  <Label fx:id="DOMETargetAzimuth" layoutX="190.0" layoutY="45.0" text="Label" styleClass="info_label"/>
+                  <Label fx:id="DOMEAzimuth" layoutX="190.0" layoutY="25.0" text="Label" styleClass="info_label"/>
               </children>
           </Pane>
 
@@ -196,26 +196,26 @@
                <TextArea fx:id="NotesField" layoutX="300.0" layoutY="520.0" prefHeight="40.0" prefWidth="80.0" />
                <TextArea fx:id="ObjectField" layoutX="300.0" layoutY="470.0" prefHeight="40.0" prefWidth="80.0" />
                <TextArea fx:id="ObserverField" layoutX="300.0" layoutY="420.0" prefHeight="40.0" prefWidth="80.0" />
-               <Label fx:id="CAMStatus" layoutX="200.0" layoutY="325.0" text="Label" styleClass="info_label"/>
-               <Label fx:id="CAMRemaining2" layoutX="200.0" layoutY="305.0" text="Label" styleClass="info_label"/>
-               <Label fx:id="CAMDelay" layoutX="200.0" layoutY="285.0" text="Label" styleClass="info_label"/>
-               <Label fx:id="CAMCooler2" layoutX="200.0" layoutY="265.0" text="Label" styleClass="info_label"/>
-               <Label fx:id="CAMSetpoint" layoutX="200.0" layoutY="245.0" text="Label" styleClass="info_label"/>
-               <Label fx:id="CAMNotes" layoutX="200.0" layoutY="225.0" text="Label" styleClass="info_label"/>
-               <Label fx:id="CAMObject" layoutX="200.0" layoutY="205.0" text="Label" styleClass="info_label"/>
-               <Label fx:id="CAMObserver" layoutX="200.0" layoutY="185.0" text="Label" styleClass="info_label"/>
-               <Label fx:id="CAMSubframe2" layoutX="200.0" layoutY="165.0" text="Label" styleClass="info_label"/>
-               <Label fx:id="CAMBinning" layoutX="200.0" layoutY="145.0" text="Label" styleClass="info_label"/>
-               <Label fx:id="CAMBGFlush" layoutX="200.0" layoutY="125.0" text="Label" styleClass="info_label"/>
-               <Label fx:id="CAMTDIMode" layoutX="200.0" layoutY="105.0" text="Label" styleClass="info_label"/>
-               <Label fx:id="CAMRBIFloodTime" layoutX="200.0" layoutY="85.0" text="Label" styleClass="info_label"/>
-               <Label fx:id="CAMRBIFlushCount" layoutX="200.0" layoutY="65.0" text="Label" styleClass="info_label"/>
-               <Label fx:id="CAMMode" layoutX="200.0" layoutY="45.0" text="Label" styleClass="info_label"/>
-               <Label fx:id="CAMExposure" layoutX="200.0" layoutY="25.0" text="Label" styleClass="info_label"/>
-               <Label fx:id="CAMType" layoutX="200.0" layoutY="5.0" text="Label" styleClass="info_label"/>
-               <Label fx:id="CAMSubframe1" layoutX="110.0" layoutY="165.0" text="Label" styleClass="info_label"/>
-               <Label fx:id="CAMCooler1" layoutX="110.0" layoutY="265.0" text="Label" styleClass="info_label"/>
-               <Label fx:id="CAMRemaining1" layoutX="110.0" layoutY="305.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMStatus" layoutX="160.0" layoutY="325.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMRemaining2" layoutX="160.0" layoutY="305.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMDelay" layoutX="160.0" layoutY="285.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMCooler2" layoutX="160.0" layoutY="265.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMSetpoint" layoutX="160.0" layoutY="245.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMNotes" layoutX="160.0" layoutY="225.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMObject" layoutX="160.0" layoutY="205.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMObserver" layoutX="160.0" layoutY="185.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMSubframe2" layoutX="160.0" layoutY="165.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMBinning" layoutX="160.0" layoutY="145.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMBGFlush" layoutX="160.0" layoutY="125.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMTDIMode" layoutX="160.0" layoutY="105.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMRBIFloodTime" layoutX="160.0" layoutY="85.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMRBIFlushCount" layoutX="160.0" layoutY="65.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMMode" layoutX="160.0" layoutY="45.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMExposure" layoutX="160.0" layoutY="25.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMType" layoutX="160.0" layoutY="5.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMSubframe1" layoutX="90.0" layoutY="165.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMCooler1" layoutX="90.0" layoutY="265.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="CAMRemaining1" layoutX="90.0" layoutY="305.0" text="Label" styleClass="info_label"/>
             </children>
          </Pane>
 
@@ -240,16 +240,16 @@
                <Label layoutX="20.0" layoutY="215.0" text="Load target RA:" styleClass="info_label"/>
                <Label layoutX="20.0" layoutY="245.0" text="Load target DE:" styleClass="info_label"/>
                <Button fx:id="GoToCancel" layoutX="65.0" layoutY="275.0" mnemonicParsing="false" prefWidth="110.0"  text="Go To/Cancel"/>
-               <Label fx:id="target10" layoutX="200.0" layoutY="185.0" text="Label" styleClass="info_label"/>
-               <Label fx:id="target9" layoutX="200.0" layoutY="165.0" text="Label" styleClass="info_label"/>
-               <Label fx:id="target8" layoutX="200.0" layoutY="145.0" text="Label" styleClass="info_label"/>
-               <Label fx:id="target7" layoutX="200.0" layoutY="125.0" text="Label" styleClass="info_label"/>
-               <Label fx:id="target6" layoutX="200.0" layoutY="105.0" text="Label" styleClass="info_label"/>
-               <Label fx:id="target5" layoutX="200.0" layoutY="85.0" text="Label" styleClass="info_label"/>
-               <Label fx:id="target4" layoutX="200.0" layoutY="65.0" text="Label" styleClass="info_label"/>
-               <Label fx:id="target3" layoutX="200.0" layoutY="45.0" text="Label" styleClass="info_label"/>
-               <Label fx:id="target2" layoutX="200.0" layoutY="25.0" text="Label" styleClass="info_label"/>
-               <Label fx:id="target1" layoutX="200.0" layoutY="5.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="target10" layoutX="160.0" layoutY="185.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="target9" layoutX="160.0" layoutY="165.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="target8" layoutX="160.0" layoutY="145.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="target7" layoutX="160.0" layoutY="125.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="target6" layoutX="160.0" layoutY="105.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="target5" layoutX="160.0" layoutY="85.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="target4" layoutX="160.0" layoutY="65.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="target3" layoutX="160.0" layoutY="45.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="target2" layoutX="160.0" layoutY="25.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="target1" layoutX="160.0" layoutY="5.0" text="Label" styleClass="info_label"/>
             </children>
          </Pane>
 
@@ -269,14 +269,12 @@
                   </items>
 	            </ComboBox>
                <Label layoutX="10.0" layoutY="5.0" text="filter:" styleClass="info_label"/>
-               <Label fx:id="FWFilter" layoutX="200.0" layoutY="5.0" text="Label" styleClass="info_label"/>
+               <Label fx:id="FWFilter" layoutX="160.0" layoutY="5.0" text="Label" styleClass="info_label"/>
             </children>
          </Pane>
 
          <Pane fx:id="module_Others" styleClass="module_background" prefHeight="0.0" prefWidth="0.0">
             <children>
-                <Label fx:id="aplication_name" layoutX="500.0" layoutY="2.0" text="Názov Aplikácie" textFill="WHITE">
-                  <font><Font size="22.0" /></font></Label>
                 <Label fx:id="info" layoutX="23.0" layoutY="10.0" text="UTC: yyyy-mm-dd hh:mm:ss   UTC1-UTC=0.9 leapsec=37 p=715.5mmHg T=12.6°" textFill="WHITE"/>
                 <Button fx:id="Shortcuts" styleClass="shortcuts" layoutX="1060.0" layoutY="7.0" mnemonicParsing="false"  text="Shortcuts"/>
                 <Button fx:id="Exit" styleClass="exit" layoutX="1140.0" layoutY="7.0" mnemonicParsing="false" prefWidth="50.0"  text="Exit"/>
