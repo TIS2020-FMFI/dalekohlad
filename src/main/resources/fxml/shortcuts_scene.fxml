@@ -393,7 +393,7 @@
             <Font size="13.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="702.0" layoutY="29.0" style="&#10;" text="no itput" textAlignment="CENTER" textFill="WHITE" wrapText="false">
+      <Label alignment="CENTER" layoutX="702.0" layoutY="29.0" style="&#10;" text="no input" textAlignment="CENTER" textFill="WHITE" wrapText="false">
          <font>
             <Font size="13.0" />
          </font>
@@ -401,27 +401,27 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Label>
-      <Label alignment="CENTER" layoutX="702.0" layoutY="50.0" style="&#10;" text="no itput" textAlignment="CENTER" textFill="WHITE" wrapText="false">
+      <Label alignment="CENTER" layoutX="702.0" layoutY="50.0" style="&#10;" text="no input" textAlignment="CENTER" textFill="WHITE" wrapText="false">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="702.0" layoutY="70.0" style="&#10;" text="no itput" textAlignment="CENTER" textFill="WHITE" wrapText="false">
+      <Label alignment="CENTER" layoutX="702.0" layoutY="70.0" style="&#10;" text="no input" textAlignment="CENTER" textFill="WHITE" wrapText="false">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="702.0" layoutY="166.0" style="&#10;" text="no itput" textAlignment="CENTER" textFill="WHITE" wrapText="false">
+      <Label alignment="CENTER" layoutX="702.0" layoutY="166.0" style="&#10;" text="no input" textAlignment="CENTER" textFill="WHITE" wrapText="false">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="702.0" layoutY="185.0" style="&#10;" text="no itput" textAlignment="CENTER" textFill="WHITE" wrapText="false">
+      <Label alignment="CENTER" layoutX="702.0" layoutY="185.0" style="&#10;" text="no input" textAlignment="CENTER" textFill="WHITE" wrapText="false">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="702.0" layoutY="204.0" style="&#10;" text="no itput" textAlignment="CENTER" textFill="WHITE" wrapText="false">
+      <Label alignment="CENTER" layoutX="702.0" layoutY="204.0" style="&#10;" text="no input" textAlignment="CENTER" textFill="WHITE" wrapText="false">
          <font>
             <Font size="13.0" />
          </font>
