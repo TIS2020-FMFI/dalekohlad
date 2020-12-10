@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -75,11 +76,11 @@ public class Communication {
             try {
                 processUpdate(readString());
             }
-            catch (SocketTimeoutException e) {
+            catch (SocketTimeoutException|SocketException e) {
                 reconnect();
             }
             catch (Exception e) {
-                lgr.error("Failed to read data, repeating...");
+                lgr.error("Failed to read data, repeating...", e);
                 sleep(1000);
             }
         }
