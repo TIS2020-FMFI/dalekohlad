@@ -172,9 +172,6 @@ public class Others implements GUIModule {
 
     private void markFlagsAsConnected() {
         Others.wasUpdated = true;
-        if (connectionFailed) {
-            connectionFailed = false;
-        }
     }
 
     private void setDisplayingShortcuts() {
@@ -204,10 +201,11 @@ public class Others implements GUIModule {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if(!Others.wasUpdated) {
+                if(!Others.wasUpdated && !Others.connectionFailed) {
                     BackgroundFill redBackground = new BackgroundFill(Color.RED, null, null);
                     Platform.runLater(() -> status.setBackground(new Background(redBackground)));
                     Platform.runLater(() -> status.setText("disconnected"));
+                    connectionFailed = true;
                 }
                 else if(Others.connectionFailed && Others.wasUpdated) {
                     Others.connectionFailed = false;
