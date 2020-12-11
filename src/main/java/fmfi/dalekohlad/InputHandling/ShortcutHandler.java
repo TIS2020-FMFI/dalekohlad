@@ -26,6 +26,7 @@ public class ShortcutHandler<T extends KeyEvent> implements EventHandler {
         KeyEvent key = (KeyEvent) event;
         Pair<Boolean, KeyCode> shortcut_id = new Pair<>(key.isShiftDown(), key.getCode());
         shortcuts.getOrDefault(shortcut_id, () -> {}).run();
+        event.consume();
     }
 }
 
