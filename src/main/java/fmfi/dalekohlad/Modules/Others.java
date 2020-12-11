@@ -5,7 +5,9 @@ import eap.fits.FitsHDU;
 import eap.fits.FitsImageData;
 import eap.fits.RandomAccessFitsFile;
 import eap.fitsbrowser.FitsImageViewer;
+import fmfi.dalekohlad.Communication.Communication;
 import fmfi.dalekohlad.Mediator;
+import fmfi.dalekohlad.Operations;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXMLLoader;
@@ -13,15 +15,23 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.util.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.awt.*;
+import java.awt.Dimension;
+import java.io.BufferedReader;
 import java.io.RandomAccessFile;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -33,6 +43,9 @@ public class Others implements GUIModule {
     private final int IMAGE_HDU = 0;
     private static boolean wasUpdated = true;
     private static boolean connectionFailed = false;
+    private final int START_SCHEDULING = 59;
+    private final int STOP_SCHEDULING = 46;
+    private final String pathToScript = "/script.py";
 
     private Parent main_screen_root;
     private Pane pane;
@@ -40,6 +53,59 @@ public class Others implements GUIModule {
     private Label status;
     private Label pathFITS;
     private SwingNode swingNode;
+    private Button startStopScheduling;
+
+    @Override
+    public void init(Pane pane) {
+        this.pane = pane;
+        this.info = (Label) GUIModule.GetById(pane, "info");
+        this.status = (Label) GUIModule.GetById(pane, "Connected");
+        this.pathFITS = (Label) GUIModule.GetById(pane, "path_to_last_frame");
+        this.swingNode = (SwingNode) GUIModule.GetById(pane, "node_FITS");
+        this.startStopScheduling = (Button) GUIModule.GetById(pane, "start_scheduling");
+        this.main_screen_root = pane.getParent().getScene().getRoot();
+        displayConnectionStatus();
+
+        startStopScheduling.setOnAction(event -> startStopScheduling());
+        ((Button) GUIModule.GetById(pane, "load_scheduling")).setOnAction(event -> this.startLoadingScript());
+        ((Button) GUIModule.GetById(pane,"Exit")).setOnAction(event -> System.exit(0));
+        ((Button) GUIModule.GetById(pane,"Shortcuts")).setOnAction(event -> this.setDisplayingShortcuts());
+    }
+
+    @Override
+    public void update(JsonObject jo) {
+        markFlagsAsConnected();
+        String infoText = "";
+        try {
+            String time = jo.get("TIMEUTC").getAsString();
+            infoText += time + " ";
+        } catch (Exception e) {
+            lgr.debug("Time UTC wasn't loaded.");
+        }
+        try {
+            String timeUT1 = jo.get("TIMEUT1UTC").getAsString();
+            infoText += timeUT1;
+        } catch (Exception e) {
+            lgr.debug("Time UTC wasn't loaded.");
+        }
+        try {
+            String fits_path = jo.get("LastFITSPath").getAsString();
+            this.fitsHandle(fits_path);
+        } catch (Exception e) {
+            lgr.debug("Path to FITS wasn't loaded");
+        }
+
+        String finalInfoText = infoText;
+        Platform.runLater(() -> this.info.setText(finalInfoText));
+    }
+
+    @Override
+    public void registerShortcuts(Map<Pair<Boolean, KeyCode>, Runnable> shortcuts) {
+        Pair<Boolean, KeyCode> startScheduling = new Pair<>(true, KeyCode.J);
+        shortcuts.put(startScheduling, this::startScheduling);
+        Pair<Boolean, KeyCode> stopScheduling = new Pair<>(true, KeyCode.K);
+        shortcuts.put(stopScheduling, this::stopScheduling);
+    }
 
     private void fitsHandle(String pathToFITS) {
         //suppose FITS file is never rewritten -> new photo is written to new file
@@ -65,49 +131,47 @@ public class Others implements GUIModule {
     }
 
     private FitsImageViewer loadImageFromFits(String pathoTiFits) throws Exception {
-        RandomAccessFile lastFrame = new RandomAccessFile(pathoTiFits.toString(), "r");
+        RandomAccessFile lastFrame = new RandomAccessFile(pathoTiFits, "r");
         RandomAccessFitsFile fitFile = new RandomAccessFitsFile(lastFrame);
         FitsHDU hdu = fitFile.getHDU(IMAGE_HDU);
         FitsImageData imageData = (FitsImageData) hdu.getData();
-        FitsImageViewer image = new FitsImageViewer(imageData);
-        return image;
+        return new FitsImageViewer(imageData);
     }
 
-    @Override
-    public void update(JsonObject jo) {
-        markFlagsAsConnected();
-        String infoText = "";
-        try {
-            String time = jo.get("TIMEUTC").getAsString();
-            infoText += time + " ";
-        } catch (Exception e) {
-            lgr.debug("Time UTC wasn't loaded.");
+    private void startStopScheduling() {
+        String actualState = startStopScheduling.getText();
+        if(actualState.equals("Start scheduling")) {
+            startScheduling();
         }
-        try {
-            String timeUT1 = jo.get("TIMEUT1UTC").getAsString();
-            infoText += timeUT1 + " ";
-        } catch (Exception e) {
-            lgr.debug("Time UTC wasn't loaded.");
+        else {
+            stopScheduling();
         }
-        try {
-            String fits_path = jo.get("FITSpath").getAsString();
-            this.fitsHandle(fits_path);
-        } catch (Exception e) {
-            lgr.debug("Path to FITS wasn't loaded");
-        }
+    }
 
-        String finalInfoText = infoText;
-        Platform.runLater(() -> {
-            this.info.setText(finalInfoText);
-        });
+    private void startScheduling() {
+        String actualState = startStopScheduling.getText();
+        if(actualState.equals("Stop scheduling")) {
+            Operations.add("You can't start scheduling.\nScheduling is already running.");
+        }
+        else {
+            Platform.runLater(() -> startStopScheduling.setText("Stop scheduling"));
+            Communication.sendData(String.valueOf(START_SCHEDULING));
+        }
+    }
+
+    private void stopScheduling() {
+        String actualState = startStopScheduling.getText();
+        if (actualState.equals("Start scheduling")) {
+            Operations.add("You can't stop scheduling.\nScheduling is not running.");
+        } else {
+            Platform.runLater(() -> startStopScheduling.setText("Start scheduling"));
+            Communication.sendData(String.valueOf(STOP_SCHEDULING));
+        }
     }
 
 
     private void markFlagsAsConnected() {
         Others.wasUpdated = true;
-        if (connectionFailed) {
-            connectionFailed = false;
-        }
     }
 
     private void setDisplayingShortcuts() {
@@ -132,37 +196,50 @@ public class Others implements GUIModule {
         backToMain.setOnAction(e -> scene.setRoot(main_screen_root));
     }
 
-    @Override
-    public void init(Pane pane) {
-        this.pane = pane;
-        ((Button) GUIModule.GetById(pane,"Exit")).setOnAction(event -> System.exit(0));
-        this.info = (Label) GUIModule.GetById(pane, "info");
-        this.status = (Label) GUIModule.GetById(pane, "Connected");
-        this.pathFITS = (Label) GUIModule.GetById(pane, "path_to_last_frame");
-        this.swingNode = (SwingNode) GUIModule.GetById(pane, "node_FITS");
-        this.main_screen_root = pane.getParent().getScene().getRoot();
-        displayConnectionStatus();
-
-        ((Button) GUIModule.GetById(pane,"Shortcuts")).setOnAction(event -> this.setDisplayingShortcuts());
-    }
-
     private void displayConnectionStatus() {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if(!Others.wasUpdated) {
+                if(!Others.wasUpdated && !Others.connectionFailed) {
                     BackgroundFill redBackground = new BackgroundFill(Color.RED, null, null);
                     Platform.runLater(() -> status.setBackground(new Background(redBackground)));
+                    Platform.runLater(() -> status.setText("disconnected"));
+                    connectionFailed = true;
                 }
                 else if(Others.connectionFailed && Others.wasUpdated) {
                     Others.connectionFailed = false;
                     BackgroundFill greenBackground = new BackgroundFill(Color.GREEN, null, null);
                     Platform.runLater(() -> status.setBackground(new Background(greenBackground)));
+                    Platform.runLater(() -> status.setText("connected"));
                 }
 
                 Others.wasUpdated = false;
             }
         }, 6000,2500);
+    }
+
+    private void startLoadingScript() {
+        try {
+            URL url = Others.class.getResource(pathToScript);
+            Path script_path = Paths.get(url.toURI());
+            ProcessBuilder pb = new ProcessBuilder("python",script_path.toString());
+            Process p = pb.start();
+            BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            Double loaded = Double.parseDouble(in.readLine());
+            ProgressBar progressBar = ((ProgressBar) GUIModule.GetById(pane, "progress"));
+
+            if(progressBar.isDisabled()) {
+                progressBar.setDisable(false);
+            }
+            if(loaded >= 1) {
+                Operations.add("Scheduler was loaded.");
+            }
+            progressBar.setProgress(loaded);
+
+        } catch(Exception e) {
+            lgr.error("Loading script failed");
+        }
+
     }
 }
