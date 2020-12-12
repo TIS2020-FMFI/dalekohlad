@@ -46,8 +46,8 @@ public interface GUIModule {
         field = GetById(pane,id);
         field.requestFocus();
 
-        if(textArea)((TextArea) field).setText("");
-        else((TextField) field).setText("");
+        if(textArea) Platform.runLater(() -> ((TextArea) field).setText(""));
+        else  Platform.runLater(() -> ((TextField) field).setText(""));
     }
 
     default void updateInformations(JsonObject jo, List<String> namesOfCells, Label[] infoLabels) {

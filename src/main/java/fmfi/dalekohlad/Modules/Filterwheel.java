@@ -70,7 +70,8 @@ public class Filterwheel implements GUIModule {
         assert comboBox != null;
         String data = (String)comboBox.getValue();
 
-        SetFilter(data.split(" ")[1]);
+        if(data.contains(" ")) SetFilter(data.split(" ")[1]);
+        else SetFilter(data);
     }
 
     public void SetFilter(String s){
