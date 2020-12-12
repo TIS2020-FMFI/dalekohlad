@@ -74,6 +74,10 @@ public class Target implements GUIModule {
     }
 
     public void PoleCrossing(){
+        Button button = (Button) GUIModule.GetById(pane, "PoleCrossing");
+        if(button.getText().equals("Pole crossing on")) Platform.runLater(() -> {button.setText("Pole crossing off");});
+        else Platform.runLater(() -> {button.setText("Pole crossing on");});
+
         Communication.sendData(String.valueOf(SWITCH_POLE_CROSSING_CODE));
     }
 
@@ -85,7 +89,11 @@ public class Target implements GUIModule {
     public void registerShortcuts(Map<Pair<Boolean, KeyCode>, Runnable> shortcuts) {
         // L - load target
         Pair<Boolean, KeyCode> load_target = new Pair<>(true, KeyCode.L);
-        shortcuts.put(load_target, () -> FocusTextField(false,"LoadTargetRA", pane));
+        shortcuts.put(load_target, () -> {
+            FocusTextField(false,"LoadTargetRA", pane);
+            TextField load = ((TextField)GUIModule.GetById(pane,"LoadTargetRA"));
+            Platform.runLater(() -> load.setText(""));
+        });
 
         // p - pole crossing
         Pair<Boolean, KeyCode> pole_crossing = new Pair<>(false, KeyCode.P);

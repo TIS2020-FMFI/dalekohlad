@@ -151,16 +151,24 @@ public class Axis implements GUIModule {
     public void registerShortcuts(Map<Pair<Boolean, KeyCode>, Runnable> shortcuts) {
         // Left - slew east
         Pair<Boolean, KeyCode> slew_east = new Pair<>(false, KeyCode.LEFT);
-        shortcuts.put(slew_east, () -> FocusTextField(false,"SlewRAField", pane));
+        shortcuts.put(slew_east, () -> {
+            FocusTextField(false,"SlewRAField", pane);
+            TextField s_east = ((TextField)GUIModule.GetById(pane,"SlewRAField"));
+            Platform.runLater(() -> s_east.setText("-"));
+        });
         //Right - slew west
         Pair<Boolean, KeyCode> slew_west = new Pair<>(false, KeyCode.RIGHT);
-        shortcuts.put(slew_west, () -> FocusTextField(false,"SlewRAField", pane));
+        shortcuts.put(slew_west, () -> {FocusTextField(false,"SlewRAField", pane);});
         // Up - slew up
         Pair<Boolean, KeyCode> slew_up = new Pair<>(false, KeyCode.UP);
-        shortcuts.put(slew_up, () -> FocusTextField(false,"SlewDEField", pane));
+        shortcuts.put(slew_up, () -> {FocusTextField(false,"SlewDEField", pane);});
         //Down - slew down
         Pair<Boolean, KeyCode> slew_down = new Pair<>(false, KeyCode.DOWN);
-        shortcuts.put(slew_down, () -> FocusTextField(false,"SlewDEField", pane));
+        shortcuts.put(slew_down, () -> {
+            FocusTextField(false,"SlewDEField", pane);
+            TextField s_down = ((TextField)GUIModule.GetById(pane,"SlewDEField"));
+            Platform.runLater(() -> s_down.setText("-"));
+        });
 
         // PageDown - stop RA
         Pair<Boolean, KeyCode> stop_ra = new Pair<>(false, KeyCode.PAGE_DOWN);
