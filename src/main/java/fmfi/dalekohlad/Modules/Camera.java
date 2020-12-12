@@ -198,54 +198,26 @@ public class Camera implements GUIModule {
     public void registerShortcuts(Map<Pair<Boolean, KeyCode>, Runnable> shortcuts) {
         // O - observer
         Pair<Boolean, KeyCode> observer = new Pair<>(true, KeyCode.O);
-        shortcuts.put(observer, () -> {
-            FocusTextField(true,"ObserverField", pane);
-            TextField obs = ((TextField)GUIModule.GetById(pane,"ObserverField"));
-            Platform.runLater(() -> obs.setText(""));
-        });
+        shortcuts.put(observer, () -> FocusTextField(true,"ObserverField", pane));
         // o - object
         Pair<Boolean, KeyCode> object = new Pair<>(false, KeyCode.O);
-        shortcuts.put(object, () -> {
-            FocusTextField(true,"ObjectField", pane);
-            TextField obj = ((TextField)GUIModule.GetById(pane,"ObjectField"));
-            Platform.runLater(() -> obj.setText("-"));
-        });
+        shortcuts.put(object, () -> FocusTextField(true,"ObjectField", pane));
         // n - notes
         Pair<Boolean, KeyCode> notes = new Pair<>(false, KeyCode.N);
-        shortcuts.put(notes, () -> {
-            FocusTextField(true,"NotesField", pane);
-            TextField note = ((TextField)GUIModule.GetById(pane,"NotesField"));
-            Platform.runLater(() -> note.setText(""));
-        });
+        shortcuts.put(notes, () -> FocusTextField(true,"NotesField", pane));
 
         // e - exposure time
         Pair<Boolean, KeyCode> exposure_time = new Pair<>(false, KeyCode.E);
-        shortcuts.put(exposure_time, () -> {
-            FocusTextField(false,"ExposureTimeField", pane);
-            TextField exp = ((TextField)GUIModule.GetById(pane,"ExposureTimeField"));
-            Platform.runLater(() -> exp.setText(""));
-        });
+        shortcuts.put(exposure_time, () -> FocusTextField(false,"ExposureTimeField", pane));
         // s - cooler setpoint
         Pair<Boolean, KeyCode> cooler_setpoint = new Pair<>(false, KeyCode.S);
-        shortcuts.put(cooler_setpoint, () -> {
-            FocusTextField(false,"CoolerSetPointField", pane);
-            TextField cooler = ((TextField)GUIModule.GetById(pane,"CoolerSetPointField"));
-            Platform.runLater(() -> cooler.setText(""));
-        });
+        shortcuts.put(cooler_setpoint, () -> FocusTextField(false,"CoolerSetPointField", pane));
         // d - exposure delay
         Pair<Boolean, KeyCode> exposure_delay = new Pair<>(false, KeyCode.D);
-        shortcuts.put(exposure_delay, () -> {
-            FocusTextField(false,"ExposureDelayField", pane);
-            TextField exp = ((TextField)GUIModule.GetById(pane,"ExposureDelayField"));
-            Platform.runLater(() -> exp.setText(""));
-        });
+        shortcuts.put(exposure_delay, () -> FocusTextField(false,"ExposureDelayField", pane));
         // r - sequence repeats
         Pair<Boolean, KeyCode> sequence_repeats = new Pair<>(false, KeyCode.R);
-        shortcuts.put(sequence_repeats, () -> {
-            FocusTextField(false,"SequenceRepeatsField", pane);
-            TextField seq = ((TextField)GUIModule.GetById(pane,"SequenceRepeatsField"));
-            Platform.runLater(() -> seq.setText(""));
-        });
+        shortcuts.put(sequence_repeats, () -> FocusTextField(false,"SequenceRepeatsField", pane));
 
         // m - camera mode
         Pair<Boolean, KeyCode> camera_mode = new Pair<>(false, KeyCode.M);

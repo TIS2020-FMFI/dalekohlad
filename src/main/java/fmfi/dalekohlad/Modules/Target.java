@@ -89,11 +89,7 @@ public class Target implements GUIModule {
     public void registerShortcuts(Map<Pair<Boolean, KeyCode>, Runnable> shortcuts) {
         // L - load target
         Pair<Boolean, KeyCode> load_target = new Pair<>(true, KeyCode.L);
-        shortcuts.put(load_target, () -> {
-            FocusTextField(false,"LoadTargetRA", pane);
-            TextField load = ((TextField)GUIModule.GetById(pane,"LoadTargetRA"));
-            Platform.runLater(() -> load.setText(""));
-        });
+        shortcuts.put(load_target, () -> FocusTextField(false,"LoadTargetRA", pane));
 
         // p - pole crossing
         Pair<Boolean, KeyCode> pole_crossing = new Pair<>(false, KeyCode.P);
@@ -101,6 +97,5 @@ public class Target implements GUIModule {
         // G - goto/cancel
         Pair<Boolean, KeyCode> goto_cancel = new Pair<>(true, KeyCode.G);
         shortcuts.put(goto_cancel, this::GoToCancel);
-
     }
 }

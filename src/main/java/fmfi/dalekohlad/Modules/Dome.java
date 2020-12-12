@@ -113,18 +113,10 @@ public class Dome implements GUIModule {
     public void registerShortcuts(Map<Pair<Boolean, KeyCode>, Runnable> shortcuts) {
         // f - frequency  (0 - 60)
         Pair<Boolean, KeyCode> frequency = new Pair<>(false, KeyCode.F);
-        shortcuts.put(frequency, () -> {
-            FocusTextField(false,"FrequencyField", pane);
-            TextField freq = ((TextField)GUIModule.GetById(pane,"FrequencyField"));
-            Platform.runLater(() -> freq.setText(""));
-        });
+        shortcuts.put(frequency, () -> FocusTextField(false,"FrequencyField", pane));
         // a - azimuth (0 - 360)
         Pair<Boolean, KeyCode> calibrate_azimuth = new Pair<>(false, KeyCode.A);
-        shortcuts.put(calibrate_azimuth, () -> {
-            FocusTextField(false,"CalibrateAzimuthField", pane);
-            TextField cal_azi = ((TextField)GUIModule.GetById(pane,"CalibrateAzimuthField"));
-            Platform.runLater(() -> cal_azi.setText(""));
-        });
+        shortcuts.put(calibrate_azimuth, () -> FocusTextField(false,"CalibrateAzimuthField", pane));
         // y - synchronize
         Pair<Boolean, KeyCode> synchronize = new Pair<>(false, KeyCode.Y);
         shortcuts.put(synchronize, this::Synchronize);
