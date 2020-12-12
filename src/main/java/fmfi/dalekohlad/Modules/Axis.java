@@ -78,13 +78,11 @@ public class Axis implements GUIModule {
 
     public void EnableDisableMotors() {
         Button button = (Button) GUIModule.GetById(pane, "EnableDisableMotors");
-        if(button.getText().equals("Enable Motors")) {
+        if(button.getText().equals("Enable Motors") && Communication.sendData(String.valueOf(ENABLE_MOTORS_CODE))) {
             Platform.runLater(() -> {button.setText("Disable Motors");});
-            Communication.sendData(String.valueOf(ENABLE_MOTORS_CODE));
         }
-        else {
+        else if(Communication.sendData(String.valueOf(DISABLE_MOTORS_CODE))){
             Platform.runLater(() -> {button.setText("Enable Motors");});
-            Communication.sendData(String.valueOf(DISABLE_MOTORS_CODE));
         }
     }
 

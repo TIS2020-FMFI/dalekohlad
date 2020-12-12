@@ -127,15 +127,17 @@ public class Communication {
         return startPeriodicUpdates();
     }
 
-    public static void sendData(String data) {
+    public static boolean sendData(String data) {
         try {
             ByteArrayOutputStream out_data = new ByteArrayOutputStream();
             out_data.write(data.getBytes());
             out_data.write(0);
             client_out.write(out_data.toByteArray(), 0, data.length()+1);
+            return true;
         } catch (Exception e) {
             lgr.error("Failed to send data:", e);
             InputConfirmation.warn("Data couldn't be sent!");
+            return false;
         }
     }
 
