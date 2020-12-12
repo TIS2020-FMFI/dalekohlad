@@ -153,9 +153,8 @@ public class Others implements GUIModule {
         if(actualState.equals("Stop scheduling")) {
             Operations.add("You can't start scheduling.\nScheduling is already running.");
         }
-        else {
+        else if(Communication.sendData(String.valueOf(START_SCHEDULING))){
             Platform.runLater(() -> startStopScheduling.setText("Stop scheduling"));
-            Communication.sendData(String.valueOf(START_SCHEDULING));
         }
     }
 
@@ -163,9 +162,8 @@ public class Others implements GUIModule {
         String actualState = startStopScheduling.getText();
         if (actualState.equals("Start scheduling")) {
             Operations.add("You can't stop scheduling.\nScheduling is not running.");
-        } else {
+        } else if(Communication.sendData(String.valueOf(STOP_SCHEDULING))){
             Platform.runLater(() -> startStopScheduling.setText("Start scheduling"));
-            Communication.sendData(String.valueOf(STOP_SCHEDULING));
         }
     }
 
